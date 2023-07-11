@@ -1,7 +1,7 @@
 const { Sequelize, DataTypes } = require('sequelize');
 
 //access database
-const sequelize = new Sequelize('testdb', 'admin', 'admin123',
+const sequelize = new Sequelize('ccdb', 'admin', 'admin123',
     {
         host: 'localhost',
         dialect: 'mysql',
@@ -25,10 +25,10 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
 //initialize all entity in DB
-// db.Account = require('./account.model')(sequelize,Sequelize,DataTypes);
+db.Account = require('./account.model')(sequelize,Sequelize,DataTypes);
 db.Post = require('./post.model')(sequelize,Sequelize,DataTypes);
+db.User = require('./user.model')(sequelize,Sequelize,DataTypes);
+db.Community = require('./community.model')(sequelize,Sequelize,DataTypes);
+db.Comment = require('./comment.model')(sequelize,Sequelize,DataTypes);
 
-//table relations
-
-//export db
 module.exports = db;

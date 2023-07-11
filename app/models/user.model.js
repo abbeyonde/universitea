@@ -1,7 +1,16 @@
 const Community = require("./community.model");
+const Account = require('./account.model');
 
-const Account = (sequelize, Sequelize, DataTypes) =>
-    sequelize.define('account', {
+const User = (sequelize, Sequelize, DataTypes) =>
+    sequelize.define('user', {
+        accountId:{
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            // references: {
+            //     model: Account,
+            //     key: 'id'
+            // }   
+        },
         username: {
             type: DataTypes.STRING(10),
             allowNull: false,
@@ -11,10 +20,6 @@ const Account = (sequelize, Sequelize, DataTypes) =>
             type: DataTypes.STRING,
             allowNull: false,
             unique: true
-        },
-        password: {
-            type: DataTypes.STRING,
-            allowNull: false
         },
         communityId: {
             type: DataTypes.INTEGER,
@@ -26,4 +31,4 @@ const Account = (sequelize, Sequelize, DataTypes) =>
         },
     });
 
-module.exports = Account;
+module.exports = User;
