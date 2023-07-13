@@ -48,7 +48,7 @@ post.displayUser = async (req,res) => {
 post.displayPost = async (req,res) => {
     await db.Post.findByPk(req.params.id)
     .then((data)=>{
-        res.send(data);
+        res.send(JSON.stringify(data));
     })
     .catch(err=>{
         res.status(400).send(err.message);
@@ -62,9 +62,15 @@ post.edit = (req,res) => {
 
 //delete a post
 post.deletePost = async (req,res) => {
-    const post = await db.Post.findOne({where:{id: req.body.id}});
+    const post = await db.Post.findOne({where:{id: req.params.id}});
+    await post.destroy()
+    .then(()=> {
+        res.send(`post has been deleted`);
+    })
+    .catch(err => {
+        res.status(500).send(err.message);
+    });
     
-    await post.destroy();
 }
 
 module.exports = post;
