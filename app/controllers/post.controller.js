@@ -35,7 +35,18 @@ post.displayAll = (req,res) => {
 //display all posts by specific user
 post.displayUser = async (req,res) => {
     const user = await db.Account.findOne({where: {username: req.params.username}});
-    db.Post.findAll({where:{accountId: user.id}})
+    await db.Post.findAll({where:{accountId: user.id}})
+    .then((data)=>{
+        res.send(data);
+    })
+    .catch(err=>{
+        res.status(400).send(err.message);
+    });
+}
+
+//display a post
+post.displayPost = async (req,res) => {
+    await db.Post.findByPk(req.params.id)
     .then((data)=>{
         res.send(data);
     })
@@ -50,8 +61,10 @@ post.edit = (req,res) => {
 }
 
 //delete a post
-post.delete = (req,res) => {
-
+post.deletePost = async (req,res) => {
+    const post = await db.Post.findOne({where:{id: req.body.id}});
+    
+    await post.destroy();
 }
 
 module.exports = post;
