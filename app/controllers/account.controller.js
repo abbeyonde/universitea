@@ -15,7 +15,7 @@ const account = {};
 
 //create new account
 account.create = async (req, res) => {
-    const community = db.Community.findOne({ where: { name: req.body.community } });
+    // const community = db.Community.findOne({ where: { name: req.body.community } });
     const hashed_password = await bcrypt.hash(req.body.password, saltRounds);
 
     const userExist = await checkAccount(req.body.username);
@@ -50,8 +50,13 @@ account.login = async (req,res) => {
         .then( match => {
             if(match){
                 const token = generateAccessToken(user.username);
-                const data = {
+                const userDB = {
+                    id: user.id,
                     username: user.username,
+                    communityId: user.communityId
+                }
+                const data = {
+                    user: userDB,
                     accessToken: token
                 };
                 res.send(data);

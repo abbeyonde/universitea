@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    background-color: #f9ffff;
+}
+
+li, a, button, p {
+    text-decoration: none;
+    color: #2d2425;
+    font-family: 'Montserrat', sans-serif;
+    font-size: medium;
+    font-weight: 500;
+}
+
+header {
+    height: 10%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 30px 10%;
+    border-bottom: solid #cfcfcf 1px;
+}
+
+.nav-links {
+    list-style: none;
+}
+
+.nav-links li {
+    display: inline-block;
+    padding: 0px 20px;
+}
+
+.nav-links li a {
+    transition: all 0.3s ease 0s;
+}
+
+.nav-links li a:hover {
+    color: #2d2425;
+}
+.sign-in-sign-up p{
+    display: inline-block;
+}
+
+button {
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+    padding: 9px 25px;
+    margin: 0 8px;
+}
+
+.transparent{
+    background-color: transparent;
+}
+
+.color-white{
+    color: #f9ffff;
+
+}
+
+.sign-up {
+    background-color: #2d2425cf;
+    color: #f9ffff;
+    margin-right: 0px;
+    margin-left: 15px;
+}
+
+.sign-in {
+    background-color: #f9ffff;
+    color: #2d2425;
+}
+
+.sign-in:hover {
+    /* background-color: #b3b3b3; */
+    text-decoration: underline;
+}
+
+.desc-sign-in {
+    margin-right: 5px;
+}
+
+.sign-up:hover {
+    background-color: #2d2425ff;
+}
+
+.app-name {
+    color: #2d2425;
+    font-family: 'Montserrat', sans-serif;
+    font-size: xx-large;
+    font-weight: 500;
+    cursor: pointer;
+    margin-right: auto;
+}

@@ -3,11 +3,17 @@ const cors = require('cors');
 
 require('dotenv').config();
 
-const path = __dirname+'/views/';
+const path = __dirname+'/app/views/';
 const app = express();
 
+var corsOptions ={
+    origin: 'http://localhost:3000'
+}
+
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
+
 
 //connect database
 const db = require('./app/models');
@@ -17,10 +23,13 @@ db.sequelize.sync({force:true}).then(()=>{
     console.log('All models are sync-ed');
 });
 
-app.get('/',(req,res)=>{res.send('Hello World!')})
 //use and import UI from /views
+app.use(express.static(path));
 
 //GET html file from /views
+app.get('/*', (req,res)=>{
+    res.sendFile(path+'index.html');
+});
 
 //import all router and pass app as parameter
 require('./app/routes/account.route')(app);

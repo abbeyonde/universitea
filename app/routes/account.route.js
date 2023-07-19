@@ -10,8 +10,8 @@ module.exports = app => {
         next();
     });
 
-    router.post('/signup', accounts.create);
-    router.post('/login', accounts.login);
+    router.post('/sign-up', accounts.create);
+    router.post('/sign-in', accounts.login);
 
     app.use('/account', router);
 }

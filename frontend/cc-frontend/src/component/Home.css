@@ -1,0 +1,74 @@
+.post-body{
+    width: 60vw;
+    height: 90vh;
+    background-color: antiquewhite;
+    margin: auto;
+}
+
+.search-bar{
+    width: 100%;
+    height: 40px;
+    background-color: grey;
+}
+
+.post{
+    width: 100%;
+    height: 25%;
+    padding: 20px 20px;
+    background-color: aliceblue;
+    border-bottom: solid #d8d8d8 2px;
+    display: flex;
+}
+.img-anon{
+    background-color: aquamarine;
+    width: 70px;
+    height: 70px;
+}
+.post-content{
+    width: 90%;
+    height: 90%;
+    background-color: #f9ffff;
+}
+.tea-score{
+    background-color: rgb(238, 226, 62);
+    width: 70px;
+    height:90%;
+    padding: 10px 10px;
+}
+
+.hot-vote{
+    background-color: rgb(255, 88, 88);
+    margin-bottom: 5px;
+    width: 100%;
+    height: 50%;
+}
+
+.cold-vote{
+    background-color: rgb(58, 58, 252);
+    margin-top: 5px;
+    width: 100%;
+    height: 50%;
+}
+
+.post-button{
+    padding: 20px 20px;
+    background-color: #2d2425;
+    border: solid 1px transparent;
+    border-radius: 45px;
+    width: 150px;
+    color: #f9ffff;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 24px;
+    box-shadow: -3px 3px 10px #666;
+    position: fixed;
+    margin-top: 70vh;
+    margin-left: 35vw;
+}
+
+.post-button:hover{
+    background-color: #2d2425f1;
+     transition: all 0.2s ease 0s;
+    box-shadow: 0px 0px 0px #666;
+
+}
