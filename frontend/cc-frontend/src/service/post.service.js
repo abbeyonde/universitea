@@ -1,7 +1,7 @@
 import http from "../http-common";
 import authHeader from "./auth-header";
 
-class Post{
+class Post {
     //all request must send header
     //create a new post
     newPost(data) {
@@ -10,14 +10,14 @@ class Post{
             accountId: data.accountId,
             communityId: data.communityId
         },
-        {
-            headers: authHeader()
-        });
+            {
+                headers: authHeader()
+            })
     }
 
     //retrieve all post
-    allPost(){
-        return http.get('api/post/all',{headers: authHeader()});
+    allPost() {
+        return http.get('api/post/all', { headers: authHeader() });
     }
 
     //retrieve one post

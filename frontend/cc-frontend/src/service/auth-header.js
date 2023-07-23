@@ -4,8 +4,8 @@ export default function authHeader(){
 
     //get accessToken from cookie
 
-    if (user && user.accessToken) {
-        return { Authorization: `Bearer ${user.uT_token}`};
+    if (user && user.uT_token) {
+        return { 'Authorization': `Bearer ${user.uT_token}`};
     }else{
         return{};
     }

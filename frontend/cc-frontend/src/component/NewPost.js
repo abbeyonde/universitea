@@ -22,17 +22,19 @@ const NewPost = () => {
         setContent(content);
     }
 
-    const handleClickPost = () => {
-        const user = localStorage.getItem('user');
+    const handleClickPost = async () => {
+        const user = await JSON.parse(localStorage.getItem('user'));
         const data = {
             content: content,
             accountId: user.id,
             communityId: user.communityId
         }
+        console.log(data);
 
         Post.newPost(data)
             .then(() => {
                 navigate('/home');
+                alert("Your confession has been uploaded")
                 window.location.reload();
             })
             .catch(e => {
@@ -51,7 +53,7 @@ const NewPost = () => {
             <div className='wrapper'>
                 <h2 className='transparent'>Confession</h2>
                 <textarea
-                    placeholder='Write your confession here...'
+                    placeholder='Write your confession here...allala'
                     onChange={onChangeContent}
                     required></textarea>
                 <button className='new-post-btn' onClick={handleClickPost}>Post</button>

@@ -20,6 +20,7 @@ post.create = (req,res) => {
     .catch(err => {
         res.send(err.message);
     })
+
 }
 
 //display all posts
@@ -27,6 +28,7 @@ post.displayAll = (req,res) => {
 
     db.Post.findAll()
     .then((data)=>{
+        console.log(data.length);
         res.send(data);
     })
     .catch(err=>{
