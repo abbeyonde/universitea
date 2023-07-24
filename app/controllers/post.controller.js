@@ -28,7 +28,7 @@ post.displayAll = (req,res) => {
 
     db.Post.findAll()
     .then((data)=>{
-        console.log(data.length);
+        // console.log(data.length);
         res.send(data);
     })
     .catch(err=>{

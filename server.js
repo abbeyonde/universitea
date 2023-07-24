@@ -26,14 +26,14 @@ db.sequelize.sync({force:true}).then(()=>{
 //use and import UI from /views
 app.use(express.static(path));
 
+//import all router and pass app as parameter
+require('./app/routes/account.route')(app);
+require('./app/routes/post.route')(app);
+
 //GET html file from /views
 app.get('/*', (req,res)=>{
     res.sendFile(path+'index.html');
 });
-
-//import all router and pass app as parameter
-require('./app/routes/account.route')(app);
-require('./app/routes/post.route')(app);
 
 //listen to PORT
 const PORT = process.env.PORT || 8080;
