@@ -53,10 +53,10 @@ const NewPost = () => {
             <div className='wrapper'>
                 <h2 className='transparent'>Confession</h2>
                 <textarea
-                    placeholder='Write your confession here...allala'
+                    placeholder='Write your confession here...'
                     onChange={onChangeContent}
                     required></textarea>
-                <button className='new-post-btn' onClick={handleClickPost}>Post</button>
+                <button className='new-post-btn' onClick={handleClickPost}>Spill</button>
             </div>
         </div>
     )

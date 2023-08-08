@@ -15,7 +15,9 @@ const Header = () => {
     })
 
     const onClickSignOut = () => {
-        localStorage.removeItem();
+        localStorage.removeItem('user');
+       navigate('/');
+       window.location.reload();
     }
 
     return (
@@ -33,7 +35,9 @@ const Header = () => {
 
             {currentUser ?
                 <div className='sign-in-sign-up'>
-                    <button className='sign-up'><Link to={'/'} className='transparent color-white' onClick={onClickSignOut}>Sign Out</Link></button>
+                    {/* <Link to={'/all/'} className='sign-in' >My Confession</Link> */}
+                    <Link to={`/profile`} className='sign-in' >My Profile</Link>
+                    <button className='sign-up' onClick={onClickSignOut}>Sign Out</button>
                 </div>
                 :
                 (<div className='sign-in-sign-up'>

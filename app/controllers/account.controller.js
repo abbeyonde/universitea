@@ -42,50 +42,74 @@ account.create = async (req, res) => {
 }
 
 //login to an account
-account.login = async (req,res) => {
-    const user = await db.Account.findOne({where: {username: req.body.username}});
+account.login = async (req, res) => {
+    const user = await db.Account.findOne({ where: { username: req.body.username } });
 
-    if(user){
+    if (user) {
         bcrypt.compare(req.body.password, user.password)
-        .then( match => {
-            if(match){
-                const token = generateAccessToken(user.username);
-                const userDB = {
-                    id: user.id,
-                    username: user.username,
-                    communityId: user.communityId
+            .then(match => {
+                if (match) {
+                    const token = generateAccessToken(user.username);
+                    const userDB = {
+                        id: user.id,
+                        username: user.username,
+                        communityId: user.communityId
+                    }
+                    const data = {
+                        user: userDB,
+                        accessToken: token
+                    };
+                    res.send(data);
                 }
-                const data = {
-                    user: userDB,
-                    accessToken: token
-                };
-                res.send(data);
-            }
-            else{
-                res.status(400).send('Password doesn\'t match');
-            }
-        })
-        .catch(err => {
-            res.status(500).send(err.message);
-        })
+                else {
+                    res.status(400).send('Password doesn\'t match');
+                }
+            })
+            .catch(err => {
+                res.status(500).send(err.message);
+            })
     }
-    else{
-        res.status(404).send('User doesn\'t exist');   
+    else {
+        res.status(404).send('User doesn\'t exist');
     }
-    
+
 }
 
 //get account profile
+account.getProfile = async (req, res) => {
+    const id = req.params.id;
+
+    await db.Account.findOne({ where: { id: id } })
+        .then((data) => {
+            console.log(data);
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(404).send(err.message);
+        });
+
+}
 
 //update account
-    //change username
-    //change password
+//change username
+account.changeUsername = async(req, res) => {
+    const username = req.body.username
+    db.Account.update({username: req.body.username}, {where: {id: req.params.id}})
+    .then((data)=> {
+        console.log(data);
+        res.send(data);
+    })
+    .catch(err => {
+        res.status(500).send(err.message);
+    })
+}
+//change password
 
 //delete account
 
 //generate access token
-function generateAccessToken(username){
-    return jwt.sign({username: username}, process.env.TOKEN_SECRET,{expiresIn: '30m', algorithm: 'HS256'});
+function generateAccessToken(username) {
+    return jwt.sign({ username: username }, process.env.TOKEN_SECRET, { expiresIn: '30m', algorithm: 'HS256' });
 }
 
 module.exports = account;

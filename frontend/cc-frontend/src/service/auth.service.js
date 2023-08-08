@@ -1,4 +1,4 @@
-  import http from "../http-common";
+import http from "../http-common";
 
 class AuthService {
     //signIn
@@ -19,13 +19,14 @@ class AuthService {
                         uT_token: AUTH_TOKEN
                     }
                     localStorage.setItem('user', JSON.stringify(user));
+                    localStorage.setItem('uT_token',JSON.stringify(AUTH_TOKEN));
                 }
                 return res.data;
             })
     }
     //signUp new account
-    signUp(data){
-        return http.post('account/sign-up',{
+    signUp(data) {
+        return http.post('account/sign-up', {
             username: data.username,
             email: data.email,
             password: data.password
@@ -34,10 +35,16 @@ class AuthService {
 
     //logout
 
+    //get account profile
+    getProfile(user) {
+        console.log(user.username);
+        return http.get(`account/profile/${user.id}`);
+    }
+
     //delete account
 
     //chech if user is signed in or not
-    getCurrentUser(){
+    getCurrentUser() {
         return JSON.parse(localStorage.getItem('user'));
     }
 }

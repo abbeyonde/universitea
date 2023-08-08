@@ -1,12 +1,11 @@
 export default function authHeader() {
+    const uT_token = JSON.parse(localStorage.getItem('uT_token'));
     const user = JSON.parse(localStorage.getItem('user'));
-    const cookie = document.cookie;
-
     //get accessToken from cookie
 
-    if (user && user.uT_token) {
+    if (user && uT_token) {
         return {
-            'Authorization': `Bearer ${user.uT_token}`,
+            'Authorization': `Bearer ${uT_token}`,
             'Accept': 'application/json'
         };
     } else {

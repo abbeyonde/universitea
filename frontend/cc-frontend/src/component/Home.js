@@ -1,20 +1,41 @@
 import { Link } from 'react-router-dom';
+import { Menu, MenuItem, Button} from '@mui/material';
 import './Home.css'
 import Post from '../service/post.service';
 import { useEffect, useState } from 'react';
 import Posts from './Post'
 
 const Home = () => {
-    const [ posts, setPosts ] = useState([]);
+    const [anchorEl, setAnchorEl] = useState(null);
+
+    const [posts, setPosts] = useState([
+        {
+            id: 1,
+            content: "adsadasdasda"
+        }
+    ]);
+
     useEffect(() => {
         retrievePosts();
-    },[])
+    }, [])
+
+    const onClickMenu = (e) => {
+        setAnchorEl(e.currentTarget);
+    }
+
+    const handleClose = () => {
+        setAnchorEl(null)
+    }
+
+
+
+
     const retrievePosts = () => {
         Post.allPost()
-            .then(async(res) => {
+            .then(async (res) => {
                 const datas = [];
                 const data = await res.data;
-                for(var i in data){
+                for (var i in data) {
                     datas.push(data[i]);
                 }
                 setPosts(datas);
@@ -34,13 +55,28 @@ const Home = () => {
                 {/* <Posts /> */}
                 <ul>
                     {posts && posts.map && posts.map((post, index) => (
-                        <li key={post.id}>
+                        <li className='display-block bg-transparent' key={post.id}>
                             <div className='post'>
                                 <div className='img-anon'></div>
-                                <div className='post-content'>
-                                    <p>{post.content}</p>
+                                <div className='post-content bg-transparent align-left'>
+                                    <p className='bg-transparent align-left'>{post.content}</p>
                                 </div>
                                 <div className='tea-score'>
+{/*                                     
+                                    <Button
+                                        className='btn-menu'
+                                        aria-controls='simple-menu'
+                                        aria-haspopup='true'
+                                        onClick={onClickMenu}>
+                                            ***
+                                    </Button>
+                                    <Menu
+                                        keepMounted
+                                        anchorEl={anchorEl}
+                                        onClose={handleClose}
+                                        open={Boolean(anchorEl)}>
+                                        <MenuItem onClick={handleClose}>Report</MenuItem>
+                                    </Menu> */}
                                     <div className='hot-vote'></div>
                                     <div className='cold-vote'></div>
                                 </div>
