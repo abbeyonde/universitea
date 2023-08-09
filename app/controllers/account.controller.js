@@ -91,19 +91,64 @@ account.getProfile = async (req, res) => {
 }
 
 //update account
+account.update = async (req, res) => {
+    db.Account.findOne({ where: { id: req.params.id } })
+        .then(user => {
+            const token = generateAccessToken(user.username);
+            const userDB = {
+                id: user.id,
+                username: user.username,
+                communityId: user.communityId
+            }
+            const data = {
+                user: userDB,
+                accessToken: token
+            };
+            res.send(data);
+        })
+}
 //change username
-account.changeUsername = async(req, res) => {
+account.changeUsername = async (req, res) => {
     const username = req.body.username
-    db.Account.update({username: req.body.username}, {where: {id: req.params.id}})
-    .then((data)=> {
-        console.log(data);
-        res.send(data);
-    })
-    .catch(err => {
-        res.status(500).send(err.message);
-    })
+    db.Account.update({ username: req.body.username }, { where: { id: req.params.id } })
+        .then((data) => {
+            console.log(data);
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send(err.message);
+        })
 }
 //change password
+
+account.changePassword = async (req, res) => {
+    const password = req.body.password;
+    const newPassword = req.body.newPassword;
+    const id = req.body.id;
+
+    const user = await db.Account.findOne({ where: { id: id } })
+    if (user) {
+        bcrypt.compare(password, user.password)
+            .then(async match => {
+                if (match) {
+                    console.log('password match');
+                    const hashed_password = await bcrypt.hash(newPassword, saltRounds);
+                    db.Account.update({ password: hashed_password }, { where: { id: req.params.id } })
+                        .then(data => {
+                            console.log(data);
+                            res.send(data);      
+                        })
+                }
+                else {
+                    console.log('password not match');
+                    res.status(400).send("Password is not correct");
+                }
+            })
+    }
+    else {
+        res.status(500).send(err.message);
+    };
+}
 
 //delete account
 

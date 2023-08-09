@@ -16,34 +16,36 @@ const Header = () => {
 
     const onClickSignOut = () => {
         localStorage.removeItem('user');
-       navigate('/');
-       window.location.reload();
+        navigate('/');
+        window.location.reload();
     }
 
     return (
         <header>
             {currentUser ?
-                <Link className='app-name' to={'/home'} onClick={() => { window.location.reload() }}>universiTea</Link>
+                <Link className='app-name' to={'/home'} >universiTea</Link>
                 :
-                <Link className='app-name' to={'/'} onClick={() => { window.location.reload() }}>universiTea</Link>
+                <Link className='app-name' to={'/'} >universiTea</Link>
             }
-            <nav>
-                <ul className='nav-links'>
-                    {/* <li>Profile</li> */}
-                </ul>
-            </nav>
 
             {currentUser ?
                 <div className='sign-in-sign-up'>
-                    {/* <Link to={'/all/'} className='sign-in' >My Confession</Link> */}
-                    <Link to={`/profile`} className='sign-in' >My Profile</Link>
-                    <button className='sign-up' onClick={onClickSignOut}>Sign Out</button>
+                    <nav>
+                        <ul>
+                            <li>
+                                <Link to={'/all/'} className='sign-in' >My Confession</Link>
+                            </li>
+                            <li>
+                                <Link to={`/profile`} className='sign-in' >My Profile</Link>
+                            </li>
+                        </ul>
+                        <button className='sign-up' onClick={onClickSignOut}>Sign Out</button>
+                    </nav>
                 </div>
                 :
                 (<div className='sign-in-sign-up'>
                     <p className='desc-sign-in'>Existing user?</p>
                     <Link to={'/sign-in'} className='sign-in' >Sign In</Link>
-
                     <button className='sign-up'><Link to={'/sign-up'} className='transparent color-white'>Sign Up</Link></button>
                 </div >)
             }

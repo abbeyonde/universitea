@@ -13,6 +13,8 @@ const Profile = () => {
     const [reNewPassword, setReNewPassword] = useState(undefined);
     const [changeUsername, setChangeUsername] = useState(false);
     const [changePassword, setChangePassword] = useState(false);
+    const [changeProfile, setChangeProfile] = useState(false);
+    const [passwordMatch, setPasswordMatch] = useState(true);
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [communityId, setCommunityId] = useState('');
@@ -47,15 +49,18 @@ const Profile = () => {
     }
 
     const onChangeOldPassword = (e) => {
-        setOldPassword(e.target.value);
+        const pw = e.target.value;
+        setOldPassword(pw);
     }
 
     const onChangeNewPassword = (e) => {
-        setNewPassword(e.targe.value);
+        const pw = e.target.value;
+        setNewPassword(pw);
     }
 
     const onChangeReNewPassword = (e) => {
-        setReNewPassword(e.target.value);
+        const pw = e.target.value;
+        setReNewPassword(pw);
     }
 
 
@@ -64,11 +69,28 @@ const Profile = () => {
         accountService.changeUsername(newUsername, user);
         // setUsername(newUsername);
         setChangeUsername(false);
+        setChangeProfile(true);
         window.location.reload()
     }
 
     const onClickSubmitPassword = () => {
 
+        const data = {
+            id: user.id,
+            oldPassword: oldPassword,
+            newPassword: newPassword
+        }
+        accountService.changePassword(data)
+            .then(() => {
+
+            });
+        setChangePassword(false);
+        setChangeProfile(true);
+        window.location.reload();
+    }
+
+    const onClickUpdateProfile = () => {
+        accountService.update(user);
     }
 
     return (
@@ -100,7 +122,10 @@ const Profile = () => {
                     </div>
                 )}
             <p>{`Community: ${communityId}`}</p>
-
+            {changeProfile ?
+                <button onClick={onClickUpdateProfile}>Update</button>
+                :
+                <div></div>}
         </div>
     )
 }

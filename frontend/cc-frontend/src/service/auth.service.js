@@ -1,4 +1,5 @@
 import http from "../http-common";
+import authHeader from "./auth-header";
 
 class AuthService {
     //signIn
@@ -19,7 +20,7 @@ class AuthService {
                         uT_token: AUTH_TOKEN
                     }
                     localStorage.setItem('user', JSON.stringify(user));
-                    localStorage.setItem('uT_token',JSON.stringify(AUTH_TOKEN));
+                    localStorage.setItem('uT_token', JSON.stringify(AUTH_TOKEN));
                 }
                 return res.data;
             })
@@ -38,7 +39,7 @@ class AuthService {
     //get account profile
     getProfile(user) {
         console.log(user.username);
-        return http.get(`account/profile/${user.id}`);
+        return http.get(`account/profile/${user.id}`, { headers: authHeader() });
     }
 
     //delete account

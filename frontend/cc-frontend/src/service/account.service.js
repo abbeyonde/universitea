@@ -18,9 +18,11 @@ class Account {
             })
     }
 
-    changePassword(password) {
-        return http.put('account/profile/password', {
-            password: password
+    changePassword(data) {
+        return http.put(`account/profile/${data.id}/password`, {
+            id: data.id,
+            password: data.oldPassword,
+            newPassword: data.newPassword
         },
             {
                 headers: authHeader()
@@ -32,6 +34,10 @@ class Account {
                 console.log(e.message);
                 res.status(500).send(e.message);
             })
+    }
+
+    update(user){
+        return http.get(`account/profile/update/${user.id}`);
     }
 }
 
