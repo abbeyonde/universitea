@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
 import authService from "../service/auth.service";
-import { useNavigate } from "react-router-dom";
 import accountService from "../service/account.service";
+import './Profile.css';
 
 const Profile = () => {
 
-    const navigate = useNavigate();
     const [user, setUser] = useState('');
     const [newUsername, setNewUsername] = useState(undefined);
     const [oldPassword, setOldPassword] = useState(undefined);
@@ -15,8 +14,8 @@ const Profile = () => {
     const [changePassword, setChangePassword] = useState(false);
     const [changeProfile, setChangeProfile] = useState(false);
     const [passwordMatch, setPasswordMatch] = useState(true);
-    const [username, setUsername] = useState('');
-    const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('test');
+    const [email, setEmail] = useState('test');
     const [communityId, setCommunityId] = useState('');
     useEffect(() => {
         getProfile();
@@ -69,8 +68,9 @@ const Profile = () => {
         accountService.changeUsername(newUsername, user);
         // setUsername(newUsername);
         setChangeUsername(false);
+        setUsername(newUsername);
+        // window.location.reload()
         setChangeProfile(true);
-        window.location.reload()
     }
 
     const onClickSubmitPassword = () => {
@@ -85,8 +85,8 @@ const Profile = () => {
 
             });
         setChangePassword(false);
+        // window.location.reload();
         setChangeProfile(true);
-        window.location.reload();
     }
 
     const onClickUpdateProfile = () => {
@@ -94,40 +94,55 @@ const Profile = () => {
     }
 
     return (
-        <div>
-            <p>{`Username: ${username}`}</p>
-            <button onClick={onClickUsername}>change username</button>
-            {changeUsername ?
-                (
-                    <div>
-                        <input onChange={onChangeUsername} placeholder="New username"></input>
-                        <button onClick={onClickSubmitUsername}>Submit</button>
-                    </div>
-                ) : (
-                    <div>
-                    </div>
-                )}
-            <p>{`Email: ${email}`}</p>
-            <button onClick={onClickPassword}>change password</button>
-            {changePassword ?
-                (
-                    <div>
-                        <input onChange={onChangeOldPassword} placeholder="Old password"></input>
-                        <input onChange={onChangeNewPassword} placeholder="New password"></input>
-                        <input onChange={onChangeReNewPassword} placeholder="Re-type new password"></input>
-                        <button onClick={onClickSubmitPassword}>Submit</button>
-                    </div>
-                ) : (
-                    <div>
-                    </div>
-                )}
-            <p>{`Community: ${communityId}`}</p>
-            {changeProfile ?
-                <button onClick={onClickUpdateProfile}>Update</button>
+        <div className="post-body">
+            <div className="container-username">
+                <div className="bg-transparent">
+                    <label>Username:</label>
+                    <input type="text" value={username} readOnly></input>
+                </div>
+                <button onClick={onClickUsername}>change username</button>
+                {changeUsername ?
+                    (
+                        <div className="new-field">
+                            <input className="mx-right-0" onChange={onChangeUsername} placeholder="New username"></input>
+                            <button onClick={onClickSubmitUsername}>Submit</button>
+                        </div>
+                    ) : (
+                        <div>
+                        </div>
+                    )}
+            </div>
+            <div className="container-email">
+                <label>Email:</label>
+                <input type="text" value={email} readOnly></input>
+            </div>
+            <div className="container-pw">
+                <label>Password:</label>
+                <button onClick={onClickPassword}>change password</button>
+                {changePassword ?
+                    (
+                        <div className="input-pw new-field">
+                            <input type="password" onChange={onChangeOldPassword} placeholder="Old password"></input>
+                            <input type="password" onChange={onChangeNewPassword} placeholder="New password"></input>
+                            <input type="password" onChange={onChangeReNewPassword} placeholder="Re-type new password"></input>
+                            <button onClick={onClickSubmitPassword}>Submit</button>
+                        </div>
+                    ) : (
+                        <div>
+                        </div>
+                    )}
+            </div>
+            <div className="container-community">
+                <label>Community:</label>
+                <input type="text" value={'UNITEN'} readOnly></input>
+            </div>
+            {
+                changeProfile ?
+                <button className="update-button" onClick={onClickUpdateProfile}>Update</button>
                 :
-                <div></div>}
+                <div></div>
+}
         </div>
     )
 }
-
 export default Profile;

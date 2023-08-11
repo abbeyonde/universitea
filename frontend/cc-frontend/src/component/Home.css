@@ -1,8 +1,15 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    background-color: #f9ffff;
+}
+
 .post-body {
     width: 60vw;
-    min-width: 600px;
+    min-width: 300px;
     height: 90vh;
-    background-color: antiquewhite;
+    background-color: white;
     margin: auto;
 }
 

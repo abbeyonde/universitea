@@ -136,12 +136,12 @@ account.changePassword = async (req, res) => {
                     db.Account.update({ password: hashed_password }, { where: { id: req.params.id } })
                         .then(data => {
                             console.log(data);
-                            res.send(data);      
+                            res.send(true);      
                         })
                 }
                 else {
                     console.log('password not match');
-                    res.status(400).send("Password is not correct");
+                    res.status(400).send(false);
                 }
             })
     }

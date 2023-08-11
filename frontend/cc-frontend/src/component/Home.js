@@ -62,21 +62,6 @@ const Home = () => {
                                     <p className='bg-transparent align-left'>{post.content}</p>
                                 </div>
                                 <div className='tea-score'>
-{/*                                     
-                                    <Button
-                                        className='btn-menu'
-                                        aria-controls='simple-menu'
-                                        aria-haspopup='true'
-                                        onClick={onClickMenu}>
-                                            ***
-                                    </Button>
-                                    <Menu
-                                        keepMounted
-                                        anchorEl={anchorEl}
-                                        onClose={handleClose}
-                                        open={Boolean(anchorEl)}>
-                                        <MenuItem onClick={handleClose}>Report</MenuItem>
-                                    </Menu> */}
                                     <div className='hot-vote'></div>
                                     <div className='cold-vote'></div>
                                 </div>

@@ -30,7 +30,7 @@ const Header = () => {
 
             {currentUser ?
                 <div className='sign-in-sign-up'>
-                    <nav>
+                    <nav className='nav-links'>
                         <ul>
                             <li>
                                 <Link to={'/all/'} className='sign-in' >My Confession</Link>
@@ -38,8 +38,10 @@ const Header = () => {
                             <li>
                                 <Link to={`/profile`} className='sign-in' >My Profile</Link>
                             </li>
+                            <li>
+                                <button className='sign-up' onClick={onClickSignOut}>Sign Out</button>
+                            </li>
                         </ul>
-                        <button className='sign-up' onClick={onClickSignOut}>Sign Out</button>
                     </nav>
                 </div>
                 :

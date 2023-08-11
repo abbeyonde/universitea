@@ -24,6 +24,11 @@ header {
     border-bottom: solid #cfcfcf 1px;
 }
 
+.navbar{
+    display: inline;
+    margin: 0 15px;
+}
+
 .nav-links {
     list-style: none;
 }
@@ -33,7 +38,7 @@ header {
     padding: 0px 20px;
 }
 
-.nav-links li a {
+.nav-links li a{
     transition: all 0.3s ease 0s;
 }
 

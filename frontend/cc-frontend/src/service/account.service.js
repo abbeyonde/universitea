@@ -10,11 +10,10 @@ class Account {
                 headers: authHeader()
             })
             .then(res => {
-                console.log(res);
+                console.log(res.data);
             })
             .catch((e, res) => {
                 console.log(e.message);
-                res.status(500).send(e.message);
             })
     }
 
@@ -30,9 +29,8 @@ class Account {
             .then(res => {
                 console.log(res);
             })
-            .catch((e, res) => {
+            .catch((e) => {
                 console.log(e.message);
-                res.status(500).send(e.message);
             })
     }
 
