@@ -14,6 +14,24 @@ class Post {
                 headers: authHeader()
             })
     }
+    //upvote
+    upVote(data,value){
+        return http.put(`api/post/${data}/upvote`,{
+            value: value
+        },
+        {
+            headers: authHeader()
+        })
+    }
+
+    //downvote
+    downVote(data){
+        return http.put(`api/post/${data}/downvote`,{},
+        {
+            headers: authHeader()
+        })
+    }
+
 
     //retrieve all post
     allPost() {

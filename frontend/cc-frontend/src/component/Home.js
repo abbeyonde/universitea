@@ -1,9 +1,12 @@
 import { Link } from 'react-router-dom';
-import { Menu, MenuItem, Button} from '@mui/material';
+import { Menu, MenuItem, Button } from '@mui/material';
 import './Home.css'
 import Post from '../service/post.service';
 import { useEffect, useState } from 'react';
 import Posts from './Post'
+import UpvoteIcon from '../icon/UpvoteIcon.jsx';
+import { purple } from '@mui/material/colors';
+import DownvoteIcon from '../icon/DownvoteIcon';
 
 const Home = () => {
     const [anchorEl, setAnchorEl] = useState(null);
@@ -11,7 +14,11 @@ const Home = () => {
     const [posts, setPosts] = useState([
         {
             id: 1,
-            content: "adsadasdasda"
+            content: "adsadasdasda",
+            upvote: 9,
+            downvote: 2,
+            upvoted: false,
+            downvoted: false
         }
     ]);
 
@@ -27,15 +34,14 @@ const Home = () => {
         setAnchorEl(null)
     }
 
-
-
-
     const retrievePosts = () => {
         Post.allPost()
             .then(async (res) => {
                 const datas = [];
                 const data = await res.data;
                 for (var i in data) {
+                    data[i].upvoted = false;
+                    data[i].downvoted = false;
                     datas.push(data[i]);
                 }
                 setPosts(datas);
@@ -44,6 +50,16 @@ const Home = () => {
             .catch(e => {
                 console.log(e);
             })
+    }
+
+    const onClickUpvote = (id, value) => {
+
+        Post.upVote(id, value);
+        const listPosts = posts.map((post) => post.id === id ? { ...post, upvoted: !post.upvoted } : post );
+        setPosts(listPosts);
+    }
+    const onClickDownvote = (id) => {
+        Post.downVote(id);
     }
     return (
         <div>
@@ -62,8 +78,26 @@ const Home = () => {
                                     <p className='bg-transparent align-left'>{post.content}</p>
                                 </div>
                                 <div className='tea-score'>
-                                    <div className='hot-vote'></div>
-                                    <div className='cold-vote'></div>
+                                    {post.upvoted ?
+                                        <div className='hot-vote'>
+                                            <button className='vote' onClick={() => { onClickUpvote(post.id, -1) }}>
+                                                <UpvoteIcon color={'tomato'} />
+                                            </button>
+                                        </div> :
+                                        <div className='hot-vote'>
+                                            <button className='vote' onClick={() => { onClickUpvote(post.id, 1) }}>
+                                                <UpvoteIcon color={'grey'} />
+                                            </button>
+                                        </div>
+                                    }
+                                    <div className='counter'>
+                                        <p>{post.upvote - post.downvote}</p>
+                                    </div>
+                                    <div className='cold-vote'>
+                                        <button className='vote' onClick={() => { onClickDownvote(post.id) }}>
+                                            <DownvoteIcon color={'rgb(58, 58, 252)'} />
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </li>

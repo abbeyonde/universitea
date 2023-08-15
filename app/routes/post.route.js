@@ -18,6 +18,9 @@ module.exports = app => {
     router.get('/user/:username', [auth.authenticateToken], posts.displayUser);
     router.get('/:id', [auth.authenticateToken], posts.displayPost);
     router.delete('/:id', [auth.authenticateToken], posts.deletePost);
+    router.put('/:id/upvote', [auth.authenticateToken], posts.upVote);
+    router.put('/:id/downvote', [auth.authenticateToken], posts.downVote);
+
 
     app.use('/api/post', router);
 }

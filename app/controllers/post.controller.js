@@ -64,6 +64,44 @@ post.edit = (req,res) => {
 
 }
 
+post.upVote = async (req,res) => {
+    const id = req.params.id;
+    const value = req.body.value;
+    const post = await db.Post.findByPk(id)
+    console.log(post.upvote);
+    const upvote = post.upvote;
+
+    const newUpvote = upvote+value;
+    db.Post.update({upvote: newUpvote}, {where: {id: id}})
+    .then((data)=>{
+        console.log(data);
+        res.send(data);
+    })
+    .catch(err => {
+        console.log(err.message);
+        res.send(err.message);
+    })
+}
+
+post.downVote = async (req,res) => {
+    const id = req.params.id;
+    const post = await db.Post.findByPk(id)
+    console.log(post.downvote);
+    const downvote = post.downvote;
+
+    const newDownvote = downvote+1;
+    db.Post.update({downvote: newDownvote}, {where: {id: id}})
+    .then((data)=>{
+        console.log(data);
+        res.send(data);
+    })
+    .catch(err => {
+        console.log(err.message);
+        res.send(err.message);
+    })
+
+}
+
 //delete a post
 post.deletePost = async (req,res) => {
     const post = await db.Post.findOne({where:{id: req.params.id}});
