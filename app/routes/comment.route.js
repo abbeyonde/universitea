@@ -1,3 +1,5 @@
+const auth = require('../controllers/auth');
+
 module.exports = app => {
     const comments = require('../controllers/comment.controller');
     var router = require('express').Router();

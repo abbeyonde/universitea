@@ -7,6 +7,7 @@ import Posts from './Post'
 import UpvoteIcon from '../icon/UpvoteIcon.jsx';
 import { purple } from '@mui/material/colors';
 import DownvoteIcon from '../icon/DownvoteIcon';
+import Comment from '../service/comment.service';
 
 const Home = () => {
     const [anchorEl, setAnchorEl] = useState(null);
@@ -22,17 +23,19 @@ const Home = () => {
         }
     ]);
 
+    const [comment, setComment] = useState('');
+
     useEffect(() => {
         retrievePosts();
     }, [])
 
-    const onClickMenu = (e) => {
-        setAnchorEl(e.currentTarget);
-    }
+    // const onClickMenu = (e) => {
+    //     setAnchorEl(e.currentTarget);
+    // }
 
-    const handleClose = () => {
-        setAnchorEl(null)
-    }
+    // const handleClose = () => {
+    //     setAnchorEl(null)
+    // }
 
     const retrievePosts = () => {
         Post.allPost()
@@ -40,6 +43,7 @@ const Home = () => {
                 const datas = [];
                 const data = await res.data;
                 for (var i in data) {
+                    //check from db user liked the post or not
                     data[i].upvoted = false;
                     data[i].downvoted = false;
                     datas.push(data[i]);
@@ -55,12 +59,42 @@ const Home = () => {
     const onClickUpvote = (id, value) => {
 
         Post.upVote(id, value);
-        const listPosts = posts.map((post) => post.id === id ? { ...post, upvoted: !post.upvoted } : post );
+        const listPosts = posts.map((post) => post.id === id ? { ...post, upvoted: !post.upvoted } : post);
         setPosts(listPosts);
     }
     const onClickDownvote = (id) => {
         Post.downVote(id);
     }
+
+    const onChangeComment = (e) => {
+        const comment = e.target.value;
+        setComment(comment);
+    }
+
+    const handleClickComment = async (postId) => {
+        const user = await JSON.parse(localStorage.getItem('user'));
+        const data = {
+            content: comment,
+            postId: postId,
+            accountId: user.id,
+            communityId: user.communityId
+        }
+        console.log(data)
+        Comment.new(data)
+            .then(() => {
+                alert("Comment uploaded");
+                window.location.reload();
+            })
+            .catch(e => {
+                const resMsg = (e.response && e.response.data && e.response.data.message ||
+                    e.message ||
+                    e.toString());
+                // alert(resMsg);
+                console.log(resMsg);
+            })
+
+    }
+
     return (
         <div>
             <Link to='/post/new' className=''>
@@ -75,7 +109,9 @@ const Home = () => {
                             <div className='post'>
                                 <div className='img-anon'></div>
                                 <div className='post-content bg-transparent align-left'>
+                                <Link to={`/post/${post.id}`}>
                                     <p className='bg-transparent align-left'>{post.content}</p>
+                                </Link>
                                 </div>
                                 <div className='tea-score'>
                                     {post.upvoted ?
@@ -99,6 +135,13 @@ const Home = () => {
                                         </button>
                                     </div>
                                 </div>
+                            </div>
+                            <div className='comment'>
+                                <textarea
+                                    placeholder='Comment'
+                                    onChange={onChangeComment}
+                                    required></textarea>
+                                <button onClick={() => {handleClickComment(post.id)}}>Comment</button>
                             </div>
                         </li>
                     )

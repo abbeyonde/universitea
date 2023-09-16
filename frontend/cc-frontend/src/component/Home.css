@@ -42,7 +42,7 @@
     height: 70px;
 }
 
-.post-content {
+.post-content{
     width: 90%;
     height: 90%;
     background-color: transparent;
@@ -86,6 +86,41 @@
 
 .tea-score button:hover{
     background-color: #6666662c;
+}
+
+.comment {
+    background-color: transparent;
+    display:inline; 
+}
+
+.comment textarea{
+    font-family: 'Montserra',sans-serif;
+    width:80%;
+    height: 39px;
+    padding: 5px;
+    border-radius: 25px;
+    font-size: 16px;
+    border-color: #d4d2d4;
+    outline: none;
+    resize: none;
+    max-height: 175px;
+    margin-top: 5px;
+
+}
+
+textarea:is(:focus, :valid){
+    border-color: #2d2425;
+    transition: all 0.3s ease 0s;
+
+}
+
+textarea::-webkit-scrollbar{
+    width: 0px;
+}
+
+.comment button {
+    background-color: #d6c9ca;
+    width: 120px;
 }
 
 .post-button {

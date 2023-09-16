@@ -8,6 +8,7 @@ comment.create = (req,res) => {
     const comment = {
         content: req.body.content,
         accountId: req.body.accountId,
+        postId: req.body.postId,
         communityId: req.body.communityId
     }
 

@@ -26,9 +26,10 @@ db.sequelize = sequelize;
 
 //initialize all entity in DB
 db.Account = require('./account.model')(sequelize,Sequelize,DataTypes);
-db.Post = require('./post.model')(sequelize,Sequelize,DataTypes);
 db.User = require('./user.model')(sequelize,Sequelize,DataTypes);
 db.Community = require('./community.model')(sequelize,Sequelize,DataTypes);
+db.Post = require('./post.model')(sequelize,Sequelize,DataTypes);
 db.Comment = require('./comment.model')(sequelize,Sequelize,DataTypes);
+db.Post_Vote = require('./post_vote.model')(sequelize,Sequelize,DataTypes);
 
 module.exports = db;

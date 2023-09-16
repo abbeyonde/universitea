@@ -68,7 +68,6 @@ post.upVote = async (req,res) => {
     const id = req.params.id;
     const value = req.body.value;
     const post = await db.Post.findByPk(id)
-    console.log(post.upvote);
     const upvote = post.upvote;
 
     const newUpvote = upvote+value;

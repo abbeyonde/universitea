@@ -7,6 +7,7 @@ import NewPost from './NewPost';
 import Profile from './Profile';
 import { useEffect, useState } from 'react';
 import authService from '../service/auth.service';
+import Post from './Post';
 
 
 
@@ -24,7 +25,8 @@ const Content = () => {
                     <Route path='/sign-up' element={<SignUp />} />
                     <Route path='/home' element={<Home />} />
                     <Route path='/post/new' element={<NewPost />} />
-                    <Route path='/profile' element={<Profile />} />
+                    <Route path='/profile/:username' element={<Profile />} />
+                    <Route path='/post/:id' element={<Post/>}/>
                 </Routes>
             </div>
         </main>

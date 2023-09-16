@@ -39,6 +39,9 @@ class Post {
     }
 
     //retrieve one post
+    Post(id){
+        return http.get(`api/post/${id}`, {headers: authHeader()});
+    }
 
     //delete a post
 

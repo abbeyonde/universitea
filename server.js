@@ -19,7 +19,7 @@ app.use(express.urlencoded({extended:true}));
 const db = require('./app/models');
 
 //sync database
-db.sequelize.sync({force:true}).then(()=>{
+db.sequelize.sync().then(()=>{
     console.log('All models are sync-ed');
 });
 
@@ -29,6 +29,7 @@ app.use(express.static(path));
 //import all router and pass app as parameter
 require('./app/routes/account.route')(app);
 require('./app/routes/post.route')(app);
+require('./app/routes/comment.route')(app);
 
 //GET html file from /views
 app.get('/*', (req,res)=>{

@@ -36,7 +36,7 @@ const Header = () => {
                                 <Link to={'/all/'} className='sign-in' >My Confession</Link>
                             </li>
                             <li>
-                                <Link to={`/profile`} className='sign-in' >My Profile</Link>
+                                <Link to={`/profile/${currentUser.username}`} className='sign-in' >My Profile</Link>
                             </li>
                             <li>
                                 <button className='sign-up' onClick={onClickSignOut}>Sign Out</button>
