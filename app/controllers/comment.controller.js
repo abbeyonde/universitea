@@ -34,8 +34,8 @@ comment.create = (req,res) => {
 // }
 
 //display all posts by specific user
-comment.displayPostComments = async (req,res) => {
-    await db.Comment.findAll({where:{postId: req.params.postId}})
+comment.displayPostComments = (req,res) => {
+    db.Comment.findAll({where:{postId: req.params.postId}})
     .then((data)=>{
         res.send(data);
     })
