@@ -12,6 +12,10 @@ class Comment {
             headers: authHeader(),
         })
     }
+
+    postComment(postId) {
+        return http.get(`api/comment/${postId}/all-comments`,{ headers: authHeader()});
+    }
 }
 
 export default new Comment();

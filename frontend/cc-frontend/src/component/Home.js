@@ -1,11 +1,9 @@
 import { Link } from 'react-router-dom';
-import { Menu, MenuItem, Button } from '@mui/material';
+// import { Menu, MenuItem, Button } from '@mui/material';
 import './Home.css'
 import Post from '../service/post.service';
 import { useEffect, useState } from 'react';
-import Posts from './Post'
 import UpvoteIcon from '../icon/UpvoteIcon.jsx';
-import { purple } from '@mui/material/colors';
 import DownvoteIcon from '../icon/DownvoteIcon';
 import Comment from '../service/comment.service';
 

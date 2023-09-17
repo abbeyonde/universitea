@@ -39,7 +39,7 @@ class Post {
     }
 
     //retrieve one post
-    Post(id){
+    post(id){
         return http.get(`api/post/${id}`, {headers: authHeader()});
     }
 

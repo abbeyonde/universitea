@@ -146,6 +146,11 @@ textarea::-webkit-scrollbar{
 
 }
 
+.comments {
+    padding-left: 50px;
+    border-left: solid 1px transparent;
+}
+
 .display-block {
     display: block;
 }
