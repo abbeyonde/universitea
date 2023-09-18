@@ -6,6 +6,9 @@ import { useEffect, useState } from 'react';
 import UpvoteIcon from '../icon/UpvoteIcon.jsx';
 import DownvoteIcon from '../icon/DownvoteIcon';
 import Comment from '../service/comment.service';
+import io from 'socket.io-client';
+
+const socket = io.connect('http://localhost:8080');
 
 const Home = () => {
     const [anchorEl, setAnchorEl] = useState(null);
@@ -25,7 +28,11 @@ const Home = () => {
 
     useEffect(() => {
         retrievePosts();
-    }, [])
+        socket.on('new_post_uploaded', () => {
+            console.log('new post in')
+            retrievePosts();
+        })
+    }, [socket])
 
     // const onClickMenu = (e) => {
     //     setAnchorEl(e.currentTarget);
@@ -46,6 +53,7 @@ const Home = () => {
                     data[i].downvoted = false;
                     datas.push(data[i]);
                 }
+                datas.reverse();
                 setPosts(datas);
                 console.log(datas);
             })

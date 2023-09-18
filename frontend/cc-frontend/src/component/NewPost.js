@@ -2,6 +2,11 @@ import './NewPost.css'
 import { useState } from 'react'
 import Post from '../service/post.service';
 import { useNavigate } from 'react-router-dom';
+// import socket from '../service/ws.service';
+
+import io from 'socket.io-client'
+
+const socket = io.connect('http://localhost:8080');
 
 const NewPost = () => {
     const textarea = document.querySelector('textarea');
@@ -35,7 +40,8 @@ const NewPost = () => {
             .then(() => {
                 navigate('/home');
                 alert("Your confession has been uploaded")
-                window.location.reload();
+                socket.emit('new_post');
+                // window.location.reload();
             })
             .catch(e => {
                 const resMsg = (e.response && e.response.data && e.response.data.message ||

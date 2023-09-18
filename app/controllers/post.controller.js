@@ -18,7 +18,8 @@ post.create = (req,res) => {
         res.send('Post uploaded');
     })
     .catch(err => {
-        res.send(err.message);
+        // res.send(err.message);
+        console.log(err.message);
     })
 
 }

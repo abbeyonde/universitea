@@ -33,6 +33,7 @@ const Post = () => {
                 for (var i in data) {
                     datas.push(data[i]);
                 }
+                datas.reverse();
                 setComments(datas);
                 console.log(datas);
             })
