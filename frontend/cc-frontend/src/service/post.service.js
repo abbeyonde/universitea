@@ -38,6 +38,10 @@ class Post {
         return http.get('api/post/all', { headers: authHeader() });
     }
 
+    userPost() {
+        return http.get('api/post/:username', { headers: authHeader() });
+    }
+
     //retrieve one post
     post(id){
         return http.get(`api/post/${id}`, {headers: authHeader()});

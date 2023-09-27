@@ -15,13 +15,7 @@ app.use(express.urlencoded({ extended: true }));
 
 
 //connect database
-const db = require('./app/models');
-const { default: socket } = require('./frontend/cc-frontend/src/service/ws.service');
 
-//sync database
-db.sequelize.sync().then(() => {
-    console.log('All models are sync-ed');
-});
 
 //use and import UI from /views
 app.use(express.static(path));
@@ -30,6 +24,7 @@ app.use(express.static(path));
 require('./app/routes/account.route')(app);
 require('./app/routes/post.route')(app);
 require('./app/routes/comment.route')(app);
+require('./app/routes/vote.route')(app);
 
 //GET html file from /views
 app.get('/*', (req, res) => {
@@ -42,19 +37,31 @@ const server = http.createServer(app);
 
 //create io socket from http server
 const io = new Server(server, {
-    cors:{
+    cors: {
         origin: 'http://localhost:3000',
     }
 })
 
-io.on('connection' ,(socket) => {
-    console.log(`user id is ${socket.id}`);
+io.on('connection', (socket) => {
+    // console.log(`user id is ${socket.id}`);
 
-    socket.on('new_post' ,()=> {
+    socket.on('new_post', () => {
         console.log('new_post');
         socket.broadcast.emit('new_post_uploaded');
+    });
+    socket.on('new_comment', () => {
+        socket.broadcast.emit('new_comment_add')
+    });
 
-    })
+    // setInterval(() => {
+    //     socket.emit('new_post_uploaded')
+    // }, 60000);
+    // setInterval(() => {
+    //     socket.emit('new_comment_add')
+    // }, 60000);
+    setInterval(() => {
+        socket.emit('update_vote_count',)
+    }, 30000);
 })
 
 

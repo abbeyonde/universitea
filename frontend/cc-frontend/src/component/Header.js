@@ -33,7 +33,7 @@ const Header = () => {
                     <nav className='nav-links'>
                         <ul>
                             <li>
-                                <Link to={'/all/'} className='sign-in' >My Confession</Link>
+                                <Link to={`/post/${currentUser.username}`} className='sign-in' >My Confession</Link>
                             </li>
                             <li>
                                 <Link to={`/profile/${currentUser.username}`} className='sign-in' >My Profile</Link>

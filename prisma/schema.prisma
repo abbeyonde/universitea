@@ -1,0 +1,80 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+model Account {
+  id          Int      @id @default(autoincrement())
+  username    String   @unique(map: "username") @db.VarChar(10)
+  email       String   @unique(map: "email") @db.VarChar(255)
+  password    String   @db.VarChar(255)
+  communityId Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("accounts")
+}
+
+model Comment {
+  id          Int      @id @default(autoincrement())
+  content     String   @db.Text
+  postId      Int
+  accountId   Int
+  communityId Int
+  upvote      Int?     @default(0)
+  downvote    Int?     @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("comments")
+}
+
+model Community {
+  id        Int      @id @default(autoincrement())
+  name      String   @db.VarChar(255)
+  shortname String   @db.VarChar(255)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("communities")
+}
+
+model PostVotes {
+  id        Int      @id @default(autoincrement())
+  postId    Int
+  accountId Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("post_votes")
+}
+
+model Post {
+  id          Int      @id @default(autoincrement())
+  content     String   @db.Text
+  accountId   Int
+  communityId Int
+  upvote      Int?     @default(0)
+  downvote    Int?     @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("posts")
+}
+
+model User {
+  id          Int      @id @default(autoincrement())
+  accountId   Int
+  username    String   @unique(map: "username") @db.VarChar(10)
+  email       String   @unique(map: "email") @db.VarChar(255)
+  communityId Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("users")
+}

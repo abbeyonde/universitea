@@ -5,7 +5,7 @@ import './Profile.css';
 
 const Profile = () => {
 
-    const [user, setUser] = useState('');
+    const [user, setUser] = useState(undefined);
     const [newUsername, setNewUsername] = useState(undefined);
     const [oldPassword, setOldPassword] = useState(undefined);
     const [newPassword, setNewPassword] = useState(undefined);
@@ -91,6 +91,7 @@ const Profile = () => {
 
     const onClickUpdateProfile = () => {
         accountService.update(user);
+        window.location.reload();
     }
 
     return (

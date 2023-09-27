@@ -3,8 +3,12 @@ import './Home.css'
 import postService from '../service/post.service';
 import { useParams, Link } from 'react-router-dom';
 import UpvoteIcon from '../icon/UpvoteIcon.jsx';
-import DownvoteIcon from '../icon/DownvoteIcon';
 import Comment from '../service/comment.service';
+import io from 'socket.io-client';
+import voteService from '../service/vote.service';
+
+const socket = io.connect('http://localhost:8080');
+
 
 const Post = () => {
     const [post, setPost] = useState('');
@@ -23,7 +27,11 @@ const Post = () => {
     useEffect(() => {
         getPost();
         retrieveComments();
-    }, []);
+        socket.on('new_comment_add', ()=>{
+            retrieveComments();
+        })
+
+    }, [socket]);
 
     const retrieveComments = () => {
         Comment.postComment(id)
@@ -45,6 +53,8 @@ const Post = () => {
         postService.post(id)
             .then(async (res) => {
                 const data = res.data;
+                const upVoteState = await checkVoteLog(postVote);
+                data.upvoted = upVoteState;
                 setPost(data);
             })
             .catch((err, res) => {
@@ -52,14 +62,30 @@ const Post = () => {
             })
     }
 
-    const onClickUpvote = (id, value) => {
-
-        Post.upVote(id, value);
-        // const listPosts = posts.map((post) => post.id === id ? { ...post, upvoted: !post.upvoted } : post);
-        // setPosts(listPosts);
+    const checkVoteLog = async (data) => {
+        
+        const voteState = await voteService.checkLog(data)
+        console.log(voteState);
+        return voteState.data;
     }
-    const onClickDownvote = (id) => {
-        Post.downVote(id);
+
+    const onClickUpvote = async (id, value) => {
+
+        const user = await JSON.parse(localStorage.getItem('user'));
+        const postVote = {
+            accountId: user.id,
+            postId: id
+        }
+        Post.upVote(id, value);
+        if (voteState) {
+            voteService.deleteVote(postVote);
+        }
+        else {
+            voteService.logVote(postVote);
+        }
+        
+        post.upvoted = !post.upvoted; 
+        setPost(post);
     }
 
     const onChangeComment = (e) => {
@@ -79,6 +105,7 @@ const Post = () => {
         Comment.new(data)
             .then(() => {
                 alert("Comment uploaded");
+                socket.emit('new_comment');
                 window.location.reload();
             })
             .catch(e => {
@@ -101,26 +128,21 @@ const Post = () => {
                     </Link>
                 </div>
                 <div className='tea-score'>
+                    <div className='counter'>
+                        <p>{post.upvote}</p>
+                    </div>
                     {post.upvoted ?
                         <div className='hot-vote'>
-                            <button className='vote' onClick={() => { onClickUpvote(post.id, -1) }}>
+                            <button className='vote' onClick={() => { onClickUpvote(post.id, -1, post.upvoted) }}>
                                 <UpvoteIcon color={'tomato'} />
                             </button>
                         </div> :
                         <div className='hot-vote'>
-                            <button className='vote' onClick={() => { onClickUpvote(post.id, 1) }}>
+                            <button className='vote' onClick={() => { onClickUpvote(post.id, 1, post.upvoted) }}>
                                 <UpvoteIcon color={'grey'} />
                             </button>
                         </div>
                     }
-                    <div className='counter'>
-                        <p>{post.upvote - post.downvote}</p>
-                    </div>
-                    <div className='cold-vote'>
-                        <button className='vote' onClick={() => { onClickDownvote(post.id) }}>
-                            <DownvoteIcon color={'rgb(58, 58, 252)'} />
-                        </button>
-                    </div>
                 </div>
             </div>
             <div className='comment'>

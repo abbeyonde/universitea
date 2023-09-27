@@ -14,7 +14,7 @@ module.exports = app => {
 
     router.post('/sign-up', accounts.create);
     router.post('/sign-in', accounts.login);
-    router.get('/profile/:id', accounts.getProfile);
+    router.get('/profile/:username', accounts.getProfile);
     router.get('/profile/update/:id', accounts.update);
     router.put('/profile/:id/username',[auth.authenticateToken], accounts.changeUsername);
     router.put('/profile/:id/password',[auth.authenticateToken], accounts.changePassword);

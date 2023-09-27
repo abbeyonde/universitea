@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-// import { Menu, MenuItem, Button } from '@mui/material';
 import './Home.css'
 import Post from '../service/post.service';
 import { useEffect, useState } from 'react';
@@ -10,7 +9,7 @@ import voteService from '../service/vote.service';
 
 const socket = io.connect('http://localhost:8080');
 
-const Home = () => {
+const MyConfess = () => {
     const [anchorEl, setAnchorEl] = useState(null);
 
     const [posts, setPosts] = useState([
@@ -30,10 +29,10 @@ const Home = () => {
 
     useEffect(() => {
         retrievePosts();
-        socket.on('new_post_uploaded', () => {
-            console.log('new post in');
-            retrievePosts();
-        });
+        // socket.on('new_post_uploaded', () => {
+        //     console.log('new post in');
+        //     retrievePosts();
+        // });
         // socket.on('update_vote_count', () => {
         //     console.log('new vote');
         //     retrievePosts();
@@ -41,7 +40,7 @@ const Home = () => {
     }, [socket])
 
     const retrievePosts = () => {
-        Post.allPost()
+        Post.userPost ()
             .then(async (res) => {
                 const datas = [];
                 const data = await res.data;
@@ -115,10 +114,13 @@ const Home = () => {
                 const resMsg = (e.response && e.response.data && e.response.data.message ||
                     e.message ||
                     e.toString());
-                // alert(resMsg);
                 console.log(resMsg);
             })
 
+    }
+
+    const onClickDelete = async (postId) => {
+        
     }
 
     return (
@@ -157,7 +159,10 @@ const Home = () => {
                                                 <UpvoteIcon color={'grey'} />
                                             </button>
                                         </div>
+                                        
                                     }
+                                    <div className='delete-button'> </div>
+                                    {/* add delete button here */}
                                 </div>
                             </div>
                             <div className='comment'>
@@ -177,4 +182,4 @@ const Home = () => {
     );
 }
 
-export default Home;
+export default MyConfess;

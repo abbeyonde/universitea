@@ -1,10 +1,10 @@
-const db = require('../models');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const saltRounds = 10;
+const prisma = require('../prisma');
 
 const checkAccount = async (username) => {
-    const user = db.User.findOne({ where: { username: username } });
+    const user = prisma.user.findUnique({ where: { username: username } });
     if (typeof user != 'undefined') {
         return false;
     }
@@ -31,7 +31,7 @@ account.create = async (req, res) => {
             // community: community.id
             communityId: 1
         }
-        db.Account.create(user)
+        prisma.account.create({ data: user })
             .then((data) => {
                 res.send(true);
             })
@@ -43,7 +43,7 @@ account.create = async (req, res) => {
 
 //login to an account
 account.login = async (req, res) => {
-    const user = await db.Account.findOne({ where: { username: req.body.username } });
+    const user = await prisma.account.findUnique({ where: { username: req.body.username } });
 
     if (user) {
         bcrypt.compare(req.body.password, user.password)
@@ -77,9 +77,9 @@ account.login = async (req, res) => {
 
 //get account profile
 account.getProfile = async (req, res) => {
-    const id = req.params.id;
+    const username = req.params.username;
 
-    await db.Account.findOne({ where: { id: id } })
+    await prisma.account.findUnique({ where: { username: username } })
         .then((data) => {
             console.log(data);
             res.send(data);
@@ -92,7 +92,7 @@ account.getProfile = async (req, res) => {
 
 //update account
 account.update = async (req, res) => {
-    db.Account.findOne({ where: { id: req.params.id } })
+    await prisma.account.findUnique({ where: { id: Number(req.params.id) } })
         .then(user => {
             const token = generateAccessToken(user.username);
             const userDB = {
@@ -110,7 +110,16 @@ account.update = async (req, res) => {
 //change username
 account.changeUsername = async (req, res) => {
     const username = req.body.username
-    db.Account.update({ username: req.body.username }, { where: { id: req.params.id } })
+    const id = req.params.id
+    await prisma.account.update({
+        where: {
+            id: Number(id)
+        },
+        data: { 
+            username: username 
+        }
+    }
+    )
         .then((data) => {
             console.log(data);
             res.send(data);
@@ -126,17 +135,26 @@ account.changePassword = async (req, res) => {
     const newPassword = req.body.newPassword;
     const id = req.body.id;
 
-    const user = await db.Account.findOne({ where: { id: id } })
+    const user = await prisma.account.findUnique({ where: { id: Number(id) } })
     if (user) {
         bcrypt.compare(password, user.password)
             .then(async match => {
                 if (match) {
                     console.log('password match');
                     const hashed_password = await bcrypt.hash(newPassword, saltRounds);
-                    db.Account.update({ password: hashed_password }, { where: { id: req.params.id } })
+                    prisma.account.update({
+                        where: {
+                            id: Number(id)
+                        }
+                    ,
+                        data: {
+                            password: hashed_password
+                        }
+
+                    })
                         .then(data => {
                             console.log(data);
-                            res.send(true);      
+                            res.send(true);
                         })
                 }
                 else {

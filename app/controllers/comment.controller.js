@@ -1,9 +1,9 @@
-const db= require('../models');
+const prisma = require('../prisma');
 
 const comment = {};
 
 //create a new comment
-comment.create = (req,res) => {
+comment.create = (req, res) => {
 
     const comment = {
         content: req.body.content,
@@ -12,13 +12,13 @@ comment.create = (req,res) => {
         communityId: req.body.communityId
     }
 
-    db.Comment.create(comment)
-    .then(()=>{
-        res.send('Comment uploaded');
-    })
-    .catch(err => {
-        res.send(err.message);
-    })
+    prisma.comment.create({ data: comment })
+        .then(() => {
+            res.send(true);
+        })
+        .catch(err => {
+            res.send(err.message);
+        })
 }
 
 // //display all posts
@@ -34,43 +34,43 @@ comment.create = (req,res) => {
 // }
 
 //display all posts by specific user
-comment.displayPostComments = (req,res) => {
-    db.Comment.findAll({where:{postId: req.params.postId}})
-    .then((data)=>{
-        res.send(data);
-    })
-    .catch(err=>{
-        res.status(400).send(err.message);
-    });
+comment.displayPostComments = (req, res) => {
+    prisma.comment.findMany({ where: { postId: Number(req.params.postId) } })
+        .then((data) => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(400).send(err.message);
+        });
 }
 
 //display a comment
-comment.displayComment = async (req,res) => {
-    await db.Comment.findByPk(req.params.id)
-    .then((data)=>{
-        res.send(JSON.stringify(data));
-    })
-    .catch(err=>{
-        res.status(400).send(err.message);
-    });
+comment.displayComment = async (req, res) => {
+    await prisma.comment.findUnique({ where: { id: Number(req.params.id) } })
+        .then((data) => {
+            res.send(JSON.stringify(data));
+        })
+        .catch(err => {
+            res.status(400).send(err.message);
+        });
 }
 
 //edit created comment
-comment.edit = (req,res) => {
+comment.edit = (req, res) => {
 
 }
 
 //delete a comment
-comment.deleteComment = async (req,res) => {
-    const comment = await db.Comment.findOne({where:{id: req.params.id}});
+comment.deleteComment = async (req, res) => {
+    const comment = await prisma.comment.findUnique({ where: { id: req.params.id } });
     await comment.destroy()
-    .then(()=> {
-        res.send(`comment has been deleted`);
-    })
-    .catch(err => {
-        res.status(500).send(err.message);
-    });
-    
+        .then(() => {
+            res.send(`comment has been deleted`);
+        })
+        .catch(err => {
+            res.status(500).send(err.message);
+        });
+
 }
 
 module.exports = comment;

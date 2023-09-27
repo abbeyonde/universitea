@@ -8,6 +8,7 @@ import Profile from './Profile';
 import { useEffect, useState } from 'react';
 import authService from '../service/auth.service';
 import Post from './Post';
+import MyConfess from './MyConfess';
 
 
 
@@ -26,11 +27,12 @@ const Content = () => {
                     <Route path='/home' element={<Home />} />
                     <Route path='/post/new' element={<NewPost />} />
                     <Route path='/profile/:username' element={<Profile />} />
-                    <Route path='/post/:id' element={<Post/>}/>
+                    <Route path='/post/:id' element={<Post />} />
+                    <Route path='/post/:username' element={<MyConfess />} />
                 </Routes>
             </div>
         </main>
-        
+
     );
 }
 
