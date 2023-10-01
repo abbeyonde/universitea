@@ -9,6 +9,8 @@ import { useEffect, useState } from 'react';
 import authService from '../service/auth.service';
 import Post from './Post';
 import MyConfess from './MyConfess';
+import Loading from './Loading';
+import Verification from './Verification';
 
 
 
@@ -21,14 +23,17 @@ const Content = () => {
     return (
         <main>
             <div className='container mt-3'>
+                {/* <p>test</p> */}
                 <Routes>
                     <Route path='/sign-in' element={<SignIn />} />
                     <Route path='/sign-up' element={<SignUp />} />
+                    <Route path='/verify/:username/:verifyToken' element={<Verification />}/>
                     <Route path='/home' element={<Home />} />
                     <Route path='/post/new' element={<NewPost />} />
                     <Route path='/profile/:username' element={<Profile />} />
                     <Route path='/post/:id' element={<Post />} />
-                    <Route path='/post/:username' element={<MyConfess />} />
+                    <Route path='/post/user/:username' element={<MyConfess />} />
+                    <Route path='/loading' element={<Loading/>}/>
                 </Routes>
             </div>
         </main>

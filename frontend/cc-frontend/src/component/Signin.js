@@ -28,12 +28,13 @@ const SignIn = () => {
                 navigate('/home');
                 window.location.reload();
             })
-            .catch(e => {
+            .catch((e,res) => {
                 const resMsg = (e.response && e.response.data && e.response.data.message ||
                     e.message ||
                     e.toString());
+                console.log(e.response)
                 alert(resMsg);
-                setMessage(resMsg);
+                setMessage(e.response.data);
             })
     }
 
@@ -54,6 +55,9 @@ const SignIn = () => {
                             placeholder='Password'
                             onChange={onChangePassword}></input>
                     </label>
+                    <div className='message transparent'>
+                        <small className='message'>{message}</small>
+                    </div>
                     <button
                         className='btn-sign-in'
                         onClick={handleClickSignIn}>Sign In</button>

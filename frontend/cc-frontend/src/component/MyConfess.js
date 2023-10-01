@@ -12,23 +12,24 @@ const socket = io.connect('http://localhost:8080');
 const MyConfess = () => {
     const [anchorEl, setAnchorEl] = useState(null);
 
-    const [posts, setPosts] = useState([
-        {
-            id: 1,
-            content: "adsadasdasda",
-            upvote: 9,
-            downvote: 2,
-            upvoted: false,
-            downvoted: false
-        }
-    ]);
+    const [posts, setPosts] = useState([]);
+    // const [posts, setPosts] = useState([
+    //     {
+    //         id: 1,
+    //         content: "adsadasdasda",
+    //         upvote: 9,
+    //         downvote: 2,
+    //         upvoted: false,
+    //         downvoted: false
+    //     }
+    // ]);
 
-    
+
 
     const [comment, setComment] = useState('');
 
     useEffect(() => {
-        retrievePosts();
+        getUserPosts();
         // socket.on('new_post_uploaded', () => {
         //     console.log('new post in');
         //     retrievePosts();
@@ -39,12 +40,12 @@ const MyConfess = () => {
         // });
     }, [socket])
 
-    const retrievePosts = () => {
-        Post.userPost ()
+    const getUserPosts = async () => {
+        const user = await JSON.parse(localStorage.getItem('user'));
+        Post.userPost(user.username)
             .then(async (res) => {
                 const datas = [];
                 const data = await res.data;
-                const user = await JSON.parse(localStorage.getItem('user'));
                 for (var i in data) {
                     //check from db user liked the post or not
                     const postVote = {
@@ -86,7 +87,7 @@ const MyConfess = () => {
         else {
             voteService.logVote(postVote);
         }
-        
+
         const listPosts = posts.map((post) => post.id === id ? { ...post, upvoted: !post.upvoted } : post);
         setPosts(listPosts);
     }
@@ -120,19 +121,19 @@ const MyConfess = () => {
     }
 
     const onClickDelete = async (postId) => {
-        
+        Post.delete(postId)
+        .then(() => {
+            window.location.reload();
+        })
     }
 
     return (
         <div>
-            <Link to='/post/new' className=''>
-                <label className='post-button'>Confess</label>
-            </Link>
             <div className="post-body">
                 <div className='search-bar'></div>
                 <ul>
                     {posts && posts.map && posts.map((post, index) => (
-                        <li className='display-block bg-transparent' key={post.id}>
+                        <li className='border-1px display-block bg-transparent' key={post.id}>
                             <div className='post'>
                                 <div className='img-anon'></div>
                                 <div className='post-content bg-transparent align-left'>
@@ -141,28 +142,31 @@ const MyConfess = () => {
                                     </Link>
                                 </div>
                                 <div className='tea-score'>
+                                    <div className='delete-button'>
+                                        <label className='delete-button' onClick={() => {onClickDelete(post.id)}}>delete</label>
+                                    </div>
                                     <div className='counter'>
                                         <p>{post.upvote}</p>
                                     </div>
                                     {post.upvoted ?
                                         <div className='hot-vote'>
-                                            <button className='vote' onClick={() => { 
+                                            <button className='vote' onClick={() => {
                                                 onClickUpvote(post.id, -1, post.upvoted);
-                                                post.upvote += -1 }}>
+                                                post.upvote += -1
+                                            }}>
                                                 <UpvoteIcon color={'tomato'} />
                                             </button>
                                         </div> :
                                         <div className='hot-vote'>
-                                            <button className='vote' onClick={() => { 
+                                            <button className='vote' onClick={() => {
                                                 onClickUpvote(post.id, 1, post.upvoted);
-                                                post.upvote += 1 }}>
+                                                post.upvote += 1
+                                            }}>
                                                 <UpvoteIcon color={'grey'} />
                                             </button>
                                         </div>
-                                        
+
                                     }
-                                    <div className='delete-button'> </div>
-                                    {/* add delete button here */}
                                 </div>
                             </div>
                             <div className='comment'>

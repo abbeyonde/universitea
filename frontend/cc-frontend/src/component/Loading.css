@@ -1,0 +1,9 @@
+.sweet-loading {
+    margin:auto;
+}
+
+.loader {
+    /* margin:auto; */
+    border-radius: 10px;
+    color:rgb(194, 194, 194)
+}

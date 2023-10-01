@@ -37,6 +37,10 @@ class Account {
     update(user){
         return http.get(`account/profile/update/${user.id}`);
     }
+
+    verify(data){
+        return http.put(`account/verify/${data.username}/${data.verifyToken}`)
+    }
 }
 
 export default new Account();

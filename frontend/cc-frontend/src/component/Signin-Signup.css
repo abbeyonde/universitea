@@ -11,6 +11,7 @@
     align-items: flex-end;
     flex-direction: column;
     margin: auto;
+    margin-top: 30px;
     justify-content: center;
     background-color: rgb(232, 235, 235);
     background-image: url('../../public/cot.png');
@@ -20,6 +21,7 @@
 
 .signin-form{
     width: 40%;
+    min-width: 250px;
     height: 100%;
     font-family: 'Montserrat', sans-serif;
     font-size: 48px;
@@ -28,6 +30,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    /* overflow:visible; */
     background-color: rgba(232, 235, 235, 0.85);
 }
 
@@ -46,9 +49,9 @@
 
 .tnc-line{
     display: flex;
+    margin: 15px;
     align-items: center;
 }
-
 .tnc-line a:hover{
     /* color: #2d2425c4; */
     color: rgb(0, 135, 177);
@@ -76,6 +79,7 @@
 
 .signin-input-field {
     margin: 35px 5px;
+    width: 250px;
     background-color: transparent;
     font-size: medium;
     font-weight: 300;
@@ -108,4 +112,9 @@
 }
 .signin-form button:hover {
     background-color: rgb(236, 187, 123);
+}
+
+.message small{
+    background-color: transparent;
+    color: rgb(231, 75, 47);
 }

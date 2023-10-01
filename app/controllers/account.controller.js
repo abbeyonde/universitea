@@ -3,8 +3,33 @@ const bcrypt = require('bcryptjs');
 const saltRounds = 10;
 const prisma = require('../prisma');
 
+const hbs = require('nodemailer-express-handlebars');
+const nodemailer = require('nodemailer');
+const path = require('path');
+
+var transporter = nodemailer.createTransport(
+    {
+        service: 'gmail',
+        auth: {
+            user: 'universitea.cc@gmail.com',
+            pass: 'bwox ruud gfcs zbsi'
+        }
+    }
+)
+
+const handlebarOptions = {
+    viewEngine: {
+        partialsDir: path.resolve('./app/views/'),
+        defaultLayout: false,
+    },
+    viewPath: path.resolve('./app/views/'),
+};
+
+transporter.use('compile', hbs(handlebarOptions));
+
+
 const checkAccount = async (username) => {
-    const user = prisma.user.findUnique({ where: { username: username } });
+    const user = prisma.account.findUnique({ where: { username: username } });
     if (typeof user != 'undefined') {
         return false;
     }
@@ -21,7 +46,7 @@ account.create = async (req, res) => {
     const userExist = await checkAccount(req.body.username);
 
     if (userExist) {
-        res.send(false);
+        res.status(400).send('Username already exist');
     }
     else {
         const user = {
@@ -31,14 +56,50 @@ account.create = async (req, res) => {
             // community: community.id
             communityId: 1
         }
+        const verifyToken = generateVerifyToken(user.username);
+        const link = `http://localhost:8080/verify/${user.username}/${verifyToken}`
+        const mailOptions = {
+            from: '"UniversiTea" <universitea.cc@gmail.com',
+            template: "email.handlebars",
+            to: user.email,
+            subject: `Welcome to UniversiTea, ${user.username}`,
+            context: {
+                username: user.username,
+                link: link,
+            },
+        };
+        try{
+            await transporter.sendMail(mailOptions);
+        }catch(err){
+            console.log('error sending email', err);
+        }
+        finally{
         prisma.account.create({ data: user })
-            .then((data) => {
+        .then((data) => {
                 res.send(true);
             })
             .catch(err => {
-                res.status(500).send(err.message);
-            });
+                res.status(500).send('Username already exist');
+            });}
     }
+}
+
+account.verify = async (req,res) => {
+    const user = await prisma.account.findUnique({where:{username: req.params.username}})
+    prisma.account.update({
+        where: {
+            id: Number(user.id)
+        },
+        data:{
+            verified: true
+        }
+    })
+    .then((data)=>{
+        res.send(data);
+    })
+    .catch(err => {
+        console.log(err.message);
+    })
 }
 
 //login to an account
@@ -48,7 +109,7 @@ account.login = async (req, res) => {
     if (user) {
         bcrypt.compare(req.body.password, user.password)
             .then(match => {
-                if (match) {
+                if (match && user.verified) {
                     const token = generateAccessToken(user.username);
                     const userDB = {
                         id: user.id,
@@ -61,8 +122,11 @@ account.login = async (req, res) => {
                     };
                     res.send(data);
                 }
+                else if(!match){
+                    res.status(400).send('Your password is wrong');
+                }
                 else {
-                    res.status(400).send('Password doesn\'t match');
+                    res.status(400).send('You haven\'t verified your email');
                 }
             })
             .catch(err => {
@@ -70,7 +134,7 @@ account.login = async (req, res) => {
             })
     }
     else {
-        res.status(404).send('User doesn\'t exist');
+        res.status(404).send('We cannot find any account with that username');
     }
 
 }
@@ -115,8 +179,8 @@ account.changeUsername = async (req, res) => {
         where: {
             id: Number(id)
         },
-        data: { 
-            username: username 
+        data: {
+            username: username
         }
     }
     )
@@ -146,7 +210,7 @@ account.changePassword = async (req, res) => {
                         where: {
                             id: Number(id)
                         }
-                    ,
+                        ,
                         data: {
                             password: hashed_password
                         }
@@ -173,6 +237,9 @@ account.changePassword = async (req, res) => {
 //generate access token
 function generateAccessToken(username) {
     return jwt.sign({ username: username }, process.env.TOKEN_SECRET, { expiresIn: '30m', algorithm: 'HS256' });
+}
+function generateVerifyToken(username) {
+    return jwt.sign({ username: username }, process.env.TOKEN_SECRET_VERIFY, { expiresIn: '10m', algorithm: 'HS256' });
 }
 
 module.exports = account;
