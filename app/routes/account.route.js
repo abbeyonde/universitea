@@ -18,6 +18,7 @@ module.exports = app => {
     router.get('/profile/update/:id', accounts.update);
     router.put('/profile/:id/username',[auth.authenticateToken], accounts.changeUsername);
     router.put('/profile/:id/password',[auth.authenticateToken], accounts.changePassword);
+    router.put('/verify/:username/:verifyToken', accounts.verify);
 
     app.use('/account', router);
 }

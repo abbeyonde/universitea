@@ -2,21 +2,27 @@ import { Link } from 'react-router-dom';
 // import { Menu, MenuItem, Button } from '@mui/material';
 import './Home.css'
 import Post from '../service/post.service';
-import { useEffect, useState } from 'react';
+import { React, useEffect, useState } from 'react';
 import UpvoteIcon from '../icon/UpvoteIcon.jsx';
 import Comment from '../service/comment.service';
 import io from 'socket.io-client';
 import voteService from '../service/vote.service';
+// import Loading from './Loading';
+import BarLoader from 'react-spinners/BarLoader'
+import './Loading.css'
+import Anon from '../icon/Anon';
+// import { ToastContainer, toast } from 'react-toastify'
+// import 'react-toastify/dist/ReactToastify.css'
 
 const socket = io.connect('http://localhost:8080');
 
 const Home = () => {
-    const [anchorEl, setAnchorEl] = useState(null);
 
+    // const [posts, setPosts] = useState([]);
     const [posts, setPosts] = useState([
         {
             id: 1,
-            content: "adsadasdasda",
+            content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis ultricies lacus sed turpis tincidunt id aliquet risus feugiat. Pretium quam vulputate dignissim suspendisse in est ante in. Nunc consequat interdum varius sit amet mattis vulputate. Leo vel orci porta non pulvinar neque. Tortor at risus viverra adipiscing at in tellus integer. Ultrices sagittis orci a scelerisque purus semper eget duis at. Turpis nunc eget lorem dolor sed viverra ipsum nunc. Velit dignissim sodales ut eu sem integer. Facilisi nullam vehicula ipsum a. Sit amet massa vitae tortor condimentum lacinia quis vel eros. Natoque penatibus et magnis dis. Urna porttitor rhoncus dolor purus non enim praesent. Neque gravida in fermentum et. Porttitor rhoncus dolor purus non enim praesent. Id porta nibh venenatis cras sed. Consequat interdum varius sit amet mattis vulputate. Commodo nulla facilisi nullam vehicula ipsum a arcu cursus vitae. Elementum sagittis vitae et leo duis. Enim lobortis scelerisque fermentum dui faucibus in ornare.",
             upvote: 9,
             downvote: 2,
             upvoted: false,
@@ -24,20 +30,23 @@ const Home = () => {
         }
     ]);
 
-    
+    const [isLoading, setIsLoading] = useState(false);
+    const [newConfession , setNewConfession] = useState(true);
+
 
     const [comment, setComment] = useState('');
 
     useEffect(() => {
-        retrievePosts();
+        retrievePosts()
         socket.on('new_post_uploaded', () => {
             console.log('new post in');
             retrievePosts();
+
         });
-        // socket.on('update_vote_count', () => {
-        //     console.log('new vote');
-        //     retrievePosts();
-        // });
+        socket.on('update_vote_count', () => {
+            console.log('new vote');
+            retrievePosts();
+        });
     }, [socket])
 
     const retrievePosts = () => {
@@ -47,7 +56,7 @@ const Home = () => {
                 const data = await res.data;
                 const user = await JSON.parse(localStorage.getItem('user'));
                 for (var i in data) {
-                    //check from db user liked the post or not
+                    //check from db, user liked the post or not
                     const postVote = {
                         accountId: user.id,
                         postId: data[i].id
@@ -60,7 +69,8 @@ const Home = () => {
                 }
                 datas.reverse();
                 setPosts(datas);
-                console.log(datas);
+                setIsLoading(false);
+                // console.log(datas);
             })
             .catch(e => {
                 console.log(e);
@@ -87,7 +97,7 @@ const Home = () => {
         else {
             voteService.logVote(postVote);
         }
-        
+
         const listPosts = posts.map((post) => post.id === id ? { ...post, upvoted: !post.upvoted } : post);
         setPosts(listPosts);
     }
@@ -115,65 +125,87 @@ const Home = () => {
                 const resMsg = (e.response && e.response.data && e.response.data.message ||
                     e.message ||
                     e.toString());
-                // alert(resMsg);
                 console.log(resMsg);
             })
-
     }
 
-    return (
-        <div>
-            <Link to='/post/new' className=''>
-                <label className='post-button'>Confess</label>
-            </Link>
-            <div className="post-body">
-                <div className='search-bar'></div>
-                <ul>
-                    {posts && posts.map && posts.map((post, index) => (
-                        <li className='display-block bg-transparent' key={post.id}>
-                            <div className='post'>
-                                <div className='img-anon'></div>
-                                <div className='post-content bg-transparent align-left'>
-                                    <Link to={`/post/${post.id}`}>
-                                        <p className='bg-transparent align-left'>{post.content}</p>
-                                    </Link>
-                                </div>
-                                <div className='tea-score'>
-                                    <div className='counter'>
-                                        <p>{post.upvote}</p>
-                                    </div>
-                                    {post.upvoted ?
-                                        <div className='hot-vote'>
-                                            <button className='vote' onClick={() => { 
-                                                onClickUpvote(post.id, -1, post.upvoted);
-                                                post.upvote += -1 }}>
-                                                <UpvoteIcon color={'tomato'} />
-                                            </button>
-                                        </div> :
-                                        <div className='hot-vote'>
-                                            <button className='vote' onClick={() => { 
-                                                onClickUpvote(post.id, 1, post.upvoted);
-                                                post.upvote += 1 }}>
-                                                <UpvoteIcon color={'grey'} />
-                                            </button>
-                                        </div>
-                                    }
-                                </div>
-                            </div>
-                            <div className='comment'>
-                                <textarea
-                                    placeholder='Comment'
-                                    onChange={onChangeComment}
-                                    required></textarea>
-                                <button onClick={() => { handleClickComment(post.id) }}>Comment</button>
-                            </div>
-                        </li>
-                    )
-                    )}
-                </ul>
-            </div>
+    // const onClickNewConfession = () => {
+    //     if(newConfession){
+    //         setNewConfession(false);
+    //     }
+    //     window.location.reload();
+    // }
 
-        </div>
+    return (
+
+        <div>
+            {isLoading ?
+                <div className='post-body'>
+                    <div className='border-1px display-block bg-transparent'>
+                        <div className='post'>
+                            <div className="sweet-loading">
+                                <div className='post-content'>
+                                <BarLoader
+                                    className="loader"
+                                    color="rgb(194, 194, 194)"
+                                    height={20}
+                                    width={400}
+                                    speedMultiplier={1} />
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                :
+                < div className="post-body">
+                    <div className='search-bar'></div>
+                    <ul>
+                        {posts && posts.map && posts.map((post, index) => (
+                            <li className='border-1px display-block bg-transparent' key={post.id}>
+                                <div className='post'>
+                                    <div className='img-anon'><Anon/></div>
+                                    <div className='post-content bg-transparent align-left'>
+                                        <Link to={`/post/${post.id}`}>
+                                            <p className='bg-transparent align-left'>{post.content}</p>
+                                        </Link>
+                                    </div>
+                                    <div className='tea-score'>
+                                        <div className='counter'>
+                                            <p>{post.upvote}</p>
+                                        </div>
+                                        {post.upvoted ?
+                                            <div className='hot-vote'>
+                                                <button className='vote' onClick={() => {
+                                                    onClickUpvote(post.id, -1, post.upvoted);
+                                                    post.upvote += -1
+                                                }}>
+                                                    <UpvoteIcon color={'tomato'} />
+                                                </button>
+                                            </div> :
+                                            <div className='hot-vote'>
+                                                <button className='vote' onClick={() => {
+                                                    onClickUpvote(post.id, 1, post.upvoted);
+                                                    post.upvote += 1
+                                                }}>
+                                                    <UpvoteIcon color={'grey'} />
+                                                </button>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                                <div className='comment'>
+                                    <textarea
+                                        placeholder='Comment'
+                                        onChange={onChangeComment}
+                                        required></textarea>
+                                    <button onClick={() => { handleClickComment(post.id) }}>Comment</button>
+                                </div>
+                            </li>
+                        )
+                        )}
+                    </ul>
+                </div>}
+        </div >
     );
 }
 

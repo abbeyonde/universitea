@@ -2,21 +2,21 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    background-color: #f9ffff;
+    background-color: #ffffff;
 }
 
 .post-body {
     width: 60vw;
     min-width: 300px;
     height: 90vh;
-    background-color: white;
+    background-color: transparent;
     margin: auto;
 }
 
 .search-bar {
     width: 100%;
     height: 40px;
-    background-color: grey;
+    background-color: transparent;
 }
 
 .btn-menu{
@@ -30,14 +30,24 @@
     width: 100%;
     height: 25%;
     min-height: 190px;
-    padding: 20px 20px;
-    background-color: #ffffff;
-    border-bottom: solid #d8d8d8 1px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    padding-right: 0px;
+    background-color: transparent;
+    /* border-bottom: solid #ffffff 1px; */
     display: flex;
+    overflow: auto;
+}
+
+.border-1px{
+    border-radius: 10px;
+    margin: 10px 0px;
+    border: solid #c9c9c96e 1px;
 }
 
 .img-anon {
-    background-color: aquamarine;
+    background-color: transparent;
     width: 70px;
     height: 70px;
 }
@@ -56,13 +66,15 @@
     padding: 10px 10px;
     border-left: rgb(197, 197, 197) solid 1px;
 }
+
 .counter p{
-    padding: 0px 5px;
+    padding: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
-    font-size: large;
+    font-size:xx-large;
+    background-color: transparent;
 }
 .hot-vote {
     background-color: transparent;
@@ -71,33 +83,31 @@
     height: 40%;
 }
 
-.cold-vote {
-    background-color: transparent;
-    margin-top: 10px;
-    width: 100%;
-    height: 40%;
-}
 
 .vote {
     padding: 5px 5px;
     margin: 0px 0px;
     border-radius: 5px;
+    background-color: transparent;
 }
 
 .tea-score button:hover{
-    background-color: #6666662c;
+    background-color: #a3a3a32c;
 }
 
 .comment {
     background-color: transparent;
-    display:inline; 
+    display:flex; 
+    justify-content: center;
+    margin: 15px 5px;
+    padding-left: 20px;
 }
 
 .comment textarea{
     font-family: 'Montserra',sans-serif;
     width:80%;
     height: 39px;
-    padding: 5px;
+    padding: 9px;
     border-radius: 25px;
     font-size: 16px;
     border-color: #d4d2d4;
@@ -119,11 +129,19 @@ textarea::-webkit-scrollbar{
 }
 
 .comment button {
-    background-color: #d6c9ca;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+    background-color: #2d2425;
     width: 120px;
 }
 
-.post-button {
+.comment button:hover{
+    background-color: #2d2425d5;
+
+}
+/* .post-button {
     padding: 20px 20px;
     background-color: #2d2425;
     border: solid 1px transparent;
@@ -144,6 +162,25 @@ textarea::-webkit-scrollbar{
     transition: all 0.2s ease 0s;
     box-shadow: 0px 0px 0px #666;
 
+} */
+
+.delete-button label{
+    padding: 2px 5px;
+    font-size: smaller;
+    background-color: #d4d2d4;
+    align-items: center;
+    text-align: center;
+    font-style: bold;
+    justify-content: center;
+    border-radius: 14px;
+    margin: auto;
+    color: tomato;
+    border: solid 1px tomato;
+}
+
+.delete-button label:hover{
+    background-color: #ffe8e8;
+    transition: all 0.2s ease 0s;
 }
 
 .comments {

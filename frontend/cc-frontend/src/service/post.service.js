@@ -24,22 +24,13 @@ class Post {
         })
     }
 
-    //downvote
-    downVote(data){
-        return http.put(`api/post/${data}/downvote`,{},
-        {
-            headers: authHeader()
-        })
-    }
-
-
     //retrieve all post
     allPost() {
         return http.get('api/post/all', { headers: authHeader() });
     }
 
-    userPost() {
-        return http.get('api/post/:username', { headers: authHeader() });
+    userPost( username) {
+        return http.get(`api/post/user/${username}`, { headers: authHeader() });
     }
 
     //retrieve one post
@@ -48,6 +39,9 @@ class Post {
     }
 
     //delete a post
+    delete(id){
+        return http.delete(`api/post/delete/${id}`, {headers: authHeader()});
+    }
 
 }
 

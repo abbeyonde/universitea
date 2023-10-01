@@ -14,6 +14,7 @@ model Account {
   email       String   @unique(map: "email") @db.VarChar(255)
   password    String   @db.VarChar(255)
   communityId Int
+  verified    Boolean  @default(false)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
@@ -26,8 +27,6 @@ model Comment {
   postId      Int
   accountId   Int
   communityId Int
-  upvote      Int?     @default(0)
-  downvote    Int?     @default(0)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
@@ -60,21 +59,8 @@ model Post {
   accountId   Int
   communityId Int
   upvote      Int?     @default(0)
-  downvote    Int?     @default(0)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
   @@map("posts")
-}
-
-model User {
-  id          Int      @id @default(autoincrement())
-  accountId   Int
-  username    String   @unique(map: "username") @db.VarChar(10)
-  email       String   @unique(map: "email") @db.VarChar(255)
-  communityId Int
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  @@map("users")
 }

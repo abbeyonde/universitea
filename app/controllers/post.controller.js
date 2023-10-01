@@ -40,7 +40,7 @@ post.displayAll = (req, res) => {
 //display all posts by specific user
 post.displayUser = async (req, res) => {
     const username = req.params.username;
-    const user = await prisma.post.findFirst({ where: { username: username } });
+    const user = await prisma.account.findFirst({ where: { username: username } });
     await prisma.post.findMany({ where: { accountId: Number(user.id) } })
         .then((data) => {
             res.send(data);
