@@ -5,7 +5,7 @@ const { Server } = require('socket.io');
 
 require('dotenv').config();
 
-const path = __dirname;
+const path = __dirname + '/app/views/';
 const app = express();
 
 
@@ -28,7 +28,7 @@ require('./app/routes/vote.route')(app);
 
 //GET html file from /views
 app.get('/*', (req, res) => {
-    res.sendFile(path + '/index.html');
+    res.sendFile(path + 'index.html');
 });
 
 
