@@ -6,10 +6,8 @@ import { useNavigate } from 'react-router-dom';
 
 import io from 'socket.io-client'
 
-const socket = io({ transports:['websocket']});
-
-
 const NewPost = () => {
+    const socket = io();
     const textarea = document.querySelector('textarea');
     const navigate = useNavigate();
     if (textarea) {

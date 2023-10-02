@@ -7,7 +7,6 @@ import Comment from '../service/comment.service';
 import io from 'socket.io-client';
 import voteService from '../service/vote.service';
 
-const socket = io({ transports:['websocket']});
 
 const MyConfess = () => {
     const [anchorEl, setAnchorEl] = useState(null);
@@ -27,7 +26,7 @@ const MyConfess = () => {
 
 
     const [comment, setComment] = useState('');
-
+    const socket = io();
     useEffect(() => {
         getUserPosts();
         // socket.on('new_post_uploaded', () => {
@@ -38,7 +37,7 @@ const MyConfess = () => {
         //     console.log('new vote');
         //     retrievePosts();
         // });
-    }, [socket])
+    },[socket])
 
     const getUserPosts = async () => {
         const user = await JSON.parse(localStorage.getItem('user'));
@@ -122,9 +121,9 @@ const MyConfess = () => {
 
     const onClickDelete = async (postId) => {
         Post.delete(postId)
-        .then(() => {
-            window.location.reload();
-        })
+            .then(() => {
+                window.location.reload();
+            })
     }
 
     return (
@@ -143,7 +142,7 @@ const MyConfess = () => {
                                 </div>
                                 <div className='tea-score'>
                                     <div className='delete-button'>
-                                        <label className='delete-button' onClick={() => {onClickDelete(post.id)}}>delete</label>
+                                        <label className='delete-button' onClick={() => { onClickDelete(post.id) }}>delete</label>
                                     </div>
                                     <div className='counter'>
                                         <p>{post.upvote}</p>
