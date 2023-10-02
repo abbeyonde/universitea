@@ -14,7 +14,7 @@ import Anon from '../icon/Anon';
 // import { ToastContainer, toast } from 'react-toastify'
 // import 'react-toastify/dist/ReactToastify.css'
 
-const socket = io();
+const socket = io({ transports:['websocket']});
 
 const Home = () => {
 

@@ -47,10 +47,10 @@ io.on('connection', (socket) => {
 
     socket.on('new_post', () => {
         console.log('new_post');
-        socket.broadcast.emit('new_post_uploaded');
+        socket.emit('new_post_uploaded');
     });
     socket.on('new_comment', () => {
-        socket.broadcast.emit('new_comment_add')
+        socket.emit('new_comment_add')
     });
 
     // setInterval(() => {

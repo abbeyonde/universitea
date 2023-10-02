@@ -7,8 +7,7 @@ import Comment from '../service/comment.service';
 import io from 'socket.io-client';
 import voteService from '../service/vote.service';
 
-const socket = io();
-
+const socket = io({ transports:['websocket']});
 
 const MyConfess = () => {
     const [anchorEl, setAnchorEl] = useState(null);
