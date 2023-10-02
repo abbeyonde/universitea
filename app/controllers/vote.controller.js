@@ -1,4 +1,5 @@
 const prisma = require('../prisma');
+// const prisma = import('../prisma.js');
 
 const vote = {};
 

@@ -1,3 +1,4 @@
+// const prisma = import('../prisma.js');
 const prisma = require('../prisma');
 
 const comment = {};

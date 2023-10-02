@@ -2,6 +2,8 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const saltRounds = 10;
 const prisma = require('../prisma');
+// const {PrismaClient} = require('@prisma/client');
+// const prisma = new PrismaClient();
 
 const hbs = require('nodemailer-express-handlebars');
 const nodemailer = require('nodemailer');
