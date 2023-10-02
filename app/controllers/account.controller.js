@@ -70,38 +70,38 @@ account.create = async (req, res) => {
                 link: link,
             },
         };
-        try{
-            await transporter.sendMail(mailOptions);
-        }catch(err){
-            console.log('error sending email', err);
-        }
-        finally{
+
         prisma.account.create({ data: user })
-        .then((data) => {
-                res.send(true);
+            .then(async (data) => {
+                try {
+                    await transporter.sendMail(mailOptions);
+                    res.send(true);
+                } catch (err) {
+                    console.log('error sending email', err);
+                }
             })
             .catch(err => {
                 res.status(500).send('Username already exist');
-            });}
+            });
     }
 }
 
-account.verify = async (req,res) => {
-    const user = await prisma.account.findUnique({where:{username: req.params.username}})
+account.verify = async (req, res) => {
+    const user = await prisma.account.findUnique({ where: { username: req.params.username } })
     prisma.account.update({
         where: {
             id: Number(user.id)
         },
-        data:{
+        data: {
             verified: true
         }
     })
-    .then((data)=>{
-        res.send(data);
-    })
-    .catch(err => {
-        console.log(err.message);
-    })
+        .then((data) => {
+            res.send(data);
+        })
+        .catch(err => {
+            console.log(err.message);
+        })
 }
 
 //login to an account
@@ -124,7 +124,7 @@ account.login = async (req, res) => {
                     };
                     res.send(data);
                 }
-                else if(!match){
+                else if (!match) {
                     res.status(400).send('Your password is wrong');
                 }
                 else {

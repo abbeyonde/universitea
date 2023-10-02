@@ -79,6 +79,7 @@ const SignUp = () => {
             setMessageSignUp('')
             authService.signUp(data)
                 .then(() => {
+                    alert('Please verify your email first before signing in');
                     navigate('/sign-in');
                     window.location.reload();
                 })
