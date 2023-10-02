@@ -3,11 +3,10 @@ import { useState } from 'react'
 import Post from '../service/post.service';
 import { useNavigate } from 'react-router-dom';
 // import socket from '../service/ws.service';
+import socket from '../socket';
 
-import io from 'socket.io-client'
 
 const NewPost = () => {
-    const socket = io();
     const textarea = document.querySelector('textarea');
     const navigate = useNavigate();
     if (textarea) {

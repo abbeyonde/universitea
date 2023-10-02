@@ -6,7 +6,7 @@ import UpvoteIcon from '../icon/UpvoteIcon.jsx';
 import Comment from '../service/comment.service';
 import io from 'socket.io-client';
 import voteService from '../service/vote.service';
-
+import socket from '../socket';
 
 const MyConfess = () => {
     const [anchorEl, setAnchorEl] = useState(null);
@@ -26,7 +26,6 @@ const MyConfess = () => {
 
 
     const [comment, setComment] = useState('');
-    const socket = io();
     useEffect(() => {
         getUserPosts();
         // socket.on('new_post_uploaded', () => {

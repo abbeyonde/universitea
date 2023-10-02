@@ -6,12 +6,11 @@ import UpvoteIcon from '../icon/UpvoteIcon.jsx';
 import Comment from '../service/comment.service';
 import io from 'socket.io-client';
 import voteService from '../service/vote.service';
-
+import socket from '../socket';
 
 
 
 const Post = () => {
-    const socket = io();
     const [post, setPost] = useState('');
     const [comments, setComments] = useState([]);
     // const [post, setPost] = useState([

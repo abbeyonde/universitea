@@ -13,12 +13,12 @@ import './Loading.css'
 import Anon from '../icon/Anon';
 // import { ToastContainer, toast } from 'react-toastify'
 // import 'react-toastify/dist/ReactToastify.css'
-
+import socket from '../socket';
 
 const Home = () => {
     
     // const [posts, setPosts] = useState([]);
-    const socket = io();
+    // const socket = io();
     const [posts, setPosts] = useState([
         {
             id: 1,
