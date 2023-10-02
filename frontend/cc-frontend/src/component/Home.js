@@ -31,7 +31,7 @@ const Home = () => {
     ]);
 
     const [isLoading, setIsLoading] = useState(false);
-    const [newConfession , setNewConfession] = useState(true);
+    const [newConfession, setNewConfession] = useState(false);
 
 
     const [comment, setComment] = useState('');
@@ -40,7 +40,7 @@ const Home = () => {
         retrievePosts()
         socket.on('new_post_uploaded', () => {
             console.log('new post in');
-            retrievePosts();
+            setNewConfession(true);
 
         });
         socket.on('update_vote_count', () => {
@@ -119,6 +119,7 @@ const Home = () => {
         Comment.new(data)
             .then(() => {
                 alert("Comment uploaded");
+                setComment('');
                 socket.emit('new_comment');
             })
             .catch(e => {
@@ -129,12 +130,13 @@ const Home = () => {
             })
     }
 
-    // const onClickNewConfession = () => {
-    //     if(newConfession){
-    //         setNewConfession(false);
-    //     }
-    //     window.location.reload();
-    // }
+    const onClickNewConfession = () => {
+        if (newConfession) {
+            setNewConfession(false);
+            window.location.reload();
+        }
+        window.location.reload();
+    }
 
     return (
 
@@ -145,25 +147,29 @@ const Home = () => {
                         <div className='post'>
                             <div className="sweet-loading">
                                 <div className='post-content'>
-                                <BarLoader
-                                    className="loader"
-                                    color="rgb(194, 194, 194)"
-                                    height={20}
-                                    width={400}
-                                    speedMultiplier={1} />
-                            </div>
+                                    <BarLoader
+                                        className="loader"
+                                        color="rgb(194, 194, 194)"
+                                        height={20}
+                                        width={400}
+                                        speedMultiplier={1} />
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 :
                 < div className="post-body">
-                    <div className='search-bar'></div>
+                    {newConfession ?
+                        <div className='confession'>
+                            <label onClick={onClickNewConfession} > New Confession is up!</label>
+                        </div> :
+                        <div></div>}
                     <ul>
                         {posts && posts.map && posts.map((post, index) => (
                             <li className='border-1px display-block bg-transparent' key={post.id}>
                                 <div className='post'>
-                                    <div className='img-anon'><Anon/></div>
+                                    <div className='img-anon'><Anon /></div>
                                     <div className='post-content bg-transparent align-left'>
                                         <Link to={`/post/${post.id}`}>
                                             <p className='bg-transparent align-left'>{post.content}</p>

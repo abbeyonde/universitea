@@ -39,8 +39,8 @@ const NewPost = () => {
 
         Post.newPost(data)
             .then(() => {
-                navigate('/home');
                 alert("Your confession has been uploaded")
+                navigate('/home');
                 socket.emit('new_post');
                 // window.location.reload();
             })
