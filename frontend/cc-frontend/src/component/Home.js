@@ -14,7 +14,7 @@ import Anon from '../icon/Anon';
 // import { ToastContainer, toast } from 'react-toastify'
 // import 'react-toastify/dist/ReactToastify.css'
 
-const socket = io.connect('https://universitea.onrender.com:10000');
+const socket = io('https://universitea.onrender.com');
 
 const Home = () => {
 

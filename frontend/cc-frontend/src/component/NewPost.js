@@ -6,7 +6,8 @@ import { useNavigate } from 'react-router-dom';
 
 import io from 'socket.io-client'
 
-const socket = io.connect('http://localhost:8080');
+const socket = io.connect('https://universitea.onrender.com:10000');
+
 
 const NewPost = () => {
     const textarea = document.querySelector('textarea');

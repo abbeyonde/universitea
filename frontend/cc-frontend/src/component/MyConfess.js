@@ -7,7 +7,8 @@ import Comment from '../service/comment.service';
 import io from 'socket.io-client';
 import voteService from '../service/vote.service';
 
-const socket = io.connect('http://localhost:8080');
+const socket = io.connect('https://universitea.onrender.com:10000');
+
 
 const MyConfess = () => {
     const [anchorEl, setAnchorEl] = useState(null);
