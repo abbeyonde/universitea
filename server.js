@@ -37,9 +37,8 @@ const server = http.createServer(app);
 
 //create io socket from http server
 const io = new Server(server, {
-    path: 'https://universitea.onrender.com',
     cors: {
-        origin: 'http://localhost:3000',
+        origin: true,
     }
 })
 

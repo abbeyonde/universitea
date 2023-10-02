@@ -7,7 +7,7 @@ import Comment from '../service/comment.service';
 import io from 'socket.io-client';
 import voteService from '../service/vote.service';
 
-const socket = io.connect('https://universitea.onrender.com:10000');
+const socket = io();
 
 
 const MyConfess = () => {

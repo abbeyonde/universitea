@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 import io from 'socket.io-client'
 
-const socket = io.connect('https://universitea.onrender.com:10000');
+const socket = io();
 
 
 const NewPost = () => {
