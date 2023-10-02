@@ -59,7 +59,7 @@ account.create = async (req, res) => {
             communityId: 1
         }
         const verifyToken = generateVerifyToken(user.username);
-        const link = `http://localhost:8080/verify/${user.username}/${verifyToken}`
+        const link = `https://universitea.onrender.com/verify/${user.username}/${verifyToken}`
         const mailOptions = {
             from: '"UniversiTea" <universitea.cc@gmail.com',
             template: "email.handlebars",
