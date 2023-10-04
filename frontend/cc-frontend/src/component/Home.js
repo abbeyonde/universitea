@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-// import { Menu, MenuItem, Button } from '@mui/material';
 import './Home.css'
 import Post from '../service/post.service';
 import { React, useEffect, useState } from 'react';
@@ -7,7 +6,6 @@ import UpvoteIcon from '../icon/UpvoteIcon.jsx';
 import Comment from '../service/comment.service';
 import io from 'socket.io-client';
 import voteService from '../service/vote.service';
-// import Loading from './Loading';
 import BarLoader from 'react-spinners/BarLoader'
 import './Loading.css'
 import Anon from '../icon/Anon';
@@ -22,7 +20,7 @@ const Home = () => {
     const [posts, setPosts] = useState([
         {
             id: 1,
-            content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis ultricies lacus sed turpis tincidunt id aliquet risus feugiat. Pretium quam vulputate dignissim suspendisse in est ante in. Nunc consequat interdum varius sit amet mattis vulputate. Leo vel orci porta non pulvinar neque. Tortor at risus viverra adipiscing at in tellus integer. Ultrices sagittis orci a scelerisque purus semper eget duis at. Turpis nunc eget lorem dolor sed viverra ipsum nunc. Velit dignissim sodales ut eu sem integer. Facilisi nullam vehicula ipsum a. Sit amet massa vitae tortor condimentum lacinia quis vel eros. Natoque penatibus et magnis dis. Urna porttitor rhoncus dolor purus non enim praesent. Neque gravida in fermentum et. Porttitor rhoncus dolor purus non enim praesent. Id porta nibh venenatis cras sed. Consequat interdum varius sit amet mattis vulputate. Commodo nulla facilisi nullam vehicula ipsum a arcu cursus vitae. Elementum sagittis vitae et leo duis. Enim lobortis scelerisque fermentum dui faucibus in ornare.",
+            content: "Lorem ipsum dolor sit amet",
             upvote: 9,
             downvote: 2,
             upvoted: false,
@@ -30,7 +28,7 @@ const Home = () => {
         }
     ]);
 
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const [newConfession, setNewConfession] = useState(false);
 
 
@@ -118,8 +116,8 @@ const Home = () => {
         console.log(data)
         Comment.new(data)
             .then(() => {
-                alert("Comment uploaded");
                 setComment('');
+                alert("Comment uploaded");
                 socket.emit('new_comment');
             })
             .catch(e => {

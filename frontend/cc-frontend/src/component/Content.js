@@ -11,6 +11,7 @@ import Post from './Post';
 import MyConfess from './MyConfess';
 import Loading from './Loading';
 import Verification from './Verification';
+import ConfirmVerification from './ConfirmVerify';
 
 
 
@@ -33,7 +34,7 @@ const Content = () => {
                     <Route path='/profile/:username' element={<Profile />} />
                     <Route path='/post/:id' element={<Post />} />
                     <Route path='/post/user/:username' element={<MyConfess />} />
-                    <Route path='/loading' element={<Loading/>}/>
+                    <Route path='confirm-verify/:username' element={<ConfirmVerification />}></Route>
                 </Routes>
             </div>
         </main>

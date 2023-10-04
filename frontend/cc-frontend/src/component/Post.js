@@ -4,35 +4,35 @@ import postService from '../service/post.service';
 import { useParams, Link } from 'react-router-dom';
 import UpvoteIcon from '../icon/UpvoteIcon.jsx';
 import Comment from '../service/comment.service';
-import io from 'socket.io-client';
 import voteService from '../service/vote.service';
 import socket from '../socket';
+import Anon from '../icon/Anon';
 
 
 
 const Post = () => {
-    const [post, setPost] = useState('');
-    const [comments, setComments] = useState([]);
-    // const [post, setPost] = useState([
-    //     {
-    //         id: 1,
-    //         content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis ultricies lacus sed turpis tincidunt id aliquet risus feugiat. Pretium quam vulputate dignissim suspendisse in est ante in. Nunc consequat interdum varius sit amet mattis vulputate. Leo vel orci porta non pulvinar neque. Tortor at risus viverra adipiscing at in tellus integer. Ultrices sagittis orci a scelerisque purus semper eget duis at. Turpis nunc eget lorem dolor sed viverra ipsum nunc. Velit dignissim sodales ut eu sem integer. Facilisi nullam vehicula ipsum a. Sit amet massa vitae tortor condimentum lacinia quis vel eros. Natoque penatibus et magnis dis. Urna porttitor rhoncus dolor purus non enim praesent. Neque gravida in fermentum et. Porttitor rhoncus dolor purus non enim praesent. Id porta nibh venenatis cras sed. Consequat interdum varius sit amet mattis vulputate. Commodo nulla facilisi nullam vehicula ipsum a arcu cursus vitae. Elementum sagittis vitae et leo duis. Enim lobortis scelerisque fermentum dui faucibus in ornare.",
-    //         upvote: 9,
-    //         downvote: 2,
-    //         upvoted: false,
-    //         downvoted: false
-    //     }
-    // ]);
-    // const [comments, setComments] = useState([
-    //     {
-    //         id: 1,
-    //         content: "adsadasdasda",
-    //         upvote: 9,
-    //         downvote: 2,
-    //         upvoted: false,
-    //         downvoted: false
-    //     }
-    // ]);
+    // const [post, setPost] = useState('');
+    // const [comments, setComments] = useState([]);
+    const [post, setPost] = useState([
+        {
+            id: 1,
+            content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis ultricies lacus sed turpis tincidunt id aliquet risus feugiat. Pretium quam vulputate dignissim suspendisse in est ante in. Nunc consequat interdum varius sit amet mattis vulputate. Leo vel orci porta non pulvinar neque. Tortor at risus viverra adipiscing at in tellus integer. Ultrices sagittis orci a scelerisque purus semper eget duis at. Turpis nunc eget lorem dolor sed viverra ipsum nunc. Velit dignissim sodales ut eu sem integer. Facilisi nullam vehicula ipsum a. Sit amet massa vitae tortor condimentum lacinia quis vel eros. Natoque penatibus et magnis dis. Urna porttitor rhoncus dolor purus non enim praesent. Neque gravida in fermentum et. Porttitor rhoncus dolor purus non enim praesent. Id porta nibh venenatis cras sed. Consequat interdum varius sit amet mattis vulputate. Commodo nulla facilisi nullam vehicula ipsum a arcu cursus vitae. Elementum sagittis vitae et leo duis. Enim lobortis scelerisque fermentum dui faucibus in ornare.",
+            upvote: 9,
+            downvote: 2,
+            upvoted: false,
+            downvoted: false
+        }
+    ]);
+    const [comments, setComments] = useState([
+        {
+            id: 1,
+            content: "adsadasdasda",
+            upvote: 9,
+            downvote: 2,
+            upvoted: false,
+            downvoted: false
+        }
+    ]);
     const [comment, setComment] = useState('');
     const { id } = useParams();
 
@@ -78,10 +78,11 @@ const Post = () => {
                 data.upvoted = upVoteState;
                 setPost(data);
             })
-            .catch((err, res) => {
-                res.send(err.message);
+            .catch(err => {
+                // res.send(err.message);
+                console.log(err.message)
             })
-    }
+        }
 
     const checkVoteLog = async (data) => {
 
@@ -129,7 +130,8 @@ const Post = () => {
         }
         console.log(data)
         Comment.new(data)
-            .then(() => {
+        .then(() => {
+                setComment('')
                 alert("Comment uploaded");
                 socket.emit('new_comment');
                 window.location.reload();
@@ -148,7 +150,7 @@ const Post = () => {
         <div className="post-body">
             <div className='border-1px display-block bg-transparent'>
                 <div className='post'>
-                    <div className='img-anon'></div>
+                    <div className='img-anon'><Anon /></div>
                     <div className='post-content bg-transparent align-left'>
                         <Link to={`/post/${post.id}`}>
                             <p className='bg-transparent align-left'>{post.content}</p>
@@ -161,8 +163,8 @@ const Post = () => {
                         {post.upvoted ?
                             <div className='hot-vote'>
                                 <button className='vote' onClick={() => {
-                                    post.upvote += -1;
                                     onClickUpvote(post.id, -1, post.upvoted);
+                                    post.upvote += -1;
                                     post.upvoted = false;
                                 }}>
                                     <UpvoteIcon color={'tomato'} />
@@ -170,8 +172,8 @@ const Post = () => {
                             </div> :
                             <div className='hot-vote'>
                                 <button className='vote' onClick={() => {
-                                    post.upvote += 1;
                                     onClickUpvote(post.id, 1, post.upvoted);
+                                    post.upvote += 1;
                                     post.upvoted = true;
 
                                 }}>

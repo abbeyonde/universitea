@@ -41,6 +41,10 @@ class Account {
     verify(data){
         return http.put(`account/verify/${data.username}/${data.verifyToken}`)
     }
+
+    resendVerify(data){
+        return http.get(`account/resend-verify/${data.username}`)
+    }
 }
 
 export default new Account();

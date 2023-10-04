@@ -47,18 +47,12 @@ io.on('connection', (socket) => {
 
     socket.on('new_post', () => {
         console.log('new_post');
-        socket.emit('new_post_uploaded');
+        socket.broadcast.emit('new_post_uploaded');
     });
     socket.on('new_comment', () => {
         socket.emit('new_comment_add')
     });
 
-    // setInterval(() => {
-    //     socket.emit('new_post_uploaded')
-    // }, 60000);
-    // setInterval(() => {
-    //     socket.emit('new_comment_add')
-    // }, 60000);
     setInterval(() => {
         socket.emit('update_vote_count',)
     }, 30000);

@@ -2,12 +2,18 @@ import { useNavigate } from 'react-router-dom';
 import './Signin-Signup.css'
 import { useState } from 'react'
 import authService from '../service/auth.service';
+import { Link } from 'react-router-dom';
 
 const SignIn = () => {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
+
+    const isPasswordSecure = (password) => {
+        const re = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[._!@#\$%\^&\*])(?=.{8,})');
+        return re.test(password);
+    }
 
     const navigate = useNavigate();
 
@@ -34,6 +40,8 @@ const SignIn = () => {
                     e.toString());
                 console.log(e.response)
                 alert(resMsg);
+                //check resMsg here password or verification
+                //if else
                 setMessage(e.response.data);
             })
     }
@@ -58,6 +66,7 @@ const SignIn = () => {
                     <div className='message transparent'>
                         <small className='message'>{message}</small>
                     </div>
+                    <Link>Forgot Password?</Link>
                     <button
                         className='btn-sign-in'
                         onClick={handleClickSignIn}>Sign In</button>

@@ -20,7 +20,7 @@ const SignUp = () => {
     const navigate = useNavigate();
 
     const isPasswordSecure = (password) => {
-        const re = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})');
+        const re = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[._!@#\$%\^&\*])(?=.{8,})');
         return re.test(password);
     }
 
@@ -79,8 +79,8 @@ const SignUp = () => {
             setMessageSignUp('')
             authService.signUp(data)
                 .then(() => {
-                    alert('Please verify your email first before signing in');
-                    navigate('/sign-in');
+                    // alert('Please verify your email first before signing in');
+                    navigate(`/confirm-verify/${username}`);//change to confirm verify
                     window.location.reload();
                 })
                 .catch(e => {

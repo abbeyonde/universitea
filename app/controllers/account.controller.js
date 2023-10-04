@@ -86,6 +86,34 @@ account.create = async (req, res) => {
     }
 }
 
+account.resendVerify = async (req,res) => {
+    const user = await prisma.account.findUnique({where: { username: req.params.username}});
+    if(user){
+        const verifyToken = generateVerifyToken(user.username);
+        const link = `https://universitea.onrender.com/verify/${user.username}/${verifyToken}`
+        const mailOptions = {
+            from: '"UniversiTea" <universitea.cc@gmail.com',
+            template: "email.handlebars",
+            to: user.email,
+            subject: `Welcome to UniversiTea, ${user.username}`,
+            context: {
+                username: user.username,
+                link: link,
+            },
+        };
+        try {
+            await transporter.sendMail(mailOptions);
+            res.send(true);
+        } catch (err) {
+            console.log('error sending email', err);
+            res.status(500).send('Error sending email');
+        }
+    }
+    else{
+        res.status(400).send('Cannot find any associated account to your username');
+    }
+}
+
 account.verify = async (req, res) => {
     const user = await prisma.account.findUnique({ where: { username: req.params.username } })
     prisma.account.update({
@@ -241,7 +269,7 @@ function generateAccessToken(username) {
     return jwt.sign({ username: username }, process.env.TOKEN_SECRET, { expiresIn: '30m', algorithm: 'HS256' });
 }
 function generateVerifyToken(username) {
-    return jwt.sign({ username: username }, process.env.TOKEN_SECRET_VERIFY, { expiresIn: '10m', algorithm: 'HS256' });
+    return jwt.sign({ username: username }, process.env.TOKEN_SECRET_VERIFY, { expiresIn: '2m', algorithm: 'HS256' });
 }
 
 module.exports = account;

@@ -4,13 +4,11 @@ import Post from '../service/post.service';
 import { useEffect, useState } from 'react';
 import UpvoteIcon from '../icon/UpvoteIcon.jsx';
 import Comment from '../service/comment.service';
-import io from 'socket.io-client';
 import voteService from '../service/vote.service';
+import Anon from '../icon/Anon';
 import socket from '../socket';
 
 const MyConfess = () => {
-    const [anchorEl, setAnchorEl] = useState(null);
-
     const [posts, setPosts] = useState([]);
     // const [posts, setPosts] = useState([
     //     {
@@ -23,8 +21,6 @@ const MyConfess = () => {
     //     }
     // ]);
 
-
-
     const [comment, setComment] = useState('');
     useEffect(() => {
         getUserPosts();
@@ -32,10 +28,10 @@ const MyConfess = () => {
         //     console.log('new post in');
         //     retrievePosts();
         // });
-        // socket.on('update_vote_count', () => {
-        //     console.log('new vote');
-        //     retrievePosts();
-        // });
+        socket.on('update_vote_count', () => {
+            console.log('new vote');
+            getUserPosts();
+        });
     },[socket])
 
     const getUserPosts = async () => {
@@ -106,6 +102,7 @@ const MyConfess = () => {
         console.log(data)
         Comment.new(data)
             .then(() => {
+                setComment('')
                 alert("Comment uploaded");
                 socket.emit('new_comment');
             })
@@ -133,7 +130,7 @@ const MyConfess = () => {
                     {posts && posts.map && posts.map((post, index) => (
                         <li className='border-1px display-block bg-transparent' key={post.id}>
                             <div className='post'>
-                                <div className='img-anon'></div>
+                                <div className='img-anon'><Anon /></div>
                                 <div className='post-content bg-transparent align-left'>
                                     <Link to={`/post/${post.id}`}>
                                         <p className='bg-transparent align-left'>{post.content}</p>
