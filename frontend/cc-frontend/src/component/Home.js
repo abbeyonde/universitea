@@ -117,6 +117,8 @@ const Home = () => {
         Comment.new(data)
             .then(() => {
                 setComment('');
+                var text = document.getElementById('comment');
+                text.value = "";
                 alert("Comment uploaded");
                 socket.emit('new_comment');
             })
@@ -199,6 +201,7 @@ const Home = () => {
                                 </div>
                                 <div className='comment'>
                                     <textarea
+                                        id='comment'
                                         placeholder='Comment'
                                         onChange={onChangeComment}
                                         required></textarea>
