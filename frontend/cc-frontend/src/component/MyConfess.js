@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import './Home.css'
 import Post from '../service/post.service';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import UpvoteIcon from '../icon/UpvoteIcon.jsx';
 import Comment from '../service/comment.service';
 import voteService from '../service/vote.service';
@@ -22,6 +22,8 @@ const MyConfess = () => {
     // ]);
 
     const [comment, setComment] = useState('');
+    const textarea = useRef(null);
+
     useEffect(() => {
         getUserPosts();
         // socket.on('new_post_uploaded', () => {
@@ -32,7 +34,7 @@ const MyConfess = () => {
             console.log('new vote');
             getUserPosts();
         });
-    },[socket])
+    }, [socket])
 
     const getUserPosts = async () => {
         const user = await JSON.parse(localStorage.getItem('user'));
@@ -99,6 +101,7 @@ const MyConfess = () => {
             accountId: user.id,
             communityId: user.communityId
         }
+        textarea.current.value = '';
         console.log(data)
         Comment.new(data)
             .then(() => {
@@ -166,6 +169,7 @@ const MyConfess = () => {
                             </div>
                             <div className='comment'>
                                 <textarea
+                                    ref={textarea}
                                     placeholder='Comment'
                                     onChange={onChangeComment}
                                     required></textarea>

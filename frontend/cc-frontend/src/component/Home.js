@@ -27,10 +27,11 @@ const Home = () => {
             downvoted: false
         }
     ]);
-
+    
     const [isLoading, setIsLoading] = useState(false);
     const [newConfession, setNewConfession] = useState(false);
-
+    const textarea = useRef(null);
+    
 
     const [comment, setComment] = useState('');
 
@@ -99,7 +100,6 @@ const Home = () => {
         const listPosts = posts.map((post) => post.id === id ? { ...post, upvoted: !post.upvoted } : post);
         setPosts(listPosts);
     }
-    const textarea = useRef(null);
 
     const onChangeComment = (e) => {
         const comment = e.target.value;

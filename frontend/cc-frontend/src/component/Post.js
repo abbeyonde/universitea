@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import './Home.css'
 import postService from '../service/post.service';
 import { useParams, Link } from 'react-router-dom';
@@ -82,7 +82,7 @@ const Post = () => {
                 // res.send(err.message);
                 console.log(err.message)
             })
-        }
+    }
 
     const checkVoteLog = async (data) => {
 
@@ -119,7 +119,7 @@ const Post = () => {
         const comment = e.target.value;
         setComment(comment);
     }
-
+    const textarea = useRef(null);
     const handleClickComment = async (postId) => {
         const user = await JSON.parse(localStorage.getItem('user'));
         const data = {
@@ -129,12 +129,13 @@ const Post = () => {
             communityId: user.communityId
         }
         console.log(data)
+        textarea.current.value = '';
         Comment.new(data)
-        .then(() => {
+            .then(() => {
                 setComment('')
                 alert("Comment uploaded");
                 socket.emit('new_comment');
-                window.location.reload();
+                // window.location.reload();
             })
             .catch(e => {
                 const resMsg = (e.response && e.response.data && e.response.data.message ||
@@ -185,6 +186,7 @@ const Post = () => {
                 </div>
                 <div className='comment'>
                     <textarea
+                        ref={textarea}
                         placeholder='Comment'
                         onChange={onChangeComment}
                         required></textarea>
