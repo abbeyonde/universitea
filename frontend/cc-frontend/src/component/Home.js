@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import './Home.css'
 import Post from '../service/post.service';
-import { React, useEffect, useState } from 'react';
+import { React, useEffect, useRef, useState } from 'react';
 import UpvoteIcon from '../icon/UpvoteIcon.jsx';
 import Comment from '../service/comment.service';
 import io from 'socket.io-client';
@@ -28,7 +28,7 @@ const Home = () => {
         }
     ]);
 
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
     const [newConfession, setNewConfession] = useState(false);
 
 
@@ -99,6 +99,7 @@ const Home = () => {
         const listPosts = posts.map((post) => post.id === id ? { ...post, upvoted: !post.upvoted } : post);
         setPosts(listPosts);
     }
+    const textarea = useRef(null);
 
     const onChangeComment = (e) => {
         const comment = e.target.value;
@@ -112,13 +113,13 @@ const Home = () => {
             postId: postId,
             accountId: user.id,
             communityId: user.communityId
-        }
+        };
+        textarea.current.value = '';
+
         console.log(data)
         Comment.new(data)
-            .then(() => {
+        .then(() => {
                 setComment('');
-                var text = document.getElementById('comment');
-                text.value = "";
                 alert("Comment uploaded");
                 socket.emit('new_comment');
             })
@@ -201,7 +202,8 @@ const Home = () => {
                                 </div>
                                 <div className='comment'>
                                     <textarea
-                                        id='comment'
+                                        ref={textarea}
+                                        className='comment-textarea'
                                         placeholder='Comment'
                                         onChange={onChangeComment}
                                         required></textarea>
