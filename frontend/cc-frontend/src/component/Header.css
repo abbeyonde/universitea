@@ -24,7 +24,7 @@ header {
     padding: 15px 10%;
     /* min-width: fit-content; */
     min-width: 100vw;
-    position: fixed;
+    /* position: fixed; */
     /* margin-top: -40px; */
     border-bottom: solid #cfcfcf 1px;
 }
