@@ -14,24 +14,24 @@ import Anon from '../icon/Anon';
 import socket from '../socket';
 
 const Home = () => {
-    
-    // const [posts, setPosts] = useState([]);
+
+    const [posts, setPosts] = useState([]);
     // const socket = io();
-    const [posts, setPosts] = useState([
-        {
-            id: 1,
-            content: "Lorem ipsum dolor sit amet",
-            upvote: 9,
-            downvote: 2,
-            upvoted: false,
-            downvoted: false
-        }
-    ]);
-    
-    const [isLoading, setIsLoading] = useState(false);
+    // const [posts, setPosts] = useState([
+    //     {
+    //         id: 1,
+    //         content: "Lorem ipsum dolor sit amet",
+    //         upvote: 9,
+    //         downvote: 2,
+    //         upvoted: false,
+    //         downvoted: false
+    //     }
+    // ]);
+
+    const [isLoading, setIsLoading] = useState(true);
     const [newConfession, setNewConfession] = useState(false);
     const textarea = useRef(null);
-    
+
 
     const [comment, setComment] = useState('');
 
@@ -118,7 +118,7 @@ const Home = () => {
 
         console.log(data)
         Comment.new(data)
-        .then(() => {
+            .then(() => {
                 setComment('');
                 alert("Comment uploaded");
                 socket.emit('new_comment');
@@ -160,59 +160,61 @@ const Home = () => {
                     </div>
                 </div>
                 :
-                < div className="post-body">
+                <div>
                     {newConfession ?
                         <div className='confession'>
                             <label onClick={onClickNewConfession} > New Confession is up!</label>
                         </div> :
                         <div></div>}
-                    <ul>
-                        {posts && posts.map && posts.map((post, index) => (
-                            <li className='border-1px display-block bg-transparent' key={post.id}>
-                                <div className='post'>
-                                    <div className='img-anon'><Anon /></div>
-                                    <div className='post-content bg-transparent align-left'>
-                                        <Link to={`/post/${post.id}`}>
-                                            <p className='bg-transparent align-left'>{post.content}</p>
-                                        </Link>
-                                    </div>
-                                    <div className='tea-score'>
-                                        <div className='counter'>
-                                            <p>{post.upvote}</p>
+                    < div className="post-body">
+                        <ul>
+                            {posts && posts.map && posts.map((post, index) => (
+                                <li className='border-1px display-block bg-transparent' key={post.id}>
+                                    <div className='post'>
+                                        <div className='img-anon'><Anon /></div>
+                                        <div className='post-content bg-transparent align-left'>
+                                            <Link to={`/post/${post.id}`}>
+                                                <p className='bg-transparent align-left'>{post.content}</p>
+                                            </Link>
                                         </div>
-                                        {post.upvoted ?
-                                            <div className='hot-vote'>
-                                                <button className='vote' onClick={() => {
-                                                    onClickUpvote(post.id, -1, post.upvoted);
-                                                    post.upvote += -1
-                                                }}>
-                                                    <UpvoteIcon color={'tomato'} />
-                                                </button>
-                                            </div> :
-                                            <div className='hot-vote'>
-                                                <button className='vote' onClick={() => {
-                                                    onClickUpvote(post.id, 1, post.upvoted);
-                                                    post.upvote += 1
-                                                }}>
-                                                    <UpvoteIcon color={'grey'} />
-                                                </button>
+                                        <div className='tea-score'>
+                                            <div className='counter'>
+                                                <p>{post.upvote}</p>
                                             </div>
-                                        }
+                                            {post.upvoted ?
+                                                <div className='hot-vote'>
+                                                    <button className='vote' onClick={() => {
+                                                        onClickUpvote(post.id, -1, post.upvoted);
+                                                        post.upvote += -1
+                                                    }}>
+                                                        <UpvoteIcon color={'tomato'} />
+                                                    </button>
+                                                </div> :
+                                                <div className='hot-vote'>
+                                                    <button className='vote' onClick={() => {
+                                                        onClickUpvote(post.id, 1, post.upvoted);
+                                                        post.upvote += 1
+                                                    }}>
+                                                        <UpvoteIcon color={'grey'} />
+                                                    </button>
+                                                </div>
+                                            }
+                                        </div>
                                     </div>
-                                </div>
-                                <div className='comment'>
-                                    <textarea
-                                        ref={textarea}
-                                        className='comment-textarea'
-                                        placeholder='Comment'
-                                        onChange={onChangeComment}
-                                        required></textarea>
-                                    <button onClick={() => { handleClickComment(post.id) }}>Comment</button>
-                                </div>
-                            </li>
-                        )
-                        )}
-                    </ul>
+                                    <div className='comment'>
+                                        <textarea
+                                            ref={textarea}
+                                            className='comment-textarea'
+                                            placeholder='Comment'
+                                            onChange={onChangeComment}
+                                            required></textarea>
+                                        <button onClick={() => { handleClickComment(post.id) }}>Comment</button>
+                                    </div>
+                                </li>
+                            )
+                            )}
+                        </ul>
+                    </div>
                 </div>}
         </div >
     );

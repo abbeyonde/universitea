@@ -22,7 +22,8 @@ header {
     /* position: relative; */
     align-items: center;
     padding: 15px 10%;
-    min-width: fit-content;
+    /* min-width: fit-content; */
+    min-width: 100vw;
     border-bottom: solid #cfcfcf 1px;
 }
 
