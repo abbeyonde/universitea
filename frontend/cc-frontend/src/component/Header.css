@@ -25,6 +25,7 @@ header {
     /* min-width: fit-content; */
     min-width: 100vw;
     position: fixed;
+    /* margin-top: -40px; */
     border-bottom: solid #cfcfcf 1px;
 }
 
