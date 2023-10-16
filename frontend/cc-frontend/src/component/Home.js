@@ -16,7 +16,7 @@ import socket from '../socket';
 const Home = () => {
 
     const [posts, setPosts] = useState([]);
-    // const socket = io();
+
     // const [posts, setPosts] = useState([
     //     {
     //         id: 1,
