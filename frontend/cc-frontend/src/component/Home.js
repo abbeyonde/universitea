@@ -2,9 +2,8 @@ import { Link } from 'react-router-dom';
 import './Home.css'
 import Post from '../service/post.service';
 import { React, useEffect, useRef, useState } from 'react';
-import UpvoteIcon from '../icon/UpvoteIcon.jsx';
+import FavoriteIcon from '../icon/FavoriteIcon.jsx';
 import Comment from '../service/comment.service';
-import io from 'socket.io-client';
 import voteService from '../service/vote.service';
 import BarLoader from 'react-spinners/BarLoader'
 import './Loading.css'
@@ -15,20 +14,20 @@ import socket from '../socket';
 
 const Home = () => {
 
-    const [posts, setPosts] = useState([]);
+    // const [posts, setPosts] = useState([]);
 
-    // const [posts, setPosts] = useState([
-    //     {
-    //         id: 1,
-    //         content: "Lorem ipsum dolor sit amet",
-    //         upvote: 9,
-    //         downvote: 2,
-    //         upvoted: false,
-    //         downvoted: false
-    //     }
-    // ]);
+    const [posts, setPosts] = useState([
+        {
+            id: 1,
+            content: "Lorem ipsum dolor sit amet",
+            upvote: 9,
+            downvote: 2,
+            upvoted: false,
+            downvoted: false
+        }
+    ]);
 
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
     const [newConfession, setNewConfession] = useState(false);
     const textarea = useRef(null);
 
@@ -187,7 +186,7 @@ const Home = () => {
                                                         onClickUpvote(post.id, -1, post.upvoted);
                                                         post.upvote += -1
                                                     }}>
-                                                        <UpvoteIcon color={'tomato'} />
+                                                        <FavoriteIcon color={'tomato'} />
                                                     </button>
                                                 </div> :
                                                 <div className='hot-vote'>
@@ -195,13 +194,15 @@ const Home = () => {
                                                         onClickUpvote(post.id, 1, post.upvoted);
                                                         post.upvote += 1
                                                     }}>
-                                                        <UpvoteIcon color={'grey'} />
+                                                        <FavoriteIcon color={'grey'} />
                                                     </button>
                                                 </div>
                                             }
                                         </div>
                                     </div>
                                     <div className='comment'>
+                                        {/* <div><label>1</label></div> */}
+                                        {/* comment number here */}
                                         <textarea
                                             ref={textarea}
                                             className='comment-textarea'

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import './Home.css'
 import postService from '../service/post.service';
 import { useParams, Link } from 'react-router-dom';
-import UpvoteIcon from '../icon/UpvoteIcon.jsx';
+import FavoriteIcon from '../icon/FavoriteIcon.jsx';
 import Comment from '../service/comment.service';
 import voteService from '../service/vote.service';
 import socket from '../socket';
@@ -168,7 +168,7 @@ const Post = () => {
                                     post.upvote += -1;
                                     post.upvoted = false;
                                 }}>
-                                    <UpvoteIcon color={'tomato'} />
+                                    <FavoriteIcon color={'tomato'} />
                                 </button>
                             </div> :
                             <div className='hot-vote'>
@@ -178,7 +178,7 @@ const Post = () => {
                                     post.upvoted = true;
 
                                 }}>
-                                    <UpvoteIcon color={'grey'} />
+                                    <FavoriteIcon color={'grey'} />
                                 </button>
                             </div>
                         }

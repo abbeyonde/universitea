@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import './Home.css'
 import Post from '../service/post.service';
 import { useEffect, useState, useRef } from 'react';
-import UpvoteIcon from '../icon/UpvoteIcon.jsx';
+import FavoriteIcon from '../icon/FavoriteIcon.jsx';
 import Comment from '../service/comment.service';
 import voteService from '../service/vote.service';
 import Anon from '../icon/Anon';
@@ -152,7 +152,7 @@ const MyConfess = () => {
                                                 onClickUpvote(post.id, -1, post.upvoted);
                                                 post.upvote += -1
                                             }}>
-                                                <UpvoteIcon color={'tomato'} />
+                                                <FavoriteIcon color={'tomato'} />
                                             </button>
                                         </div> :
                                         <div className='hot-vote'>
@@ -160,7 +160,7 @@ const MyConfess = () => {
                                                 onClickUpvote(post.id, 1, post.upvoted);
                                                 post.upvote += 1
                                             }}>
-                                                <UpvoteIcon color={'grey'} />
+                                                <FavoriteIcon color={'grey'} />
                                             </button>
                                         </div>
 
