@@ -29,7 +29,7 @@ const Home = () => {
 
     const [isLoading, setIsLoading] = useState(false);
     const [newConfession, setNewConfession] = useState(false);
-    const textarea = useRef(null);
+    // const textarea = useRef(null);
 
 
     const [comment, setComment] = useState('');
@@ -63,8 +63,6 @@ const Home = () => {
                     console.log(`upvoteState: ${upVoteState}`);
                     data[i].upvoted = upVoteState;
                     data[i].downvoted = false;
-                    // const textarea = useRef(null);
-                    data[i].textarea = textarea;
                     datas.push(data[i]);
                 }
                 datas.reverse();
@@ -116,6 +114,8 @@ const Home = () => {
             communityId: user.communityId
         };
         // textarea.current.value = '';
+        const text = document.getElementById('text-area');
+        text.textContent = '';
 
         console.log(data)
         Comment.new(data)
@@ -206,14 +206,15 @@ const Home = () => {
                                         {/* <div><label>1</label></div> */}
                                         {/* comment number here */}
                                         <textarea
-                                            ref={post.textarea}
+                                            // ref={post.textarea}
+                                            id='text-area'
                                             className='comment-textarea'
                                             placeholder='Comment'
                                             onChange={onChangeComment}
                                             required></textarea>
                                         <button onClick={() => { 
                                             handleClickComment(post.id);
-                                            post.textarea.current.value = '';
+                                            // post.textarea.current.value = '';
                                             }}>Comment</button>
                                     </div>
                                 </li>
