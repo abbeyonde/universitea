@@ -128,7 +128,7 @@ const MyConfess = () => {
     return (
         <div>
             <div className="post-body">
-                <div className='search-bar'></div>
+                {/* <div className='search-bar'></div> */}
                 <ul>
                     {posts && posts.map && posts.map((post, index) => (
                         <li className='border-1px display-block bg-transparent' key={post.id}>

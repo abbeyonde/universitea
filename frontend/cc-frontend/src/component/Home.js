@@ -63,6 +63,8 @@ const Home = () => {
                     console.log(`upvoteState: ${upVoteState}`);
                     data[i].upvoted = upVoteState;
                     data[i].downvoted = false;
+                    // const textarea = useRef(null);
+                    data[i].textarea = textarea;
                     datas.push(data[i]);
                 }
                 datas.reverse();
@@ -113,7 +115,7 @@ const Home = () => {
             accountId: user.id,
             communityId: user.communityId
         };
-        textarea.current.value = '';
+        // textarea.current.value = '';
 
         console.log(data)
         Comment.new(data)
@@ -204,12 +206,15 @@ const Home = () => {
                                         {/* <div><label>1</label></div> */}
                                         {/* comment number here */}
                                         <textarea
-                                            ref={textarea}
+                                            ref={post.textarea}
                                             className='comment-textarea'
                                             placeholder='Comment'
                                             onChange={onChangeComment}
                                             required></textarea>
-                                        <button onClick={() => { handleClickComment(post.id) }}>Comment</button>
+                                        <button onClick={() => { 
+                                            handleClickComment(post.id);
+                                            post.textarea.current.value = '';
+                                            }}>Comment</button>
                                     </div>
                                 </li>
                             )
