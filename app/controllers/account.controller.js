@@ -266,7 +266,7 @@ account.changePassword = async (req, res) => {
 
 //generate access token
 function generateAccessToken(username) {
-    return jwt.sign({ username: username }, process.env.TOKEN_SECRET, { expiresIn: '30m', algorithm: 'HS256' });
+    return jwt.sign({ username: username }, process.env.TOKEN_SECRET, { algorithm: 'HS256' });
 }
 function generateVerifyToken(username) {
     return jwt.sign({ username: username }, process.env.TOKEN_SECRET_VERIFY, { expiresIn: '2m', algorithm: 'HS256' });

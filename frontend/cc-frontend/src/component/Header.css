@@ -19,20 +19,17 @@ header {
     height: 10%;
     display: flex;
     justify-content: flex-end;
-    /* position: relative; */
     align-items: center;
     padding: 15px 10%;
-    /* min-width: fit-content; */
     min-width: 100vw;
     position: fixed;
     top: 0;
-    /* margin-top: -40px; */
     border-bottom: solid #cfcfcf 1px;
 }
 
 .navbar{
     display: inline;
-    /* position: fixed; */
+    min-height: fit-content;
     margin: 0 15px;
 }
 
@@ -62,6 +59,7 @@ header {
 
 .nav-links li {
     display: inline-block;
+    background-color: transparent;
     padding: 0px 20px;
 }
 
@@ -132,6 +130,7 @@ button {
     display: inline-block;
     position: relative;
     align-items: center;
+    background-color: transparent;
     /* background-color: #e9e9e9; */
 }
 .dropdown button{
