@@ -34,6 +34,7 @@ const Post = () => {
         }
     ]);
     const [comment, setComment] = useState('');
+    const [text, setText] = useState(null) ;
     const { id } = useParams();
 
     useEffect(() => {
@@ -109,17 +110,18 @@ const Post = () => {
 
         }
 
-        // post.upvoted = !post.upvoted;
-
+        post.upvoted = !post.upvoted;
+        const new_post = post;
         console.log(post);
-        setPost(post);
+        setPost(new_post);
     }
 
     const onChangeComment = (e) => {
         const comment = e.target.value;
+        setText(e);
         setComment(comment);
     }
-    const textarea = useRef(null);
+
     const handleClickComment = async (postId) => {
         const user = await JSON.parse(localStorage.getItem('user'));
         const data = {
@@ -129,7 +131,7 @@ const Post = () => {
             communityId: user.communityId
         }
         console.log(data)
-        textarea.current.value = '';
+        text.target.value = '';
         Comment.new(data)
             .then(() => {
                 setComment('')
@@ -166,7 +168,7 @@ const Post = () => {
                                 <button className='vote' onClick={() => {
                                     onClickUpvote(post.id, -1, post.upvoted);
                                     post.upvote += -1;
-                                    post.upvoted = false;
+                                    // post.upvoted = false;
                                 }}>
                                     <FavoriteIcon color={'tomato'} />
                                 </button>
@@ -175,7 +177,7 @@ const Post = () => {
                                 <button className='vote' onClick={() => {
                                     onClickUpvote(post.id, 1, post.upvoted);
                                     post.upvote += 1;
-                                    post.upvoted = true;
+                                    // post.upvoted = true;
 
                                 }}>
                                     <FavoriteIcon color={'grey'} />
@@ -186,7 +188,6 @@ const Post = () => {
                 </div>
                 <div className='comment'>
                     <textarea
-                        ref={textarea}
                         placeholder='Comment'
                         onChange={onChangeComment}
                         required></textarea>

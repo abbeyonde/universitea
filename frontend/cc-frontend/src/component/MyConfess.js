@@ -22,7 +22,8 @@ const MyConfess = () => {
     // ]);
 
     const [comment, setComment] = useState('');
-    const textarea = useRef(null);
+    const [text, setText] = useState(null);
+
 
     useEffect(() => {
         getUserPosts();
@@ -90,6 +91,7 @@ const MyConfess = () => {
 
     const onChangeComment = (e) => {
         const comment = e.target.value;
+        setText(e);
         setComment(comment);
     }
 
@@ -101,7 +103,7 @@ const MyConfess = () => {
             accountId: user.id,
             communityId: user.communityId
         }
-        textarea.current.value = '';
+        text.target.value = '';
         console.log(data)
         Comment.new(data)
             .then(() => {
@@ -169,7 +171,6 @@ const MyConfess = () => {
                             </div>
                             <div className='comment'>
                                 <textarea
-                                    ref={textarea}
                                     placeholder='Comment'
                                     onChange={onChangeComment}
                                     required></textarea>

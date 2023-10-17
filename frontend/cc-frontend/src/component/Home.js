@@ -14,23 +14,22 @@ import socket from '../socket';
 
 const Home = () => {
 
-    // const [posts, setPosts] = useState([]);
+    const [posts, setPosts] = useState([]);
 
-    const [posts, setPosts] = useState([
-        {
-            id: 1,
-            content: "Lorem ipsum dolor sit amet",
-            upvote: 9,
-            downvote: 2,
-            upvoted: false,
-            downvoted: false
-        }
-    ]);
+    // const [posts, setPosts] = useState([
+    //     {
+    //         id: 1,
+    //         content: "Lorem ipsum dolor sit amet",
+    //         upvote: 9,
+    //         downvote: 2,
+    //         upvoted: false,
+    //         downvoted: false
+    //     }
+    // ]);
 
     const [isLoading, setIsLoading] = useState(false);
     const [newConfession, setNewConfession] = useState(false);
     const [text, setText] = useState(null) ;
-    // const textarea = useRef(null);
 
 
     const [comment, setComment] = useState('');
@@ -115,12 +114,7 @@ const Home = () => {
             accountId: user.id,
             communityId: user.communityId
         };
-        // textarea.current.value = '';
-        // const text = document.getElementById('text-area');
-        // text.textContent = '';
-        // console.log(text.target.value);
         text.target.value = '';
-        // console.log(data)
         Comment.new(data)
             .then(() => {
                 setComment('');
@@ -209,15 +203,12 @@ const Home = () => {
                                         {/* <div><label>1</label></div> */}
                                         {/* comment number here */}
                                         <textarea
-                                            // ref={post.textarea}
-                                            id='text-area'
                                             className='comment-textarea'
                                             placeholder='Comment'
                                             onChange={onChangeComment}
                                             required></textarea>
                                         <button onClick={() => { 
                                             handleClickComment(post.id);
-                                            // post.textarea.current.value = '';
                                             }}>Comment</button>
                                     </div>
                                 </li>
