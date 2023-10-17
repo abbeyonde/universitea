@@ -29,6 +29,7 @@ const Home = () => {
 
     const [isLoading, setIsLoading] = useState(false);
     const [newConfession, setNewConfession] = useState(false);
+    const [text, setText] = useState(null) ;
     // const textarea = useRef(null);
 
 
@@ -102,6 +103,7 @@ const Home = () => {
 
     const onChangeComment = (e) => {
         const comment = e.target.value;
+        setText(e);
         setComment(comment);
     }
 
@@ -114,10 +116,11 @@ const Home = () => {
             communityId: user.communityId
         };
         // textarea.current.value = '';
-        const text = document.getElementById('text-area');
-        text.textContent = '';
-
-        console.log(data)
+        // const text = document.getElementById('text-area');
+        // text.textContent = '';
+        // console.log(text.target.value);
+        text.target.value = '';
+        // console.log(data)
         Comment.new(data)
             .then(() => {
                 setComment('');
