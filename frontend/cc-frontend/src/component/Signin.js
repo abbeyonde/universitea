@@ -66,7 +66,7 @@ const SignIn = () => {
                     <div className='message transparent'>
                         <small className='message'>{message}</small>
                     </div>
-                    <Link>Forgot Password?</Link>
+                    <Link className='forgot-password' to={'/forgot-password'}>Forgot Password?</Link>
                     <button
                         className='btn-sign-in'
                         onClick={handleClickSignIn}>Sign In</button>

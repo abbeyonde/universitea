@@ -1,5 +1,6 @@
 import http from "../http-common";
 import authHeader from "./auth-header";
+import ExternalAuthHeader from "./ext-auth-header";
 
 class Account {
     changeUsername(username, user) {
@@ -44,6 +45,26 @@ class Account {
 
     resendVerify(data){
         return http.get(`account/resend-verify/${data.username}`)
+    }
+
+    forgotPassword(data){
+        return http.get(`account/forgot-password/${data.username}`)
+    }
+
+    resetPassword(data){
+        return http.put(`account/reset-password/${data.username}`,
+        {
+            newPassword: data.newPassword
+        },
+        {
+            headers: ExternalAuthHeader()
+        })
+        .then(res => {
+            console.log(res.data);
+        })
+        .catch(err => {
+            console.log(err.message);
+        })
     }
 }
 

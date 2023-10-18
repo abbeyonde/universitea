@@ -8,6 +8,7 @@ const prisma = require('../prisma');
 const hbs = require('nodemailer-express-handlebars');
 const nodemailer = require('nodemailer');
 const path = require('path');
+const { getMaxListeners } = require('events');
 
 var transporter = nodemailer.createTransport(
     {
@@ -86,9 +87,9 @@ account.create = async (req, res) => {
     }
 }
 
-account.resendVerify = async (req,res) => {
-    const user = await prisma.account.findUnique({where: { username: req.params.username}});
-    if(user){
+account.resendVerify = async (req, res) => {
+    const user = await prisma.account.findUnique({ where: { username: req.params.username } });
+    if (user) {
         const verifyToken = generateVerifyToken(user.username);
         const link = `https://universitea.onrender.com/verify/${user.username}/${verifyToken}`
         const mailOptions = {
@@ -109,8 +110,37 @@ account.resendVerify = async (req,res) => {
             res.status(500).send('Error sending email');
         }
     }
-    else{
+    else {
         res.status(400).send('Cannot find any associated account to your username');
+    }
+}
+
+account.forgotPassword = async (req, res) => {
+    const user = await prisma.account.findUnique({ where: { username: req.params.username } });
+    if (user) {
+        const resetToken = generateVerifyToken(user.username);
+        const link = `https://universitea.onrender.com/reset-password/${user.username}/${resetToken}`
+        const mailOptions = {
+            from: '"UniversiTea" <universtiea.cc@gmail.com>',
+            template: "email_reset.handlebars",
+            to: user.email,
+            subject: "Reset your password",
+            context: {
+                username: user.username,
+                link: link,
+            }
+        };
+        try {
+            await transporter.sendMail(mailOptions);
+            res.send(true);
+
+        } catch (err) {
+            console.log('error sending email', err);
+            res.status(500).send('Error sending email');
+        }
+    }
+    else {
+        res.status(404).send('Cannot find any existing account with that username');
     }
 }
 
@@ -261,7 +291,32 @@ account.changePassword = async (req, res) => {
         res.status(500).send(err.message);
     };
 }
+account.resetPassword = async (req, res) => {
+    const newPassword = req.body.newPassword;
+    const username = req.params.username;
 
+    const user = await prisma.account.findUnique({ where: { username: username } })
+    if (user) {
+        const hashed_password = await bcrypt.hash(newPassword, saltRounds);
+        prisma.account.update({
+            where: {
+                id: Number(user.id)
+            }
+            ,
+            data: {
+                password: hashed_password
+            }
+
+        })
+            .then(data => {
+                console.log(data);
+                res.send(true);
+            })
+    }
+    else {
+        res.status(500).send('Failed to reset password');
+    };
+}
 //delete account
 
 //generate access token

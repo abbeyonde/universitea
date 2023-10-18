@@ -12,6 +12,8 @@ import MyConfess from './MyConfess';
 import Loading from './Loading';
 import Verification from './Verification';
 import ConfirmVerification from './ConfirmVerify';
+import ForgotPassword from './ForgotPassword';
+import ResetPassword from './ResetPassword';
 
 
 
@@ -34,6 +36,8 @@ const Content = () => {
                     <Route path='/profile/:username' element={<Profile />} />
                     <Route path='/post/:id' element={<Post />} />
                     <Route path='/post/user/:username' element={<MyConfess />} />
+                    <Route path='/forgot-password' element={<ForgotPassword/>}/>
+                    <Route path='/reset-password/:username/:token' element={<ResetPassword/>}/>
                     <Route path='confirm-verify/:username' element={<ConfirmVerification />}></Route>
                 </Routes>
             </div>
