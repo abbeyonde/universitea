@@ -48,9 +48,9 @@ const ResetPassword = () => {
     }
     return (
         <div className="form">
-            <input placeholder="New Password" required></input>
+            <input type='password' placeholder="New Password" onChange={onChangePassword} required></input>
             <small>{messagePw}</small>
-            <input placeholder="Re-type new Password" required></input>
+            <input type='password' placeholder="Re-type new Password" onChange={onChangeRepeatPassword} required></input>
             <small>{messageRePw}</small>
             <button type="submit" onClick={handleClickResetPassword}>Submit</button>
         </div>
