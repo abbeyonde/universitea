@@ -1,8 +1,9 @@
 import { useState } from "react"
 import accountService from "../service/account.service";
+import { useNavigate } from "react-router-dom";
 
 const ResetPassword = () => {
-
+    const navigate = useNavigate();
     const [newPassword, setNewPassword] = useState('');
     const [repNewPassword, setRepNewPassword] = useState('');
     const [messagePw, setMessagePw] = useState('');
@@ -41,6 +42,13 @@ const ResetPassword = () => {
                 newPassword: newPassword,
             }
             accountService.resetPassword(data)
+            .then(()=> {
+                alert("Your password has been reset");
+                navigate('/sign-in')
+            })
+            .catch(err => {
+                console.log(err.message);
+            })
         }
         else{
             setMessagePw('fill this field')
