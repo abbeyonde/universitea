@@ -1,23 +1,34 @@
 import { useState } from "react"
+import accountService from "../service/account.service";
 
 const ForgotPassword = () => {
 
     const [username, setUsername] = useState('');
-
+    const [message, setMessage] = useState('');
     const onChangeUsername = (e) => {
+        setMessage('')
         const username = e.target.value
         setUsername(username);
     }
 
-    const handleSubmitResetPassword = ()=> {
+    const handleClickResetPassword = () => {
         console.log('pass')
+        if (username) {
+            setMessage('');
+            const data = {
+                username: username
+            }
+            accountService.forgotPassword(data)
+        }
+        else{
+            setMessage('Please fill out the required field')
+        }
     }
     return (
         <div className="form">
-            <form className="reset-password">
-                <input placeholder="username" onChange={onChangeUsername} required></input>
-                <button type="submit" onSubmit={handleSubmitResetPassword}>Reset Password</button>
-            </form>
+            <input placeholder="username" onChange={onChangeUsername} required></input>
+            <small>{message}</small>
+            <button type="submit" onClick={handleClickResetPassword}>Reset Password</button>
         </div>
     )
 }

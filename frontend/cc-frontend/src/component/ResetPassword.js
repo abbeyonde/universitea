@@ -7,7 +7,7 @@ const ResetPassword = () => {
     const [repNewPassword, setRepNewPassword] = useState('');
     const [messagePw, setMessagePw] = useState('');
     const [messageRePw, setMessageRePw] = useState('');
-    const [pwState , setPwState] = useState(false);
+    const [pwState, setPwState] = useState(false);
 
     const isPasswordSecure = (password) => {
         const re = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[._!@#\$%\^&\*])(?=.{8,})');
@@ -35,21 +35,24 @@ const ResetPassword = () => {
         }
         setRepNewPassword(repeatPassword);
     }
-    const handleSubmitResetPassword = ()=> {
-        const data = {
-            newPassword: newPassword,
+    const handleClickResetPassword = () => {
+        if (pwState) {
+            const data = {
+                newPassword: newPassword,
+            }
+            accountService.resetPassword(data)
         }
-        accountService.resetPassword(data)
+        else{
+            setMessagePw('fill this field')
+        }
     }
     return (
         <div className="form">
-            <form className="reset-password">
-                <input placeholder="New Password" required></input>
-                <small>{messagePw}</small>
-                <input placeholder="Re-type new Password" required></input>
-                <small>{messageRePw}</small>
-                <button type="submit" onSubmit={handleSubmitResetPassword}>Submit</button>
-            </form>
+            <input placeholder="New Password" required></input>
+            <small>{messagePw}</small>
+            <input placeholder="Re-type new Password" required></input>
+            <small>{messageRePw}</small>
+            <button type="submit" onClick={handleClickResetPassword}>Submit</button>
         </div>
     )
 }
