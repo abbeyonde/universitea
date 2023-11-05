@@ -9,6 +9,7 @@ const hbs = require('nodemailer-express-handlebars');
 const nodemailer = require('nodemailer');
 const path = require('path');
 const { getMaxListeners } = require('events');
+const e = require('express');
 
 var transporter = nodemailer.createTransport(
     {
@@ -291,6 +292,8 @@ account.changePassword = async (req, res) => {
         res.status(500).send(err.message);
     };
 }
+
+//reset password if forgotten
 account.resetPassword = async (req, res) => {
     const newPassword = req.body.newPassword;
     const username = req.params.username;
@@ -298,27 +301,26 @@ account.resetPassword = async (req, res) => {
 
     const user = await prisma.account.findUnique({ where: { username: username } })
     if (user) {
-        jwt.verify(token, process.env.TOKEN_SECRET_VERIFY)
-            .then(async () => {
-                const hashed_password = await bcrypt.hash(newPassword, saltRounds);
-                prisma.account.update({
-                    where: {
-                        id: Number(user.id)
-                    }
-                    ,
-                    data: {
-                        password: hashed_password
-                    }
+        if (jwt.verify(token, process.env.TOKEN_SECRET_VERIFY)) {
+            const hashed_password = await bcrypt.hash(newPassword, saltRounds);
+            prisma.account.update({
+                where: {
+                    id: Number(user.id)
+                }
+                ,
+                data: {
+                    password: hashed_password
+                }
 
+            })
+                .then(data => {
+                    console.log(data);
+                    res.send(true);
                 })
-                    .then(data => {
-                        console.log(data);
-                        res.send(true);
-                    })
-            })
-            .catch(()=>{
-                res.status(400).send('Unauthorized action')
-            })
+        }
+        else {
+            res.status(400).send('Unauthorized action')
+        }
     }
     else {
         res.status(500).send('Failed to reset password');
