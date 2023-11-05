@@ -19,6 +19,10 @@ const ForgotPassword = () => {
                 username: username
             }
             accountService.forgotPassword(data)
+            .then(()=> {
+                alert("Check the reset link in your email")
+            }
+            )
         }
         else{
             setMessage('Please fill out the required field')

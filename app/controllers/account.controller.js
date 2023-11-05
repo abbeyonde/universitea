@@ -294,24 +294,31 @@ account.changePassword = async (req, res) => {
 account.resetPassword = async (req, res) => {
     const newPassword = req.body.newPassword;
     const username = req.params.username;
+    const token = req.params.token;
 
     const user = await prisma.account.findUnique({ where: { username: username } })
     if (user) {
-        const hashed_password = await bcrypt.hash(newPassword, saltRounds);
-        prisma.account.update({
-            where: {
-                id: Number(user.id)
-            }
-            ,
-            data: {
-                password: hashed_password
-            }
+        // jwt.verify(token, process.env.TOKEN_SECRET_VERIFY)
+        //     .then(async () => {
+                const hashed_password = await bcrypt.hash(newPassword, saltRounds);
+                prisma.account.update({
+                    where: {
+                        id: Number(user.id)
+                    }
+                    ,
+                    data: {
+                        password: hashed_password
+                    }
 
-        })
-            .then(data => {
-                console.log(data);
-                res.send(true);
-            })
+                })
+                    .then(data => {
+                        console.log(data);
+                        res.send(true);
+                    })
+            // })
+            // .catch(()=>{
+            //     res.status(400).send('Unauthorized action')
+            // })
     }
     else {
         res.status(500).send('Failed to reset password');

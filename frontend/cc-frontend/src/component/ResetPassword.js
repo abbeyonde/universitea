@@ -1,6 +1,6 @@
 import { useState } from "react"
 import accountService from "../service/account.service";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const ResetPassword = () => {
     const navigate = useNavigate();
@@ -9,6 +9,7 @@ const ResetPassword = () => {
     const [messagePw, setMessagePw] = useState('');
     const [messageRePw, setMessageRePw] = useState('');
     const [pwState, setPwState] = useState(false);
+    const {username, token} = useParams();
 
     const isPasswordSecure = (password) => {
         const re = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[._!@#\$%\^&\*])(?=.{8,})');
@@ -39,6 +40,8 @@ const ResetPassword = () => {
     const handleClickResetPassword = () => {
         if (pwState) {
             const data = {
+                username: username,
+                token:token,
                 newPassword: newPassword,
             }
             accountService.resetPassword(data)

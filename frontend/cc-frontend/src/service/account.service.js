@@ -13,7 +13,7 @@ class Account {
             .then(res => {
                 console.log(res.data);
             })
-            .catch((e, res) => {
+            .catch((e) => {
                 console.log(e.message);
             })
     }
@@ -52,18 +52,18 @@ class Account {
     }
 
     resetPassword(data){
-        return http.put(`account/reset-password/${data.username}`,
+        return http.put(`account/reset-password/${data.username}/${data.token}`,
         {
             newPassword: data.newPassword
         },
         {
             headers: ExternalAuthHeader()
         })
-        .then(res => {
-            console.log(res.data);
+        .then((res)=> {
+            console.log(res.data)
         })
-        .catch(err => {
-            console.log(err.message);
+        .catch((e)=> {
+            console.log(e.message)
         })
     }
 }
