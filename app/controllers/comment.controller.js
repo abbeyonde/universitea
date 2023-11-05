@@ -46,47 +46,44 @@ comment.displayPostComments = (req, res) => {
 }
 
 //count comment
-comment.Count = (req,res) => {
+comment.Count = async (req, res) => {
     const id = Number(req.params.id);
-    
-    prisma.comment.count({where: {
-        postId: id,
-    }})
-    .then((data)=>{
-        res.send(data);
+
+    const count = await prisma.comment.count({
+        where: {
+            postId: id,
+        }
     })
-    .catch(err => {
-        res.status(500).send(err.message);
-    })
+    res.send(count);
 }
 
-//display a comment
-comment.displayComment = async (req, res) => {
-    await prisma.comment.findUnique({ where: { id: Number(req.params.id) } })
-        .then((data) => {
-            res.send(JSON.stringify(data));
-        })
-        .catch(err => {
-            res.status(400).send(err.message);
-        });
-}
+    //display a comment
+    comment.displayComment = async (req, res) => {
+        await prisma.comment.findUnique({ where: { id: Number(req.params.id) } })
+            .then((data) => {
+                res.send(JSON.stringify(data));
+            })
+            .catch(err => {
+                res.status(400).send(err.message);
+            });
+    }
 
-//edit created comment
-comment.edit = (req, res) => {
+    //edit created comment
+    comment.edit = (req, res) => {
 
-}
+    }
 
-//delete a comment
-comment.deleteComment = async (req, res) => {
-    const comment = await prisma.comment.findUnique({ where: { id: req.params.id } });
-    await comment.destroy()
-        .then(() => {
-            res.send(`comment has been deleted`);
-        })
-        .catch(err => {
-            res.status(500).send(err.message);
-        });
+    //delete a comment
+    comment.deleteComment = async (req, res) => {
+        const comment = await prisma.comment.findUnique({ where: { id: req.params.id } });
+        await comment.destroy()
+            .then(() => {
+                res.send(`comment has been deleted`);
+            })
+            .catch(err => {
+                res.status(500).send(err.message);
+            });
 
-}
+    }
 
-module.exports = comment;
+    module.exports = comment;
