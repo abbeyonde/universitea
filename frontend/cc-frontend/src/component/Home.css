@@ -84,6 +84,14 @@
     height: 40%;
 }
 
+.count-comment {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: large;
+    /* margin-top: 50%; */
+    margin: auto 8px;
+}
 
 .vote {
     padding: 5px 5px;

@@ -11,21 +11,23 @@ import Anon from '../icon/Anon';
 // import { ToastContainer, toast } from 'react-toastify'
 // import 'react-toastify/dist/ReactToastify.css'
 import socket from '../socket';
+import commentService from '../service/comment.service';
 
 const Home = () => {
 
-    const [posts, setPosts] = useState([]);
+    // const [posts, setPosts] = useState([]);
 
-    // const [posts, setPosts] = useState([
-    //     {
-    //         id: 1,
-    //         content: "Lorem ipsum dolor sit amet",
-    //         upvote: 9,
-    //         downvote: 2,
-    //         upvoted: false,
-    //         downvoted: false
-    //     }
-    // ]);
+    const [posts, setPosts] = useState([
+        {
+            id: 1,
+            content: "Lorem ipsum dolor sit amet",
+            upvote: 9,
+            downvote: 2,
+            upvoted: false,
+            downvoted: false,
+            commentCount: 12
+        }
+    ]);
 
     const [isLoading, setIsLoading] = useState(false);
     const [newConfession, setNewConfession] = useState(false);
@@ -59,10 +61,13 @@ const Home = () => {
                         accountId: user.id,
                         postId: data[i].id
                     }
+                    //count comment from db
                     const upVoteState = await checkVoteLog(postVote);
+                    const commentCount = await countComment(data[i].id); 
                     console.log(`upvoteState: ${upVoteState}`);
                     data[i].upvoted = upVoteState;
                     data[i].downvoted = false;
+                    data[i].commentCount = commentCount;
                     datas.push(data[i]);
                 }
                 datas.reverse();
@@ -76,9 +81,14 @@ const Home = () => {
     }
 
     const checkVoteLog = async (data) => {
-        const voteState = await voteService.checkLog(data)
+        const voteState = await voteService.checkLog(data);
         console.log(voteState);
         return voteState.data;
+    }
+
+    const countComment = async (data) => {
+        const commentCount = await commentService.count(data);
+        return commentCount.data;
     }
 
     const onClickUpvote = async (id, value, voteState) => {
@@ -200,8 +210,7 @@ const Home = () => {
                                         </div>
                                     </div>
                                     <div className='comment'>
-                                        {/* <div><label>1</label></div> */}
-                                        {/* comment number here */}
+                                        <div className='count-comment'><label className='count'>{post.commentCount}</label></div>
                                         <textarea
                                             className='comment-textarea'
                                             placeholder='Comment'

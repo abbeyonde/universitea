@@ -1,6 +1,5 @@
 import http from "../http-common";
 import authHeader from "./auth-header";
-import ExternalAuthHeader from "./ext-auth-header";
 
 class Account {
     changeUsername(username, user) {

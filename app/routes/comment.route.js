@@ -16,6 +16,7 @@ module.exports = app => {
     router.get('/:postId/all-comments',[auth.authenticateToken], comments.displayPostComments);
     router.get('/:id',[auth.authenticateToken], comments.displayComment);
     router.delete('/:id',[auth.authenticateToken], comments.deleteComment);
+    router.get('/count/:id',[auth.authenticateToken], comments.Count);
 
     app.use('/api/comment', router);
 }

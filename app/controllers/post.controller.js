@@ -31,6 +31,7 @@ post.displayAll = (req, res) => {
     prisma.post.findMany()
         .then((data) => {
             // console.log(data.length);
+            
             res.send(data);
         })
         .catch(err => {

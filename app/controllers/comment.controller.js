@@ -45,6 +45,18 @@ comment.displayPostComments = (req, res) => {
         });
 }
 
+//count comment
+comment.Count = (req,res) => {
+    const id = Number(req.params.id);
+    
+    prisma.comment.count({where: {
+        postId: id,
+    }})
+    .then((data)=>{
+        res.send(data);
+    })
+}
+
 //display a comment
 comment.displayComment = async (req, res) => {
     await prisma.comment.findUnique({ where: { id: Number(req.params.id) } })
