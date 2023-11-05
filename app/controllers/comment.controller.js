@@ -55,6 +55,9 @@ comment.Count = (req,res) => {
     .then((data)=>{
         res.send(data);
     })
+    .catch(err => {
+        res.status(500).send(err.message);
+    })
 }
 
 //display a comment
