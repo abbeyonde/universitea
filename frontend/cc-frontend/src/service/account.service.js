@@ -55,15 +55,6 @@ class Account {
         return http.put(`account/reset-password/${data.username}/${data.token}`,
         {
             newPassword: data.newPassword
-        },
-        {
-            headers: ExternalAuthHeader()
-        })
-        .then((res)=> {
-            console.log(res.data)
-        })
-        .catch((e)=> {
-            console.log(e.message)
         })
     }
 }

@@ -21,7 +21,7 @@ module.exports = app => {
     router.put('/verify/:username/:verifyToken',[auth.authenticateExternalToken], accounts.verify);
     router.get('/resend-verify/:username', accounts.resendVerify);
     router.get('/forgot-password/:username', accounts.forgotPassword);
-    router.put('/reset-password/:username/:token',[auth.authenticateExternalToken], accounts.resetPassword);
+    router.put('/reset-password/:username/:token', accounts.resetPassword);
 
     app.use('/account', router);
 }
