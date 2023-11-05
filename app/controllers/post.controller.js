@@ -109,13 +109,13 @@ post.deletePost = async (req, res) => {
     const id = Number(req.params.id);
     const post = await prisma.post.delete({ where: { id: id } })
         .then(() => {
-            prisma.comment.deleteMany({where: {postId: id}})
-            .then(()=> {
-                prisma.postVotes.deleteMany({where:{postId: id}})
-                .then(()=>{
-                    res.send(`post has been deleted`);
+            prisma.comment.deleteMany({ where: { postId: id } })
+                .then(() => {
+                    prisma.postVotes.deleteMany({ where: { postId: id } })
+                        .then(() => {
+                            res.send(`post has been deleted`);
+                        })
                 })
-            })
         })
         .catch(err => {
             res.status(500).send(err.message);
