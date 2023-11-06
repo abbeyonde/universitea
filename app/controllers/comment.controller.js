@@ -49,18 +49,24 @@ comment.displayPostComments = (req, res) => {
 comment.Count = async (req, res) => {
     const id = Number(req.params.id);
 
-    const count = await prisma.comment.count({
+    await prisma.comment.count({
         where: {
             postId: id,
         }
     })
-    console.log(count);
-    if(count){
-        res.sendStatus(count);
-    }
-    else{
-        res.sendStatus(0);
-    }
+    .then((data) => {
+
+        console.log(data);
+        if(data){
+            res.send(data);
+        }
+        else{
+            res.send(0);
+        }
+    })
+    .catch(err => { 
+        res.status(500).send(err.message);
+    })
 
 }
 
