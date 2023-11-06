@@ -56,11 +56,13 @@ const Home = () => {
                 const data = await res.data;
                 const user = await JSON.parse(localStorage.getItem('user'));
                 for (var i in data) {
+
                     //check from db, user liked the post or not
                     const postVote = {
                         accountId: user.id,
                         postId: data[i].id
                     }
+
                     //count comment from db
                     const upVoteState = await checkVoteLog(postVote);
                     const commentCount = await countComment(data[i].id); 
@@ -71,6 +73,7 @@ const Home = () => {
                     datas.push(data[i]);
                 }
                 datas.reverse();
+                
                 setPosts(datas);
                 setIsLoading(false);
                 // console.log(datas);

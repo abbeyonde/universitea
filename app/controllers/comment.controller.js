@@ -54,6 +54,7 @@ comment.Count = async (req, res) => {
             postId: id,
         }
     })
+    console.log(count);
     res.send(count);
 }
 
