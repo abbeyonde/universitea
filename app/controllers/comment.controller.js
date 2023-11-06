@@ -56,10 +56,10 @@ comment.Count = async (req, res) => {
     })
     console.log(count);
     if(count){
-        res.send(count);
+        res.sendStatus(count);
     }
     else{
-        res.send(0);
+        res.sendStatus(0);
     }
 
 }
