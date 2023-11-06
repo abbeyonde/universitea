@@ -55,7 +55,13 @@ comment.Count = async (req, res) => {
         }
     })
     console.log(count);
-    res.send(count);
+    if(count){
+        res.send(count);
+    }
+    else{
+        res.send(0);
+    }
+
 }
 
     //display a comment
