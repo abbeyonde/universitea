@@ -63,13 +63,14 @@ const Home = () => {
                         postId: data[i].id
                     }
 
-                    //count comment from db
                     const upVoteState = await checkVoteLog(postVote);
-                    const commentCount = await countComment(data[i].id); 
                     console.log(`upvoteState: ${upVoteState}`);
                     data[i].upvoted = upVoteState;
-                    data[i].downvoted = false;
-                    data[i].commentCount = commentCount;
+                    // data[i].downvoted = false;
+
+                    //count comment from db
+                    // const commentCount = await countComment(data[i].id); 
+                    // data[i].commentCount = commentCount;
                     datas.push(data[i]);
                 }
                 datas.reverse();
