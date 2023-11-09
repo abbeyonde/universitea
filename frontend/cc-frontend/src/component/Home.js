@@ -71,7 +71,7 @@ const Home = () => {
                     // //count comment from db
                     // const commentCount = await countComment(data[i].id); 
                     // data[i].commentCount = commentCount;
-                    // datas.push(data[i]);
+                    datas.push(data[i]);
                 }
                 datas.reverse();
                 
