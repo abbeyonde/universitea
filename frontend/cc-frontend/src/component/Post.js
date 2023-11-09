@@ -34,7 +34,7 @@ const Post = () => {
         }
     ]);
     const [comment, setComment] = useState('');
-    const [text, setText] = useState(null) ;
+    const [text, setText] = useState(null);
     const { id } = useParams();
 
     useEffect(() => {
@@ -70,7 +70,7 @@ const Post = () => {
         postService.post(id)
             .then(async (res) => {
                 const datas = [];
-                const data = res.data;
+                const data = await res.data;
                 const user = await JSON.parse(localStorage.getItem('user'));
                 const postVote = {
                     accountId: user.id,
@@ -155,40 +155,42 @@ const Post = () => {
     return (
         <div className="post-body">
             <div className='border-1px display-block bg-transparent'>
-                <div className='post'>
-                    <div className='img-anon'><Anon /></div>
-                    <div className='post-content bg-transparent align-left'>
-                        <Link to={`/post/${post.id}`}>
-                            <p className='bg-transparent align-left'>{post.content}</p>
-                        </Link>
-                    </div>
-                    <div className='tea-score'>
-                        <div className='counter'>
-                            <p>{post.upvote}</p>
+                {post && post.map && post.map((post) => (
+                    <div className='post'>
+                        <div className='img-anon'><Anon /></div>
+                        <div className='post-content bg-transparent align-left'>
+                            <Link to={`/post/${post.id}`}>
+                                <p className='bg-transparent align-left'>{post.content}</p>
+                            </Link>
                         </div>
-                        {post.upvoted ?
-                            <div className='hot-vote'>
-                                <button className='vote' onClick={() => {
-                                    onClickUpvote(post.id, -1, post.upvoted);
-                                    post.upvote += -1;
-                                    // post.upvoted = false;
-                                }}>
-                                    <FavoriteIcon color={'tomato'} />
-                                </button>
-                            </div> :
-                            <div className='hot-vote'>
-                                <button className='vote' onClick={() => {
-                                    onClickUpvote(post.id, 1, post.upvoted);
-                                    post.upvote += 1;
-                                    // post.upvoted = true;
-
-                                }}>
-                                    <FavoriteIcon color={'grey'} />
-                                </button>
+                        <div className='tea-score'>
+                            <div className='counter'>
+                                <p>{post.upvote}</p>
                             </div>
-                        }
+                            {post.upvoted ?
+                                <div className='hot-vote'>
+                                    <button className='vote' onClick={() => {
+                                        onClickUpvote(post.id, -1, post.upvoted);
+                                        post.upvote += -1;
+                                        // post.upvoted = false;
+                                    }}>
+                                        <FavoriteIcon color={'tomato'} />
+                                    </button>
+                                </div> :
+                                <div className='hot-vote'>
+                                    <button className='vote' onClick={() => {
+                                        onClickUpvote(post.id, 1, post.upvoted);
+                                        post.upvote += 1;
+                                        // post.upvoted = true;
+
+                                    }}>
+                                        <FavoriteIcon color={'grey'} />
+                                    </button>
+                                </div>
+                            }
+                        </div>
                     </div>
-                </div>
+                ))}
                 <div className='comment'>
                     <textarea
                         placeholder='Comment'
