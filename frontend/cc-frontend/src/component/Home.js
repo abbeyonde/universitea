@@ -29,7 +29,7 @@ const Home = () => {
         }
     ]);
 
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const [newConfession, setNewConfession] = useState(false);
     const [text, setText] = useState(null) ;
 
@@ -68,10 +68,10 @@ const Home = () => {
                     data[i].upvoted = upVoteState;
                     // data[i].downvoted = false;
 
-                    //count comment from db
-                    const commentCount = await countComment(data[i].id); 
-                    data[i].commentCount = commentCount;
-                    datas.push(data[i]);
+                    // //count comment from db
+                    // const commentCount = await countComment(data[i].id); 
+                    // data[i].commentCount = commentCount;
+                    // datas.push(data[i]);
                 }
                 datas.reverse();
                 
@@ -90,10 +90,10 @@ const Home = () => {
         return voteState.data;
     }
 
-    const countComment = async (data) => {
-        const commentCount = await commentService.count(data);
-        return commentCount.data;
-    }
+    // const countComment = async (data) => {
+    //     const commentCount = await commentService.count(data);
+    //     return commentCount.data;
+    // }
 
     const onClickUpvote = async (id, value, voteState) => {
 
