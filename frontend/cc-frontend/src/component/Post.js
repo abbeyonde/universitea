@@ -69,6 +69,7 @@ const Post = () => {
     const getPost = () => {
         postService.post(id)
             .then(async (res) => {
+                const datas = [];
                 const data = res.data;
                 const user = await JSON.parse(localStorage.getItem('user'));
                 const postVote = {
@@ -77,7 +78,8 @@ const Post = () => {
                 }
                 const upVoteState = await checkVoteLog(postVote);
                 data.upvoted = upVoteState;
-                setPost(data);
+                datas.push(data);
+                setPost(datas);
             })
             .catch(err => {
                 // res.send(err.message);
@@ -110,8 +112,9 @@ const Post = () => {
 
         }
 
-        post.upvoted = !post.upvoted;
-        const new_post = post;
+        // post.upvoted = !post.upvoted;
+        // const new_post = post;
+        const new_post = post.map((post) => post.id === id ? { ...post, upvoted: !post.upvoted } : post);
         console.log(post);
         setPost(new_post);
     }
