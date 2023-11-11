@@ -136,7 +136,7 @@ const MyConfess = () => {
                         <li className='border-1px display-block bg-transparent' key={post.id}>
                             <div className='post'>
                                 <div className='img-anon'><Anon /></div>
-                                <div className='post-content bg-transparent align-left'>
+                                <div className='post-content bg-transparent align-justify'>
                                     <Link to={`/post/${post.id}`}>
                                         <p className='bg-transparent align-left'>{post.content}</p>
                                     </Link>

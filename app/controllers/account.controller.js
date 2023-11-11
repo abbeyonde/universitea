@@ -147,20 +147,33 @@ account.forgotPassword = async (req, res) => {
 
 account.verify = async (req, res) => {
     const user = await prisma.account.findUnique({ where: { username: req.params.username } })
-    prisma.account.update({
-        where: {
-            id: Number(user.id)
-        },
-        data: {
-            verified: true
+    const token = req.params.verifyToken;
+    if (user) {
+        if(jwt.verify(token, process.env.TOKEN_SECRET_VERIFY)){
+
+            prisma.account.update({
+                where: {
+                id: Number(user.id)
+            },
+            data: {
+                verified: true
+            }
+        })
+            .then((data) => {
+                res.send(data);
+            })
+            .catch(err => {
+                console.log(err.message);
+                res.status(500).send(`Unable to verify your account. Please contact website admin`);
+            })
         }
-    })
-        .then((data) => {
-            res.send(data);
-        })
-        .catch(err => {
-            console.log(err.message);
-        })
+        else{
+            res.status(400).send(`Unauthorized action detected`)
+        }
+    }
+    else{
+        res.status(400).send(`Username cannot be found`);
+    }
 }
 
 //login to an account
@@ -236,7 +249,7 @@ account.update = async (req, res) => {
 account.changeUsername = async (req, res) => {
     const username = req.body.username
     const id = req.params.id
-    await prisma.account.update({
+    prisma.account.update({
         where: {
             id: Number(id)
         },

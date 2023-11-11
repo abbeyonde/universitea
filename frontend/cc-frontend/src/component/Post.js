@@ -160,7 +160,7 @@ const Post = () => {
                         <div className='img-anon'><Anon /></div>
                         <div className='post-content bg-transparent align-left'>
                             <Link to={`/post/${post.id}`}>
-                                <p className='bg-transparent align-left'>{post.content}</p>
+                                <p className='bg-transparent align-justify'>{post.content}</p>
                             </Link>
                         </div>
                         <div className='tea-score'>
@@ -206,7 +206,7 @@ const Post = () => {
                         <li className='border-1px display-block transparent'>
                             <div className='post'>
                                 {/* <div className='img-anon'></div> */}
-                                <div className='post-content bg-transparent align-left'>
+                                <div className='post-content bg-transparent align-justify'>
                                     <p className='bg-transparent align-left'>{comment.content}</p>
                                 </div>
                             </div>
