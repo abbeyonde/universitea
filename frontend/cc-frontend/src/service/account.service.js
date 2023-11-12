@@ -3,7 +3,7 @@ import authHeader from "./auth-header";
 
 class Account {
     changeUsername(username, user) {
-        return http.put(`account/profile/${user.id}/username`, {
+        return http.put(`account/profile/${user.id}/change-username`, {
             username: username
         },
             {
