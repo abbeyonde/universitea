@@ -248,7 +248,7 @@ account.update = async (req, res) => {
 //change username
 account.changeUsername = async (req, res) => {
     const username = req.body.username;
-    const id = await req.params.id;
+    const id = req.body.id;
     prisma.account.update({
         where: {
             id: Number(id)
