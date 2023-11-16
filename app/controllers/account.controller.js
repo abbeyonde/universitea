@@ -215,9 +215,9 @@ account.login = async (req, res) => {
 
 //get account profile
 account.getProfile = async (req, res) => {
-    const username = req.params.username;
+    const id = req.params.id;
 
-    await prisma.account.findUnique({ where: { username: username } })
+    await prisma.account.findUnique({ where: { id: Number(id) } })
         .then((data) => {
             console.log(data);
             res.send(data);

@@ -39,7 +39,7 @@ class AuthService {
     //get account profile
     getProfile(user) {
         console.log(user.username);
-        return http.get(`account/profile/${user.username}`, { headers: authHeader() });
+        return http.get(`account/profile/${user.id}`, { headers: authHeader() });
     }
 
     //delete account

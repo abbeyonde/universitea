@@ -36,7 +36,7 @@ class Account {
     }
 
     update(user){
-        return http.get(`account/profile/update/${user.id}`);
+        return http.get(`account/profile/update/${user.id}`,{headers: authHeader()});
     }
 
     verify(data){
