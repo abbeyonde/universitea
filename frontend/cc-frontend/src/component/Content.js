@@ -14,6 +14,7 @@ import Verification from './Verification';
 import ConfirmVerification from './ConfirmVerify';
 import ForgotPassword from './ForgotPassword';
 import ResetPassword from './ResetPassword';
+import Footer from './Footer';
 
 
 
@@ -41,6 +42,9 @@ const Content = () => {
                     <Route path='confirm-verify/:username' element={<ConfirmVerification />}></Route>
                 </Routes>
             </div>
+        <footer>
+            <Footer />
+        </footer>
         </main>
 
     );
