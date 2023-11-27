@@ -26,7 +26,7 @@ const NewPost = () => {
     }
 
     const handleClickPost = async () => {
-        const user = await JSON.parse(localStorage.getItem('user'));
+        const user = await JSON.parse(sessionStorage.getItem('user'));
         const data = {
             content: content,
             accountId: user.id,
