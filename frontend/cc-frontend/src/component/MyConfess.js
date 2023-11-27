@@ -38,7 +38,7 @@ const MyConfess = () => {
     }, [socket])
 
     const getUserPosts = async () => {
-        const user = await JSON.parse(localStorage.getItem('user'));
+        const user = await JSON.parse(sessionStorage.getItem('user'));
         Post.userPost(user.username)
             .then(async (res) => {
                 const datas = [];
@@ -72,7 +72,7 @@ const MyConfess = () => {
 
     const onClickUpvote = async (id, value, voteState) => {
 
-        const user = await JSON.parse(localStorage.getItem('user'));
+        const user = await JSON.parse(sessionStorage.getItem('user'));
         const postVote = {
             accountId: user.id,
             postId: id
@@ -96,7 +96,7 @@ const MyConfess = () => {
     }
 
     const handleClickComment = async (postId) => {
-        const user = await JSON.parse(localStorage.getItem('user'));
+        const user = await JSON.parse(sessionStorage.getItem('user'));
         const data = {
             content: comment,
             postId: postId,

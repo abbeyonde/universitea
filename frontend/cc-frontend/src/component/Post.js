@@ -11,28 +11,28 @@ import Anon from '../icon/Anon';
 
 
 const Post = () => {
-    // const [post, setPost] = useState('');
-    // const [comments, setComments] = useState([]);
-    const [post, setPost] = useState([
-        {
-            id: 1,
-            content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis ultricies lacus sed turpis tincidunt id aliquet risus feugiat. Pretium quam vulputate dignissim suspendisse in est ante in. Nunc consequat interdum varius sit amet mattis vulputate. Leo vel orci porta non pulvinar neque. Tortor at risus viverra adipiscing at in tellus integer. Ultrices sagittis orci a scelerisque purus semper eget duis at. Turpis nunc eget lorem dolor sed viverra ipsum nunc. Velit dignissim sodales ut eu sem integer. Facilisi nullam vehicula ipsum a. Sit amet massa vitae tortor condimentum lacinia quis vel eros. Natoque penatibus et magnis dis. Urna porttitor rhoncus dolor purus non enim praesent. Neque gravida in fermentum et. Porttitor rhoncus dolor purus non enim praesent. Id porta nibh venenatis cras sed. Consequat interdum varius sit amet mattis vulputate. Commodo nulla facilisi nullam vehicula ipsum a arcu cursus vitae. Elementum sagittis vitae et leo duis. Enim lobortis scelerisque fermentum dui faucibus in ornare.",
-            upvote: 9,
-            downvote: 2,
-            upvoted: false,
-            downvoted: false
-        }
-    ]);
-    const [comments, setComments] = useState([
-        {
-            id: 1,
-            content: "adsadasdasda",
-            upvote: 9,
-            downvote: 2,
-            upvoted: false,
-            downvoted: false
-        }
-    ]);
+    const [post, setPost] = useState([]);
+    const [comments, setComments] = useState([]);
+    // const [post, setPost] = useState([
+    // {
+    //     id: 1,
+    //         content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis ultricies lacus sed turpis tincidunt id aliquet risus feugiat. Pretium quam vulputate dignissim suspendisse in est ante in. Nunc consequat interdum varius sit amet mattis vulputate. Leo vel orci porta non pulvinar neque. Tortor at risus viverra adipiscing at in tellus integer. Ultrices sagittis orci a scelerisque purus semper eget duis at. Turpis nunc eget lorem dolor sed viverra ipsum nunc. Velit dignissim sodales ut eu sem integer. Facilisi nullam vehicula ipsum a. Sit amet massa vitae tortor condimentum lacinia quis vel eros. Natoque penatibus et magnis dis. Urna porttitor rhoncus dolor purus non enim praesent. Neque gravida in fermentum et. Porttitor rhoncus dolor purus non enim praesent. Id porta nibh venenatis cras sed. Consequat interdum varius sit amet mattis vulputate. Commodo nulla facilisi nullam vehicula ipsum a arcu cursus vitae. Elementum sagittis vitae et leo duis. Enim lobortis scelerisque fermentum dui faucibus in ornare.",
+    //         upvote: 9,
+    //         downvote: 2,
+    //         upvoted: false,
+    //         downvoted: false
+    //     }
+    // ]);
+    // const [comments, setComments] = useState([
+    //     {
+    //         id: 1,
+    //         content: "adsadasdasda",
+    //         upvote: 9,
+    //         downvote: 2,
+    //         upvoted: false,
+    //         downvoted: false
+    //     }
+    // ]);
     const [comment, setComment] = useState('');
     const [text, setText] = useState(null);
     const { id } = useParams();
@@ -71,7 +71,7 @@ const Post = () => {
             .then(async (res) => {
                 const datas = [];
                 const data = await res.data;
-                const user = await JSON.parse(localStorage.getItem('user'));
+                const user = await JSON.parse(sessionStorage.getItem('user'));
                 const postVote = {
                     accountId: user.id,
                     postId: data.id
@@ -96,7 +96,7 @@ const Post = () => {
 
     const onClickUpvote = async (id, value, voteState) => {
 
-        const user = await JSON.parse(localStorage.getItem('user'));
+        const user = await JSON.parse(sessionStorage.getItem('user'));
         const postVote = {
             accountId: user.id,
             postId: id
@@ -126,7 +126,7 @@ const Post = () => {
     }
 
     const handleClickComment = async (postId) => {
-        const user = await JSON.parse(localStorage.getItem('user'));
+        const user = await JSON.parse(sessionStorage.getItem('user'));
         const data = {
             content: comment,
             postId: postId,

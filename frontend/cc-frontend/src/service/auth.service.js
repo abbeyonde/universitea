@@ -19,8 +19,8 @@ class AuthService {
                         communityId: res.data.user.communityId,
                         uT_token: AUTH_TOKEN
                     }
-                    localStorage.setItem('user', JSON.stringify(user));
-                    localStorage.setItem('uT_token', JSON.stringify(AUTH_TOKEN));
+                    sessionStorage.setItem('user', JSON.stringify(user));
+                    sessionStorage.setItem('uT_token', JSON.stringify(AUTH_TOKEN));
                 }
                 return res.data;
             })
@@ -46,7 +46,7 @@ class AuthService {
 
     //chech if user is signed in or not
     getCurrentUser() {
-        return JSON.parse(localStorage.getItem('user'));
+        return JSON.parse(sessionStorage.getItem('user'));
     }
 }
 export default new AuthService();

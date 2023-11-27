@@ -15,19 +15,19 @@ import commentService from '../service/comment.service';
 
 const Home = () => {
 
-    // const [posts, setPosts] = useState([]);
+    const [posts, setPosts] = useState([]);
 
-    const [posts, setPosts] = useState([
-        {
-            id: 1,
-            content: "Lorem ipsum dolor sit amet",
-            upvote: 9,
-            downvote: 2,
-            upvoted: false,
-            downvoted: false,
-            commentCount: 12
-        }
-    ]);
+    // const [posts, setPosts] = useState([
+    //     {
+    //         id: 1,
+    //         content: "Lorem ipsum dolor sit amet",
+    //         upvote: 9,
+    //         downvote: 2,
+    //         upvoted: false,
+    //         downvoted: false,
+    //         commentCount: 12
+    //     }
+    // ]);
 
     const [isLoading, setIsLoading] = useState(true);
     const [newConfession, setNewConfession] = useState(false);
@@ -54,7 +54,7 @@ const Home = () => {
             .then(async (res) => {
                 const datas = [];
                 const data = await res.data;
-                const user = await JSON.parse(localStorage.getItem('user'));
+                const user = await JSON.parse(sessionStorage.getItem('user'));
                 for (var i in data) {
 
                     //check from db, user liked the post or not
@@ -97,7 +97,7 @@ const Home = () => {
 
     const onClickUpvote = async (id, value, voteState) => {
 
-        const user = await JSON.parse(localStorage.getItem('user'));
+        const user = await JSON.parse(sessionStorage.getItem('user'));
         const postVote = {
             accountId: user.id,
             postId: id
@@ -121,7 +121,7 @@ const Home = () => {
     }
 
     const handleClickComment = async (postId) => {
-        const user = await JSON.parse(localStorage.getItem('user'));
+        const user = await JSON.parse(sessionStorage.getItem('user'));
         const data = {
             content: comment,
             postId: postId,

@@ -1,6 +1,6 @@
 export default function authHeader() {
-    const uT_token = JSON.parse(localStorage.getItem('uT_token'));
-    const user = JSON.parse(localStorage.getItem('user'));
+    const uT_token = JSON.parse(sessionStorage.getItem('uT_token'));
+    const user = JSON.parse(sessionStorage.getItem('user'));
     //get accessToken from cookie
 
     if (user && uT_token) {

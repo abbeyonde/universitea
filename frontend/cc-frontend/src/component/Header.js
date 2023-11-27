@@ -19,7 +19,8 @@ const Header = () => {
     })
 
     const onClickSignOut = () => {
-        localStorage.removeItem('user');
+        sessionStorage.removeItem('user');
+        sessionStorage.removeItem('uT_token');
         navigate('/');
         window.location.reload();
     }

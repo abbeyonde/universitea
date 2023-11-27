@@ -22,13 +22,13 @@ const Profile = () => {
     }, [])
 
     const getProfile = async () => {
-        const currentUser = await JSON.parse(localStorage.getItem('user'));
+        const currentUser = await JSON.parse(sessionStorage.getItem('user'));
         setUser(currentUser);
         console.log(user);
         authService.getProfile(currentUser)
             .then(async (res) => {
                 const data = await res.data;
-                console.log(data);
+                // console.log(data);
                 setUsername(data.username);
                 setEmail(data.email);
                 setCommunityId(data.communityId);
