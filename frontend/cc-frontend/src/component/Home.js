@@ -12,6 +12,7 @@ import Anon from '../icon/Anon';
 // import 'react-toastify/dist/ReactToastify.css'
 import socket from '../socket';
 import commentService from '../service/comment.service';
+import CommentIcon from '../icon/CommentIcon.jsx';
 
 const Home = () => {
 
@@ -31,7 +32,7 @@ const Home = () => {
 
     const [isLoading, setIsLoading] = useState(true);
     const [newConfession, setNewConfession] = useState(false);
-    const [text, setText] = useState(null) ;
+    const [text, setText] = useState(null);
 
 
     const [comment, setComment] = useState('');
@@ -74,7 +75,7 @@ const Home = () => {
                     datas.push(data[i]);
                 }
                 datas.reverse();
-                
+
                 setPosts(datas);
                 setIsLoading(false);
                 // console.log(datas);
@@ -214,15 +215,15 @@ const Home = () => {
                                         </div>
                                     </div>
                                     <div className='comment'>
-                                        <div className='count-comment'><label className='count'>{post.commentCount}</label></div>
+                                        <div className='count-comment'><CommentIcon /></div>
                                         <textarea
                                             className='comment-textarea'
                                             placeholder='Comment'
                                             onChange={onChangeComment}
                                             required></textarea>
-                                        <button onClick={() => { 
+                                        <button onClick={() => {
                                             handleClickComment(post.id);
-                                            }}>Comment</button>
+                                        }}>Comment</button>
                                     </div>
                                 </li>
                             )
