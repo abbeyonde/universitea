@@ -7,6 +7,7 @@ import Comment from '../service/comment.service';
 import voteService from '../service/vote.service';
 import Anon from '../icon/Anon';
 import socket from '../socket';
+import CommentIcon from '../icon/CommentIcon.jsx';
 
 const MyConfess = () => {
     const [posts, setPosts] = useState([]);
@@ -170,6 +171,7 @@ const MyConfess = () => {
                                 </div>
                             </div>
                             <div className='comment'>
+                                <div className='count-comment' ><Link to={`/post/${post.id}`}><CommentIcon /></Link></div>
                                 <textarea
                                     placeholder='Comment'
                                     onChange={onChangeComment}

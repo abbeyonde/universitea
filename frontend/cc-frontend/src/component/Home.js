@@ -215,7 +215,7 @@ const Home = () => {
                                         </div>
                                     </div>
                                     <div className='comment'>
-                                        <div className='count-comment'><CommentIcon /></div>
+                                        <div className='count-comment' ><Link to={`/post/${post.id}`}><CommentIcon /></Link></div>
                                         <textarea
                                             className='comment-textarea'
                                             placeholder='Comment'
