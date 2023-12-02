@@ -5,15 +5,24 @@
     background-color: #f9ffff;
 }
 
+@media only screen and (max-width: 800px)  {
+    .post-body{
+        width: 100%;
+    }
+}
+
 .container-username{
     width: 100%;
-    min-height: 200px;
+    min-height: 240px;
+    max-height: fit-content;
     height: 25%;
     background-color: rgba(253, 253, 253, 0.678);
     border-bottom: 1px solid gray;
     padding: 20px;
     text-align: right;
+    display: block;
 }
+
 .container-email{
     width: 100%;
     height: 15%;

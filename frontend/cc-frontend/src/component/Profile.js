@@ -98,15 +98,19 @@ const Profile = () => {
     return (
         <div className="post-body">
             <div className="container-username">
-                <div className="bg-transparent">
+                <div className="test">
                     <label>Username:</label>
                     <input type="text" value={username} readOnly></input>
                 </div>
-                <button onClick={onClickUsername}>change username</button>
+                {changeUsername ?
+                    <button onClick={() => { setChangeUsername(false) }}>cancel</button>
+                    :
+                    <button onClick={onClickUsername}>change username</button>
+                }
                 {changeUsername ?
                     (
                         <div className="new-field">
-                            <input className="mx-right-0" onChange={onChangeUsername} placeholder="New username"></input>
+                            <input className="" onChange={onChangeUsername} placeholder="new username"></input>
                             <button onClick={onClickSubmitUsername}>Submit</button>
                         </div>
                     ) : (
@@ -120,7 +124,11 @@ const Profile = () => {
             </div>
             <div className="container-pw">
                 <label>Password:</label>
-                <button onClick={onClickPassword}>change password</button>
+                {changePassword ?
+                    <button onClick={() => { setChangePassword(false) }}>cancel</button>
+                    :
+                    <button onClick={onClickPassword}>change password</button>
+                }
                 {changePassword ?
                     (
                         <div className="input-pw new-field">
@@ -140,10 +148,10 @@ const Profile = () => {
             </div>
             {
                 changeProfile ?
-                <button className="update-button" onClick={onClickUpdateProfile}>Update</button>
-                :
-                <div></div>
-}
+                    <button className="update-button" onClick={onClickUpdateProfile}>Update</button>
+                    :
+                    <div></div>
+            }
         </div>
     )
 }

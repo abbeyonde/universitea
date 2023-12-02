@@ -42,9 +42,6 @@ const Content = () => {
                     <Route path='confirm-verify/:username' element={<ConfirmVerification />}></Route>
                 </Routes>
             </div>
-        <footer>
-            <Footer />
-        </footer>
         </main>
 
     );
