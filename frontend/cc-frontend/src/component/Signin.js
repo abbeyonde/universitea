@@ -34,7 +34,7 @@ const SignIn = () => {
                 navigate('/home');
                 window.location.reload();
             })
-            .catch((e,res) => {
+            .catch((e, res) => {
                 const resMsg = (e.response && e.response.data && e.response.data.message ||
                     e.message ||
                     e.toString());
@@ -48,6 +48,9 @@ const SignIn = () => {
 
     return (
         <div className="bg-signin">
+            <div className='close-btn'>
+                <p onClick={()=>{window.location.reload()}}>x</p>
+            </div>
             <div className="signin-form">
                 Sign In
                 <div className="signin-input-field">

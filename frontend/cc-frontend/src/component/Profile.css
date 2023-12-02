@@ -82,6 +82,10 @@
     background-color: #3026272d;
     font-family: 'Montserrat', sans-serif;
 }
+.container-community input{
+    text-align: center;
+    width: 40%;
+}
 
 .new-field .mx-right-0{
     margin-right: 0px;

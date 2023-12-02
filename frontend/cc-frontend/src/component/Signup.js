@@ -1,6 +1,6 @@
 import './Signin-Signup.css'
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import authService from '../service/auth.service';
 
 const SignUp = () => {
@@ -13,9 +13,9 @@ const SignUp = () => {
     const [messageRePw, setMessageRePw] = useState('');
     const [messageSignUp, setMessageSignUp] = useState('');
     const [agree, setAgree] = useState(false);
-    const [usernameState , setUsernameState] = useState(false);
-    const [emailState , setEmailState] = useState(false);
-    const [pwState , setPwState] = useState(false);
+    const [usernameState, setUsernameState] = useState(false);
+    const [emailState, setEmailState] = useState(false);
+    const [pwState, setPwState] = useState(false);
 
     const navigate = useNavigate();
 
@@ -26,11 +26,11 @@ const SignUp = () => {
 
     const onChangeUsername = (e) => {
         const username = e.target.value;
-        if(String(username).length >= 6 && String(username).length <= 12){
+        if (String(username).length >= 6 && String(username).length <= 12) {
             setMessageUsername('');
             setUsernameState(true);
         }
-        else{
+        else {
             setMessageUsername('Username must be between 6-12 characters only');
         }
         setUsername(username);
@@ -74,7 +74,7 @@ const SignUp = () => {
         }
         console.log('click')
         //service signin
-        if( usernameState && emailState && pwState && agree){
+        if (usernameState && emailState && pwState && agree) {
             console.log(true)
             setMessageSignUp('')
             authService.signUp(data)
@@ -91,16 +91,16 @@ const SignUp = () => {
                     setMessageUsername(e.response.data);
                 })
         }
-        else{
+        else {
             console.log(false);
             setMessageSignUp('You must fill all fields and agree to our terms and condition')
         }
     }
 
-    const onClickTnC = ()=>{
+    const onClickTnC = () => {
         const agreeLocal = agree;
         setAgree(!agreeLocal);
-        if( usernameState && emailState && pwState && agree){
+        if (usernameState && emailState && pwState && agree) {
             console.log(true)
             setMessageSignUp('')
         }
@@ -108,6 +108,9 @@ const SignUp = () => {
 
     return (
         <div className="bg-signin">
+            <div className='close-btn'>
+                <p onClick={() => { window.location.reload() }}>x</p>
+            </div>
             <div className="signin-form w-50p">
                 Sign Up
                 <div className="signin-input-field">
@@ -154,8 +157,8 @@ const SignUp = () => {
                     </div>
                     <button
                         className='btn-sign-in'
-                        onClick={handleClickSignUp} 
-                        >Sign Up</button>
+                        onClick={handleClickSignUp}
+                    >Sign Up</button>
                 </div>
             </div>
         </div >

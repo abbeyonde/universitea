@@ -15,6 +15,7 @@ import ConfirmVerification from './ConfirmVerify';
 import ForgotPassword from './ForgotPassword';
 import ResetPassword from './ResetPassword';
 import Footer from './Footer';
+import LandingPage from './LandingPage';
 
 
 
@@ -26,9 +27,10 @@ const Content = () => {
     // })
     return (
         <main>
-            <div className='container mt-3'>
+            <div className=''>
                 {/* <p>test</p> */}
                 <Routes>
+                    <Route path='/' element={<LandingPage />}></Route>
                     <Route path='/sign-in' element={<SignIn />} />
                     <Route path='/sign-up' element={<SignUp />} />
                     <Route path='/verify/:username/:verifyToken' element={<Verification />}/>

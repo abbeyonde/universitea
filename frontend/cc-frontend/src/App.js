@@ -1,15 +1,31 @@
+import { useEffect, useState } from 'react';
 import './App.css';
 import Content from './component/Content';
 import Footer from './component/Footer';
 import Header from './component/Header';
+import authService from './service/auth.service';
 
 function App() {
-
+  const [user, setUser] = useState(undefined)
+  useEffect(() => {
+    const user = authService.getCurrentUser();
+    if (user) {
+      setUser(user)
+    }
+  })
   return (
     <div className="App">
-      <Header />
+      {user ?
+        <div>
+          <Header />
+        </div>
+        :
+        <div>
+          <Footer />
+
+        </div>
+      }
       <Content />
-      {/* <Footer /> */}
     </div>
   );
 }

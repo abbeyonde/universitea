@@ -1,0 +1,140 @@
+* {
+  font-family: 'Montserra', sans-serif;
+}
+
+.container-lp{
+    width: 90%;
+    height: 100%;
+    /* margin-left: auto; */
+    /* margin-right: auto; */
+    margin: auto auto;
+    margin-top: 10%;
+    display: flex;
+    justify-content: space-around;
+    background-color: transparent;
+
+}
+.logo{
+    display: flex;
+    width: 50vw;
+    height: 50vh;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+}
+.in-container{
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    justify-content: space-evenly;
+    text-align: left;
+    background-color: transparent;
+}
+.container-lp h1{
+    font-size:100px;
+    /* font-family:'Courier New', Courier, monospace; */
+    
+}
+
+.container-lp h2{
+    font-size: 50px;
+}
+
+.container-lp h1,h2,p{
+    background-color: transparent;
+}
+.desc h3{
+    padding: 10px 0;
+}
+/* .popup {
+    position: fixed;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    visibility: hidden;
+    background-color: rgba(0, 0, 0, 0.459);
+    opacity: 0;
+    z-index: 1;
+    display: block;
+} */
+b:hover{
+    cursor: pointer;
+}
+/* .popup:target {
+    visibility: visible;
+    opacity: 1;
+} */
+
+.sign-button{
+    display: flex;
+    flex-direction: column;
+
+}
+
+.container-lp button{
+    width: 100%;
+}
+
+.signup-el button{
+    background-color: rgb(59, 46, 48);
+    margin: 15px 0;
+    color: white
+}
+
+.signin-el{
+    padding-top: 15px;
+    border-top: solid 1px rgb(145, 145, 145);
+}
+
+.signin-el p{
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.signin-el button{
+    border: solid 1px gray;
+    background-color: transparent;
+}
+.content{
+    background-color: transparent;
+}
+
+.popup{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.459);
+    display: block;
+}
+
+@media only screen and (max-width: 1000px) {
+
+    .container-lp{
+        height: 100vh;
+        margin-top: 0;
+        margin: auto auto;
+        /* margin: 10px 10px; */
+        padding: 30px 10px;
+        flex-direction: column;
+        justify-content: space-evenly;
+        /* justify-content: center; */
+    }
+    .logo{
+        width: fit-content;
+        height: fit-content;
+        text-align: left;
+    }
+    .container-lp h1{
+        font-size: 50px;
+    }
+
+    .container-lp h2{
+        font-size: xx-large;
+    }
+    
+}
