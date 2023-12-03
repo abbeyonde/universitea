@@ -18,14 +18,16 @@ function App() {
       {user ?
         <div>
           <Header />
+          <Content />
         </div>
         :
         <div>
+          <Content />
           <Footer />
 
         </div>
       }
-      <Content />
+      {/* <Content /> */}
     </div>
   );
 }
