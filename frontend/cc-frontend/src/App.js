@@ -22,12 +22,10 @@ function App() {
         </div>
         :
         <div>
-          <Content />
-          <Footer />
-
+          {/* <Content /> */}
         </div>
       }
-      {/* <Content /> */}
+      <Content />
     </div>
   );
 }
