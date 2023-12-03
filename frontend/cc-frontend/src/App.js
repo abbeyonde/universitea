@@ -18,7 +18,7 @@ function App() {
       {user ?
         <div>
           <Header />
-          <Content />
+          {/* <Content /> */}
         </div>
         :
         <div>
