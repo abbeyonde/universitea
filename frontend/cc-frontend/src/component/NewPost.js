@@ -11,11 +11,12 @@ const NewPost = () => {
     const navigate = useNavigate();
     if (textarea) {
         textarea.addEventListener('keyup', e => {
-            textarea.style.height = '63px';
+            textarea.style.height = '60px';
             let scHeight = e.target.scrollHeight;
             textarea.style.height = `${scHeight}px`;
         })
     }
+    
 
     const [content, setContent] = useState('');
     const [message, setMessage] = useState('');
@@ -57,6 +58,7 @@ const NewPost = () => {
             <div className='wrapper'>
                 <h2 className='transparent'>Confession</h2>
                 <textarea
+                    id='confession'
                     placeholder='Write your confession here...'
                     onChange={onChangeContent}
                     required></textarea>

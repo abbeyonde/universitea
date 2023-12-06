@@ -9,8 +9,7 @@ const Header = () => {
     const navigate = useNavigate();
     const [currentUser, setCurrentUser] = useState(undefined);
     const [page, setPage] = useState('Home');
-    const screenSize = window.screen.availWidth;
-    console.log(screenSize)
+
     useEffect(() => {
         const user = authService.getCurrentUser();
         // setPage('Home')
