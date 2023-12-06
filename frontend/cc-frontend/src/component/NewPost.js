@@ -61,6 +61,10 @@ const NewPost = () => {
                     id='confession'
                     placeholder='Write your confession here...'
                     onChange={onChangeContent}
+                    spellCheck='false'
+                    autoCapitalize='off'
+                    autoCorrect='off'
+                    autoComplete='off'
                     required></textarea>
                 <button className='new-post-btn' onClick={handleClickPost}>Spill</button>
             </div>
