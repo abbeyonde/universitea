@@ -9,13 +9,13 @@ import socket from '../socket';
 const NewPost = () => {
     const textarea = document.querySelector('textarea');
     const navigate = useNavigate();
-    if (textarea) {
-        textarea.addEventListener('keyup', e => {
-            textarea.style.height = '60px';
-            let scHeight = e.target.scrollHeight;
-            textarea.style.height = `${scHeight}px`;
-        })
-    }
+    // if (textarea) {
+    //     textarea.addEventListener('keyup', e => {
+    //         textarea.style.height = '60px';
+    //         let scHeight = e.target.scrollHeight;
+    //         textarea.style.height = `${scHeight}px`;
+    //     })
+    // }
     
 
     const [content, setContent] = useState('');
@@ -24,6 +24,11 @@ const NewPost = () => {
     const onChangeContent = (e) => {
         const content = e.target.value;
         setContent(content);
+    }
+
+    const onKeyUp = (e) => {
+        let scHeight = e.target.scrollHeight;
+        textarea.style.height = `${scHeight}px`
     }
 
     const handleClickPost = async () => {
@@ -61,6 +66,7 @@ const NewPost = () => {
                     id='confession'
                     placeholder='Write your confession here...'
                     onChange={onChangeContent}
+                    onKeyUp={onKeyUp}
                     spellCheck='false'
                     autoCapitalize='off'
                     autoCorrect='off'
