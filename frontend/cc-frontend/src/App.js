@@ -4,6 +4,7 @@ import Content from './component/Content';
 import Footer from './component/Footer';
 import Header from './component/Header';
 import authService from './service/auth.service';
+import HeaderMobile from './component/HeaderMobile';
 
 function App() {
   const [user, setUser] = useState(undefined)
@@ -18,6 +19,7 @@ function App() {
       {user ?
         <div>
           <Header />
+          <HeaderMobile />
           {/* <Content /> */}
         </div>
         :
