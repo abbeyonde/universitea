@@ -18,7 +18,7 @@ function App() {
     <div className="App">
       {user ?
         <div>
-          <Header />
+          {/* <Header /> */}
           <HeaderMobile />
           {/* <Content /> */}
         </div>
