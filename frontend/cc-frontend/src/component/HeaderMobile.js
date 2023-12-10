@@ -35,8 +35,8 @@ const HeaderMobile = () => {
                         <Hamburger />
                         <div className='dropdown-ctt'>
                             <Link to={'/home'}><label>Home</label></Link>
-                            <Link to={`/post/user/${currentUser.username}`}><label>My Profile</label></Link>
-                            <Link to={`/profile/${currentUser.username}`}><label>My Confession</label></Link>
+                            <Link to={`/post/user/${currentUser.username}`}><label>My Confession</label></Link>
+                            <Link to={`/profile/${currentUser.username}`}><label>My Profile</label></Link>
                             <label onClick={onClickSignOut}>Sign Out</label>
                         </div>
                     </li>
