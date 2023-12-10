@@ -11,7 +11,7 @@ const HeaderMobile = () => {
     useEffect(()=> {
         const user = authService.getCurrentUser();
         if(user){
-            setCurrentUser(user);
+            return setCurrentUser(user);
         }
     })
 
@@ -26,6 +26,7 @@ const HeaderMobile = () => {
     }
     return (
         <header>
+            {currentUser?
             <nav className="navlink">
                 <ul className='flex'>
                     <li><button className='sign-up' onClick={onClickConfess}>Confess</button></li>
@@ -34,13 +35,15 @@ const HeaderMobile = () => {
                         <Hamburger />
                         <div className='dropdown-ctt'>
                             <Link to={'/home'}><label>Home</label></Link>
-                            <Link to={`post/user/${currentUser.username}`}><label>My Profile</label></Link>
-                            <Link to={`profile/${currentUser.username}`}><label>My Confession</label></Link>
+                            <Link to={`/post/user/${currentUser.username}`}><label>My Profile</label></Link>
+                            <Link to={`/profile/${currentUser.username}`}><label>My Confession</label></Link>
                             <label onClick={onClickSignOut}>Sign Out</label>
                         </div>
                     </li>
                 </ul>
             </nav>
+            :
+            <div></div>}
         </header>
     )
 }
